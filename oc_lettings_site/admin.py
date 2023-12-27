@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from lettings.models import Letting
 from lettings.models import Address
-from .models import Profile
+from profiles.models import Profile
 
 
 admin.site.register(Letting)
