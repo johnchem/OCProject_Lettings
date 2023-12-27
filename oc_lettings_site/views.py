@@ -11,3 +11,10 @@ from django.shortcuts import render
 # non finibus neque cursus id.
 def index(request):
     return render(request, "oc_lettings_site/index.html")
+
+
+def page_not_found_view(request):
+    pass
+
+def error_view(request):
+    pass

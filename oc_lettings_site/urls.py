@@ -9,3 +9,6 @@ urlpatterns = [
     path('profiles/', include('profiles.urls')),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = "oc_lettings_site.views.page_not_found_view"
+handler500 = "oc_lettings_site.views.error_view"
