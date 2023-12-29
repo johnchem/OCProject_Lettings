@@ -1,5 +1,15 @@
 from django.shortcuts import render
+from urllib.parse import quote
 
+from django.http import (
+    HttpResponseNotFound,
+    HttpResponseServerError,
+)
+from django.template import loader
+from django.views.decorators.csrf import requires_csrf_token
+
+ERROR_404_TEMPLATE_NAME = "oc_lettings_site/404.html"
+ERROR_500_TEMPLATE_NAME = "oc_lettings_site/500.html"
 
 # Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 # Quisque molestie quam lobortis leo consectetur ullamcorper non id est. Praesent dictum,
@@ -13,8 +23,46 @@ def index(request):
     return render(request, "oc_lettings_site/index.html")
 
 
-def page_not_found_view(request):
-    pass
+def page_not_found(request, exception, template_name=ERROR_404_TEMPLATE_NAME):
+    """
+    404 handler.
 
-def error_view(request):
-    pass
+    Templates: :template:`404.html`
+    Context:
+        request_path
+            The path of the requested URL (e.g., '/app/pages/bad_page/'). It's
+            quoted to prevent a content injection attack.
+        exception
+            The message from the exception which triggered the 404 (if one was
+            supplied), or the exception class name
+    """
+    exception_repr = exception.__class__.__name__
+    # Try to get an "interesting" exception message, if any (and not the ugly
+    # Resolver404 dictionary)
+    try:
+        message = exception.args[0]
+    except (AttributeError, IndexError):
+        pass
+    else:
+        if isinstance(message, str):
+            exception_repr = message
+    context = {
+        'request_path': quote(request.path),
+        'exception': exception_repr,
+    }
+    template = loader.get_template(template_name)
+    body = template.render(context, request)
+    content_type = None             # Django will use 'text/html'.
+    return HttpResponseNotFound(body, content_type=content_type)
+
+
+@requires_csrf_token
+def server_error(request, template_name=ERROR_500_TEMPLATE_NAME):
+    """
+    500 error handler.
+
+    Templates: :template:`500.html`
+    Context: None
+    """
+    template = loader.get_template(template_name)
+    return HttpResponseServerError(template.render())

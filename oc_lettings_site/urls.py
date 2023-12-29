@@ -8,7 +8,9 @@ urlpatterns = [
     path('lettings/', include('lettings.urls')),
     path('profiles/', include('profiles.urls')),
     path('admin/', admin.site.urls),
+    path('404/', views.page_not_found),
+    path('500/', views.server_error),
 ]
 
-handler404 = "oc_lettings_site.views.page_not_found_view"
-handler500 = "oc_lettings_site.views.error_view"
+handler404 = "oc_lettings_site.views.page_not_found"
+handler500 = "oc_lettings_site.views.server_error"

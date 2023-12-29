@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404, HttpResponseNotFound
 from lettings.models import Letting
 
 
@@ -26,9 +27,12 @@ def index(request):
 # Mauris condimentum auctor elementum. Donec quis nisi ligula. Integer vehicula
 # tincidunt enim, ac lacinia augue pulvinar sit amet.
 def letting(request, letting_id):
-    letting = Letting.objects.get(id=letting_id)
-    context = {
-        'title': letting.title,
-        'address': letting.address,
-    }
+    try:
+        letting = Letting.objects.get(id=letting_id)
+        context = {
+            'title': letting.title,
+            'address': letting.address,
+        }
+    except Letting.DoesNotExist:
+        raise Http404
     return render(request, 'lettings/letting.html', context)
