@@ -12,5 +12,6 @@ urlpatterns = [
     path('500/', views.server_error),
 ]
 
+# overwrite the default views for error 404 & 500
 handler404 = "oc_lettings_site.views.page_not_found"
 handler500 = "oc_lettings_site.views.server_error"

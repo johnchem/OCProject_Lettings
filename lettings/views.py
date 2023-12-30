@@ -10,6 +10,18 @@ from lettings.models import Letting
 # tempor et, bibendum id arcu. Vestibulum ante ipsum primis infaucibus
 # orci luctus et ultrices posuere cubilia curae; Cras eget scelerisque
 def index(request):
+    """
+    Display all the lettins instance in the database
+
+    **Context :**
+
+    ``lettings_list``
+        All instance of :model:`lettings.Lettins`.
+
+    **Template :**
+
+    :template:`lettings/index.html`
+    """
     lettings_list = Letting.objects.all()
     context = {'lettings_list': lettings_list}
     return render(request, 'lettings/index.html', context)
@@ -27,6 +39,21 @@ def index(request):
 # Mauris condimentum auctor elementum. Donec quis nisi ligula. Integer vehicula
 # tincidunt enim, ac lacinia augue pulvinar sit amet.
 def letting(request, letting_id):
+    """
+    Display the letting instance selected by user throught its letting_id
+
+    **Context**
+
+    ``title``
+        The title of :model:`lettings.Letting`
+    ``address``
+        The address :model:`lettings.Adress` linked to the instance 
+        :model:`lettings.Letting`
+
+    **Template:**
+
+    :template:`lettings/letting.html`
+    """
     try:
         letting = Letting.objects.get(id=letting_id)
         context = {
