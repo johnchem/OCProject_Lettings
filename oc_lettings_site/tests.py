@@ -131,7 +131,7 @@ class TestSiteUrl:
 @pytest.mark.urls('oc_lettings_site.tests')
 @pytest.mark.django_db()
 class TestSiteView:
-    def test_index_view(client):
+    def test_index_view(self, client):
         url = reverse("index")
         resp = client.get(url)
         soup = BeautifulSoup(resp.content)
@@ -145,7 +145,9 @@ class TestSiteView:
         assert len(soup.find_all("a", string=re_button_profile)) == 2
         assert len(soup.find_all("a", string=re_button_letting)) == 2
 
-    def test_admin_view(client):
+    def test_admin_view(self, client):
         resp = client.get("/admin/")
+        redirect_url = resp["Location"].split('?')[0]
+
         assert resp.status_code == 302
-        assert False
+        assert redirect_url == reverse("admin:login")
