@@ -45,20 +45,20 @@ class TestCustomErrorHandler:
         response = client.get("404/")
         soup = BeautifulSoup(response.content)
 
-        msg = "We’re sorry, but the requested page could not be found."
+        re_msg = re.compile("We’re sorry, but the requested page could not be found.")
         
         assert response.status_code == 404
-        assert soup.body.find(string=msg)
+        assert soup.body.find(string=re_msg)
         
     def test_handler_render_500_response(self, client):
         """Test the page received after raising an error 500"""
         response = client.get("/500/")
         soup = BeautifulSoup(response.content)
 
-        msg = "There’s been an error."
+        re_msg = re.compile("There’s been an error.")
 
         assert response.status_code == 500
-        assert soup.body.find(string=msg)
+        assert soup.body.find("p", string=re_msg)
 
 ### Test the urls ###
 class TestSiteUrl:
