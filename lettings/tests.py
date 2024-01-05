@@ -26,13 +26,45 @@ class TestLettingsModels:
         """
         test the creation of a new address with correct data
         """
-        pass
+        number = 11
+        street = "West 53 Street"
+        city = "Manhattan"
+        state = "NY"
+        zip_code = 10019
+        country_iso_code = "USA"
+        address = Address.objects.create(
+            number = number,
+            street = street,
+            city = city,
+            state = state,
+            zip_code = zip_code,
+            country_iso_code = country_iso_code,
+        )
+        assert address.street == street
+        assert address.state == state
+        assert address.zip_code == zip_code
 
     def test_create_letting(self, client):
         """
         test the creation of a new letting with correct data
         """
-        pass
+        address_ref = Address.objects.create(
+            number = 11,
+            street = "West 53 Street",
+            city = "Manhattan",
+            state = "NY",
+            zip_code = 10019,
+            country_iso_code = "USA",
+        )
+        title = "Museum of Modern Art"
+        address = address_ref.pk
+
+        letting = Letting.objects.create(
+            title = title,
+            address = address_ref
+        )
+        assert letting.title == title
+        assert letting.address.street == "West 53 Street"
 
     def test_validator_address(self, client):
         """
@@ -43,7 +75,21 @@ class TestLettingsModels:
             zip_code [int] : 0> int > 9999
             country_iso_code [str] : length = 3
         """
-        pass
+        number = 11
+        street = "West 53 Street"
+        city = "Manhattan"
+        state = "NY"
+        zip_code = 10019
+        country_iso_code = "USA"
+        address = Address.objects.create(
+            number = number,
+            street = street,
+            city = city,
+            state = state,
+            zip_code = zip_code,
+            country_iso_code = country_iso_code,
+        )
+        ### check the validator test 
 
     def test_delete_letting(self, client):
         """
