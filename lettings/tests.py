@@ -1,5 +1,7 @@
+import re
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 import pytest
+from bs4 import BeautifulSoup
 from django.core.management import call_command
 from django.urls import reverse, resolve
 from lettings.models import Letting, Address
@@ -97,7 +99,7 @@ class TestLettingsModels:
     @pytest.mark.django_db(transaction=True)
     def test_delete_address(self, client):
         """
-        Test the deletion of a letting, this must also delete the linked address
+        Test the deletion of an address, this must also delete the linked letting
         """
         letting = Letting.objects.get(id=1)
         address = letting.address
@@ -108,6 +110,38 @@ class TestLettingsModels:
         assert del_info[0] == 2
         assert exc_info.value.args[0] == "Letting matching query does not exist."
 
+@pytest.mark.django_db
 class TestLettingsView:
-    pass
+    """
+    
+    """
+    def test_letting_index_url(self, client):
+        expected_list = [
+            'Joshua Tree Green Haus /w Hot Tub',
+            'Oceanview Retreat',
+            "'Silo Studio' Cottage",
+            'Pirates of the Caribbean Getaway',
+            'The Mushroom Dome Retreat & LAND of Paradise Suite',
+            'Underground Hygge'
+            ]
+        
+        path = reverse('lettings_index')
+        resp = client.get(path)
+        soup = BeautifulSoup(resp.content)
+        list_letting = [x.string for x in soup.find_all("a", href=re.compile("/lettings/\d"))]
+        
+        assert len(list_letting) == 6
+        for x in list_letting:
+            assert x in expected_list
 
+    def test_letting_detail_view(self, client):
+        expected_data = ['9230 E. Joy Ridge Street', 'Marquette, MI 49855', 'USA']
+        
+        path = reverse('letting', kwargs={'letting_id':4})
+        resp = client.get(path)
+        soup = BeautifulSoup(resp.content)
+        card = soup.find("div", "card")
+        result = [x.string for x in card.find_all("p")]
+        
+        for data, expected in zip(result, expected_data):
+            assert data == expected
