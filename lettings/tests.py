@@ -1,7 +1,9 @@
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 import pytest
 from django.core.management import call_command
 from django.urls import reverse, resolve
 from lettings.models import Letting, Address
+from lettings.fixtures.test_validators import data_validator_address
 
 
 @pytest.fixture(scope='function')
@@ -72,7 +74,12 @@ class TestLettingsModels:
         assert letting.title == title
         assert letting.address.street == "West 53 Street"
 
-    def test_validator_address(self, client):
+    @pytest.mark.parametrize(
+            "address_data,error_message",
+            data_validator_address,
+            ids=["number", "state","zip_code","iso_code"]
+            )
+    def test_validator_address(self,address_data,error_message):
         """
         test the error message when incorrect data are provided
         **data : **
@@ -81,27 +88,25 @@ class TestLettingsModels:
             zip_code [int] : 0> int > 9999
             country_iso_code [str] : length = 3
         """
-        number = 11
-        street = "West 53 Street"
-        city = "Manhattan"
-        state = "NY"
-        zip_code = 10019
-        country_iso_code = "USA"
-        address = Address.objects.create(
-            number = number,
-            street = street,
-            city = city,
-            state = state,
-            zip_code = zip_code,
-            country_iso_code = country_iso_code,
-        )
-        ### check the validator test 
+        address = Address.objects.create(**address_data)
+        with pytest.raises(ValidationError) as exc_info:
+            address.full_clean()
+        assert exc_info.type is ValidationError
+        assert exc_info.value.messages[0] == error_message
 
-    def test_delete_letting(self, client):
+    @pytest.mark.django_db(transaction=True)
+    def test_delete_address(self, client):
         """
         Test the deletion of a letting, this must also delete the linked address
         """
-        pass
+        letting = Letting.objects.get(id=1)
+        address = letting.address
+        del_info = address.delete()
+        with pytest.raises(ObjectDoesNotExist) as exc_info:
+            Letting.objects.get(id=1)
+
+        assert del_info[0] == 2
+        assert exc_info.value.args[0] == "Letting matching query does not exist."
 
 class TestLettingsView:
     pass
