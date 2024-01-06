@@ -43,7 +43,7 @@ class TestCustomErrorHandler:
     def test_handler_render_404_response(self, client):
         """Test the page received after raising an error 404"""
         response = client.get("404/")
-        soup = BeautifulSoup(response.content)
+        soup = BeautifulSoup(response.content, features="html.parser")
 
         re_msg = re.compile("We’re sorry, but the requested page could not be found.")
         
@@ -53,7 +53,7 @@ class TestCustomErrorHandler:
     def test_handler_render_500_response(self, client):
         """Test the page received after raising an error 500"""
         response = client.get("/500/")
-        soup = BeautifulSoup(response.content)
+        soup = BeautifulSoup(response.content, features="html.parser")
 
         re_msg = re.compile("There’s been an error.")
 
@@ -73,7 +73,7 @@ class TestSiteView:
     def test_index_view(self, client):
         url = reverse("index")
         resp = client.get(url)
-        soup = BeautifulSoup(resp.content)
+        soup = BeautifulSoup(resp.content, features="html.parser")
 
         title = "Welcome to Holiday Homes"
         re_button_profile = re.compile("Profiles")

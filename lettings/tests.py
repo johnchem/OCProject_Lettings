@@ -1,9 +1,11 @@
 import re
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
 import pytest
 from bs4 import BeautifulSoup
+
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.management import call_command
 from django.urls import reverse, resolve
+
 from lettings.models import Letting, Address
 from lettings.fixtures.test_validators import data_validator_address
 
@@ -32,6 +34,14 @@ class TestLettingsUrl:
 
 @pytest.mark.django_db
 class TestLettingsModels:
+    """
+    Test for the letting application's models
+
+    :function: test_create_address
+    :function: test_create_letting
+    :function: test_validator_address
+    :function: test_delete_address
+    """
     def test_create_address(self, client):
         """
         test the creation of a new address with correct data
@@ -113,9 +123,17 @@ class TestLettingsModels:
 @pytest.mark.django_db
 class TestLettingsView:
     """
-    
+    Test for the letting application's view
+
+    :function: test_letting_index_view
+    :function: test_letting_detail_view
     """
-    def test_letting_index_url(self, client):
+    def test_letting_index_view(self, client):
+        """
+        Test the elements displayed by the view 
+        with the name of the letting elements in the database
+        The database is pre-load with the data in fixtures/db_test.json
+        """
         expected_list = [
             'Joshua Tree Green Haus /w Hot Tub',
             'Oceanview Retreat',
@@ -127,7 +145,7 @@ class TestLettingsView:
         
         path = reverse('lettings_index')
         resp = client.get(path)
-        soup = BeautifulSoup(resp.content)
+        soup = BeautifulSoup(resp.content, features="html.parser")
         list_letting = [x.string for x in soup.find_all("a", href=re.compile("/lettings/\d"))]
         
         assert len(list_letting) == 6
@@ -135,11 +153,16 @@ class TestLettingsView:
             assert x in expected_list
 
     def test_letting_detail_view(self, client):
+        """
+        The database is pre-load with the data in fixtures/db_test.json  
+        Test the information from the view 
+        with the info of the letting elements with the id=4
+        """
         expected_data = ['9230 E. Joy Ridge Street', 'Marquette, MI 49855', 'USA']
         
         path = reverse('letting', kwargs={'letting_id':4})
         resp = client.get(path)
-        soup = BeautifulSoup(resp.content)
+        soup = BeautifulSoup(resp.content, features="html.parser")
         card = soup.find("div", "card")
         result = [x.string for x in card.find_all("p")]
         
