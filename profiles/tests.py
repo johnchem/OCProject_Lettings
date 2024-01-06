@@ -61,7 +61,7 @@ class TestProfilesModels:
         assert user.first_name == first_name
         assert user.last_name == last_name
 
-    def test_create_profiles(self, client):
+    def test_create_profiles(self, client, capsys):
         """
         Test the creation of a new profile
         A new user is created then feed for the creation 
@@ -87,6 +87,9 @@ class TestProfilesModels:
             user = user,
             favorite_city = favorite_city
         )
+        print(profile)
+        captured = capsys.readouterr()
+        assert captured.out == username+"\n"
         assert profile.favorite_city == favorite_city
         assert profile.user.username == username
 
@@ -149,3 +152,12 @@ class TestProfilesView:
         
         for data, expected in zip(result, expected_data):
             assert data == expected
+    
+    def test_letting_not_found(self, client):
+        """
+        Test to get the detail of a profile who doesn't 
+        exist. Expect to receive a page 404 
+        """
+        path = reverse('profile', kwargs={'username':"NotExistUser"})
+        resp = client.get(path)
+        assert resp.status_code == 404

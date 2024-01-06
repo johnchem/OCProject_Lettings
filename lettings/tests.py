@@ -42,7 +42,7 @@ class TestLettingsModels:
     :function: test_validator_address
     :function: test_delete_address
     """
-    def test_create_address(self, client):
+    def test_create_address(self, client, capsys):
         """
         test the creation of a new address with correct data
         """
@@ -60,12 +60,14 @@ class TestLettingsModels:
             zip_code = zip_code,
             country_iso_code = country_iso_code,
         )
-        assert print(address) == f"{address.number} {address.street}"
+        print(address)
+        captured = capsys.readouterr()
+        assert captured.out == f"{number} {street}\n"
         assert address.street == street
         assert address.state == state
         assert address.zip_code == zip_code
 
-    def test_create_letting(self, client):
+    def test_create_letting(self, client, capsys):
         """
         test the creation of a new letting with correct data
         """
@@ -84,7 +86,9 @@ class TestLettingsModels:
             title = title,
             address = address_ref
         )
-        assert print(letting) == title
+        print(letting)
+        captured = capsys.readouterr()
+        assert captured.out == title+"\n"
         assert letting.address.street == "West 53 Street"
 
     @pytest.mark.parametrize(
@@ -128,6 +132,7 @@ class TestLettingsView:
 
     :function: test_letting_index_view
     :function: test_letting_detail_view
+    :function: test_letting_not_found
     """
     def test_letting_index_view(self, client):
         """
@@ -169,3 +174,12 @@ class TestLettingsView:
         
         for data, expected in zip(result, expected_data):
             assert data == expected
+
+    def test_letting_not_found(self, client):
+        """
+        Test to get the detail of a letting who doesn't 
+        exist. Expect to receive a page 404 
+        """
+        path = reverse('letting', kwargs={'letting_id':20})
+        resp = client.get(path)
+        assert resp.status_code == 404
