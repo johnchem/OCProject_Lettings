@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 @pytest.fixture(scope='function')
 def django_db_setup(django_db_setup, django_db_blocker):
     with django_db_blocker.unblock():
-        call_command('loaddata', 'db_profile_test.json')
+        call_command('loaddata', 'db_test_profile.json')
 
 class TestProfilesUrl:
     """

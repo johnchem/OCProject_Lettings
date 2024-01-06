@@ -1,10 +1,16 @@
+import random
 import pytest
 import re
 from bs4 import BeautifulSoup
 from django.http import Http404
 from django.urls import include, path, reverse, resolve
+from django.core.management import call_command
 from django.shortcuts import render
 
+@pytest.fixture(scope='function')
+def django_db_setup(django_db_setup, django_db_blocker):
+    with django_db_blocker.unblock():
+        call_command('loaddata', 'db_test_site.json')
 
 def page_not_found_view(request):
     """
@@ -68,7 +74,7 @@ class TestSiteUrl:
         assert resolve(path).view_name == "index"
 
 ### Test the views ###
-@pytest.mark.django_db()
+@pytest.mark.django_db
 class TestSiteView:
     def test_index_view(self, client):
         url = reverse("index")
@@ -97,3 +103,84 @@ class TestSiteView:
         assert resp.status_code == 200
         assert resp.request["PATH_INFO"] == "/admin/"
         assert resp.template_name == "admin/index.html"
+
+@pytest.mark.django_db
+class TestIntegration:
+    """
+    Integration test for the platform
+
+    :function: test_navigation_customer
+    """
+    def test_navigation_customer(self, client):
+        """
+        integration test simulating a user navigating through the site
+
+        the user start from the landing page, go to the profile page.
+        he goes to a profil pick at random. Then he moves to the lettings page.
+        So he pickes again at random a lettings and goes to the page.
+        finally he goes back to the home page.
+        """
+        # connection on the landing page
+        url = reverse("index")
+        resp = client.get(url)
+        assert resp.status_code == 200
+        
+        # get profile_index url from Profile button
+        soup = BeautifulSoup(resp.content, features="html.parser")
+        button_profile = soup.find("a", string=re.compile("Profiles"))
+        url_button_profiles = button_profile.attrs["href"]
+        assert resolve(url_button_profiles).view_name == "profiles_index"
+
+        # access to profiles index
+        resp = client.get(url_button_profiles)
+        assert resp.status_code == 200
+
+        # check the profile view and select a random profile
+        soup = BeautifulSoup(resp.content, features="html.parser")
+        list_profiles = [(x.a.string, x.a.attrs["href"]) for x in soup.div("li")]
+        profil_username, profil_url = random.choice(list_profiles)
+        assert len(list_profiles) == 4
+        assert resolve(profil_url).view_name == "profile"
+
+        # go to the profil page
+        resp = client.get(profil_url)
+        assert resp.status_code == 200
+        
+        # check the data
+        soup = BeautifulSoup(resp.content, features="html.parser")
+        username = soup.h1.string
+        assert username == profil_username
+
+        # get lettings_index url from Lettings button
+        button_lettings = soup.find("a", string=re.compile("Lettings"))
+        url_button_lettings = button_lettings.attrs["href"]
+        assert resolve(url_button_lettings).view_name == "lettings_index"
+
+        # access to lettings index
+        resp = client.get(url_button_lettings)
+        assert resp.status_code == 200
+
+        # check the lettings view and select a random letting
+        soup = BeautifulSoup(resp.content, features="html.parser")
+        list_lettings = [(x.a.string, x.a.attrs["href"]) for x in soup.div("li")]
+        letting_title, letting_url = random.choice(list_lettings)
+        assert len(list_lettings) == 6
+        assert resolve(letting_url).view_name == "letting"
+
+        # go to the letting page
+        resp = client.get(letting_url)
+        assert resp.status_code == 200
+        
+        # check the data
+        soup = BeautifulSoup(resp.content, features="html.parser")
+        title = soup.h1.string
+        assert title == letting_title
+
+        # get home url from home button
+        button_home = soup.find("a", string=re.compile("Home"))
+        url_button_home = button_home.attrs["href"]
+        assert resolve(url_button_home).view_name == "index"
+
+        # access to lettings index
+        resp = client.get(url_button_home)
+        assert resp.status_code == 200

@@ -13,7 +13,7 @@ from lettings.fixtures.test_validators import data_validator_address
 @pytest.fixture(scope='function')
 def django_db_setup(django_db_setup, django_db_blocker):
     with django_db_blocker.unblock():
-        call_command('loaddata', 'db_test.json')
+        call_command('loaddata', 'db_test_lettings.json')
 
 class TestLettingsUrl:
     """
