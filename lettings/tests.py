@@ -60,6 +60,7 @@ class TestLettingsModels:
             zip_code = zip_code,
             country_iso_code = country_iso_code,
         )
+        assert print(address) == f"{address.number} {address.street}"
         assert address.street == street
         assert address.state == state
         assert address.zip_code == zip_code
@@ -83,7 +84,7 @@ class TestLettingsModels:
             title = title,
             address = address_ref
         )
-        assert letting.title == title
+        assert print(letting) == title
         assert letting.address.street == "West 53 Street"
 
     @pytest.mark.parametrize(
