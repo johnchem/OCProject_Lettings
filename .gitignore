@@ -1,3 +1,17 @@
+# python
 **/__pycache__
 *.pyc
+
+# virtual env
 venv
+
+# test coverage
+.coverage
+.coveragerc
+htmlcov/
+
+# pytest
+.pytest*
+
+# IDE
+.vscode

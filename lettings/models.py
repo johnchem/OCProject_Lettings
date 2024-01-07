@@ -24,7 +24,7 @@ class Address(models.Model):
 class Letting(models.Model):
     """
     Model to store a letting adress, linked to the 
-    :model:`lettings.Adress` 
+    :model:`lettings.Address` 
     """
     title = models.CharField(max_length=256)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
