@@ -3,6 +3,9 @@ from django.urls import path, include
 
 from . import views
 
+def trigger_error(request):
+    division_by_zero = 1/0
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('lettings/', include('lettings.urls')),
@@ -10,6 +13,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('404/', views.page_not_found),
     path('500/', views.server_error),
+    path("sentry-debug/", trigger_error),
 ]
 
 # overwrite the default views for error 404 & 500
