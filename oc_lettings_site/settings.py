@@ -1,6 +1,8 @@
 import os
 import environ
+import logging
 import sentry_sdk
+from sentry_sdk.integrations.logging import LoggingIntegration
 
 from pathlib import Path
 
@@ -132,5 +134,12 @@ sentry_sdk.init(
     # Set profiles_sample_rate to 1.0 to profile 100%
     # of sampled transactions.
     # We recommend adjusting this value in production.
-    profiles_sample_rate=1.0,
+    profiles_sample_rate=0.5,
+    send_default_pii=True, # get user data from django.contrib.auth with error
+    integrations=[
+        LoggingIntegration(
+            level=logging.INFO,        # Capture info and above as breadcrumbs
+            event_level=logging.ERROR   # Send records as events
+        ),
+    ],
 )

@@ -1,3 +1,4 @@
+import logging
 from django.contrib import admin
 from django.urls import path, include
 
@@ -5,6 +6,13 @@ from . import views
 
 def trigger_error(request):
     division_by_zero = 1/0
+
+def trigger_log(request):
+    logging.debug("I am ignored")
+    logging.info("I am a breadcrumb")
+    logging.error("I am an event", extra=dict(bar=43))
+    logging.exception("An exception happened")
+    return views.index(request)
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -14,6 +22,7 @@ urlpatterns = [
     path('404/', views.page_not_found),
     path('500/', views.server_error),
     path("sentry-debug/", trigger_error),
+    path("logging-debug/", trigger_log),
 ]
 
 # overwrite the default views for error 404 & 500

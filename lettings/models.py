@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinLengthValidator
+from django.forms import ModelForm
 
 
 # Create your models here.
@@ -35,3 +36,14 @@ class Letting(models.Model):
     class Meta:
         verbose_name = "Letting"
         verbose_name_plural = "Lettings"
+
+class AddressForm(ModelForm):
+    class Meta:
+        model = Address
+        fields = "__all__"
+
+    def is_valid(self):
+        try: 
+            super().is_valid()
+        except Exception as e:
+            print("Je suis ici")

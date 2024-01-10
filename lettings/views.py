@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render
 from django.http import Http404, HttpResponseNotFound
 from lettings.models import Letting
@@ -22,8 +23,14 @@ def index(request):
 
     :template:`lettings/index.html`
     """
-    lettings_list = Letting.objects.all()
-    context = {'lettings_list': lettings_list}
+    try:
+        lettings_list = Letting.objects.all()
+        context = {'lettings_list': lettings_list}
+
+    except Exception as e:
+        user_identity = request.user.username if request.user.is_authenticated else "Anonymous"
+        logging.exception(f"User {user_identity} get an exception {e}")
+
     return render(request, 'lettings/index.html', context)
 
 
@@ -60,6 +67,14 @@ def letting(request, letting_id):
             'title': letting.title,
             'address': letting.address,
         }
+
     except Letting.DoesNotExist:
+        user_identity = request.user.username if request.user.is_authenticated else "Anonymous"
+        logging.error(f"User {user_identity} get page 404 : {request.path}")
         raise Http404
+    
+    except Exception as e:
+        user_identity = request.user.username if request.user.is_authenticated else "Anonymous"
+        logging.exception(f"User {user_identity} get an exception {e}")
+
     return render(request, 'lettings/letting.html', context)
