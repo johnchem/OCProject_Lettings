@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render
 from urllib.parse import quote
 
@@ -7,6 +8,7 @@ from django.http import (
 )
 from django.template import loader
 from django.views.decorators.csrf import requires_csrf_token
+from sentry_sdk import capture_message
 
 ERROR_404_TEMPLATE_NAME = "oc_lettings_site/404.html"
 ERROR_500_TEMPLATE_NAME = "oc_lettings_site/500.html"

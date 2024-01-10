@@ -1,20 +1,28 @@
 import os
+import environ
+import logging
+import sentry_sdk
+from sentry_sdk.integrations.logging import LoggingIntegration
 
 from pathlib import Path
+
+
+env = environ.Env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = False
+DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = ["localhost"]
 
@@ -68,10 +76,10 @@ WSGI_APPLICATION = 'oc_lettings_site.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'oc-lettings-site.sqlite3'),
-    }
+    'default': env.db(
+        default = os.path.join(BASE_DIR, 'oc-lettings-site.sqlite3'),
+        engine = 'django.db.backends.sqlite3',
+    )
 }
 
 
@@ -115,3 +123,23 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static", ]
+
+# Logging (Sentry key)
+
+sentry_sdk.init(
+    dsn = env("SENTRY_KEY"),
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    traces_sample_rate=1.0,
+    # Set profiles_sample_rate to 1.0 to profile 100%
+    # of sampled transactions.
+    # We recommend adjusting this value in production.
+    profiles_sample_rate=0.5,
+    send_default_pii=True, # get user data from django.contrib.auth with error
+    integrations=[
+        LoggingIntegration(
+            level=logging.INFO,        # Capture info and above as breadcrumbs
+            event_level=logging.ERROR   # Send records as events
+        ),
+    ],
+)
