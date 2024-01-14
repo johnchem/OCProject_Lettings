@@ -13,22 +13,24 @@ jobs:
             echo 'Hello World!'
             echo 'This is the delivery pipeline'
   build:
-    linux:
-      ubuntu-2204: 2023.10.1
-    steps:
-      - run: |
-        python -m venv venv
-        pip install -r requirements.txt
-        source /venv/bin/activate
-
-  test-python:
-    # Install dependencies and run tests
+    docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
-      - python/install-packages
+      - run:
+          name: setup venv
+          command: |
+            python3 -m venv venv
+            source /venv/bin/activate
+            pip install -r requirements.txt
+  Pytest:
+    docker: 
+      - image: cimg/base:2021.04
+    steps:
       - run:
           name: Run tests
-          command: python manage.py test
+          command: pytest
+
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
@@ -43,9 +45,9 @@ workflows:
     jobs:
       - Hello-World
       - build:
-          required:
-            - Hello-world
-      - test
+          requires:
+            - Hello-World
+      # - test
     # - deploy:
     #     requires:
     #       - test-python
