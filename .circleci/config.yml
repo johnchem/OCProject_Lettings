@@ -1,13 +1,28 @@
 # This config was automatically generated from your source code
 # Stacks detected: deps:python:.,file:manage.py:.
 version: 2.1
-orbs:
-  python: circleci/python@2
 jobs:
+  # running commands on a basic image
+  Hello-World:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - run:
+          name: Saying Hello
+          command: |
+            echo 'Hello World!'
+            echo 'This is the delivery pipeline'
+  build:
+    linux:
+      ubuntu-2204: 2023.10.1
+    steps:
+      - run: |
+        python -m venv venv
+        pip install -r requirements.txt
+        source /venv/bin/activate
+
   test-python:
     # Install dependencies and run tests
-    docker:
-      - image: cimg/python:3.8-node
     steps:
       - checkout
       - python/install-packages
@@ -26,7 +41,11 @@ jobs:
 workflows:
   build-and-test:
     jobs:
-      - test-python
+      - Hello-World
+      - build:
+          required:
+            - Hello-world
+      - test
     # - deploy:
     #     requires:
     #       - test-python
