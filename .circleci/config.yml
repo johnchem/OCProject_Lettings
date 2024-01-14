@@ -18,6 +18,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: setup docker
+          command: |
+            apt-get update -y
+            apt-get install python3-venv
+      - run:
           name: setup venv
           command: |
             python3 -m venv venv
