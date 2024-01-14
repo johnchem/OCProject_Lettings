@@ -1,0 +1,51 @@
+# This config was automatically generated from your source code
+# Stacks detected: deps:python:.,file:manage.py:.
+version: 2.1
+jobs:
+  # running commands on a basic image
+  Hello-World:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - run:
+          name: Saying Hello
+          command: |
+            echo 'Hello World!'
+            echo 'This is the delivery pipeline'
+  build:
+    linux:
+      ubuntu-2204: 2023.10.1
+    steps:
+      - run: |
+        python -m venv venv
+        pip install -r requirements.txt
+        source /venv/bin/activate
+
+  test-python:
+    # Install dependencies and run tests
+    steps:
+      - checkout
+      - python/install-packages
+      - run:
+          name: Run tests
+          command: python manage.py test
+  deploy:
+    # This is an example deploy job, not actually used by the workflow
+    docker:
+      - image: cimg/base:stable
+    steps:
+      # Replace this with steps to deploy to users
+      - run:
+          name: deploy
+          command: '#e.g. ./deploy.sh'
+workflows:
+  build-and-test:
+    jobs:
+      - Hello-World
+      - build:
+          required:
+            - Hello-world
+      - test
+    # - deploy:
+    #     requires:
+    #       - test-python
