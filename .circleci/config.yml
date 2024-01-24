@@ -36,9 +36,11 @@ jobs:
   container:
     docker:
       - image: cimg/base:2022.09
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_ACCESS_TOKEN
     environment:
       COMMIT_HASH: <<pipeline.trigger_parameters.github_app.commit_sha>>
-        # auth:
         #   username: $DOCKERHUB_USERNAME
         #   password: $DOCKERHUB_PASSWORD
     steps:
