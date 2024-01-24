@@ -64,7 +64,6 @@ workflows:
   test_build_and_push:
     jobs:
       - build_and_test
-      - container
+      - container:
           requires:
             - build_and_test
-            
