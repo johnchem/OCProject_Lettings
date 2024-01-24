@@ -1,8 +1,8 @@
-version: 2
+version: 2.1
 jobs:
-  build:
+  build_and_test:
     docker:
-      - image: circleci/python:3.10
+      - image: cimg/python:3.10
     steps:
       - checkout
       - restore_cache:
@@ -63,7 +63,7 @@ jobs:
 workflows:
   test_build_and_push:
     jobs:
-      - build
-      - container:
+      - build_and_test
+      - container
         requires:
-          - build
+          - build_and_test
