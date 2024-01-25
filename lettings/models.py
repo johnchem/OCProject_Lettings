@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinLengthValidator
-from django.forms import ModelForm
 
 
 # Create your models here.
@@ -18,14 +17,16 @@ class Address(models.Model):
 
     def __str__(self):
         return f'{self.number} {self.street}'
+
     class Meta:
         verbose_name = "Address"
         verbose_name_plural = "Addresses"
 
+
 class Letting(models.Model):
     """
-    Model to store a letting adress, linked to the 
-    :model:`lettings.Address` 
+    Model to store a letting adress, linked to the
+    :model:`lettings.Address`
     """
     title = models.CharField(max_length=256)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
@@ -36,14 +37,3 @@ class Letting(models.Model):
     class Meta:
         verbose_name = "Letting"
         verbose_name_plural = "Lettings"
-
-class AddressForm(ModelForm):
-    class Meta:
-        model = Address
-        fields = "__all__"
-
-    def is_valid(self):
-        try: 
-            super().is_valid()
-        except Exception as e:
-            print("Je suis ici")

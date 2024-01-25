@@ -79,8 +79,8 @@ WSGI_APPLICATION = 'oc_lettings_site.wsgi.application'
 
 DATABASES = {
     'default': env.db(
-        default = os.path.join(BASE_DIR, 'oc-lettings-site.sqlite3'),
-        engine = 'django.db.backends.sqlite3',
+        default=os.path.join(BASE_DIR, 'oc-lettings-site.sqlite3'),
+        engine='django.db.backends.sqlite3',
     )
 }
 
@@ -129,7 +129,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 # Logging (Sentry key)
 
 sentry_sdk.init(
-    dsn = env("SENTRY_KEY"),
+    dsn=env("SENTRY_KEY"),
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     traces_sample_rate=1.0,
@@ -137,7 +137,7 @@ sentry_sdk.init(
     # of sampled transactions.
     # We recommend adjusting this value in production.
     profiles_sample_rate=0.5,
-    send_default_pii=True, # get user data from django.contrib.auth with error
+    send_default_pii=True,  # get user data from django.contrib.auth with error
     integrations=[
         LoggingIntegration(
             level=logging.INFO,        # Capture info and above as breadcrumbs

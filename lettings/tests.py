@@ -15,6 +15,7 @@ def django_db_setup(django_db_setup, django_db_blocker):
     with django_db_blocker.unblock():
         call_command('loaddata', 'db_test_lettings.json')
 
+
 class TestLettingsUrl:
     """
     Test for the letting application's urls
@@ -28,9 +29,10 @@ class TestLettingsUrl:
         assert resolve(path).view_name == "lettings_index"
 
     def test_letting_detail_url(self):
-        path = reverse('letting', kwargs={'letting_id':1})
+        path = reverse('letting', kwargs={'letting_id': 1})
         assert path == "/lettings/1/"
         assert resolve(path).view_name == "letting"
+
 
 @pytest.mark.django_db
 class TestLettingsModels:
@@ -53,12 +55,12 @@ class TestLettingsModels:
         zip_code = 10019
         country_iso_code = "USA"
         address = Address.objects.create(
-            number = number,
-            street = street,
-            city = city,
-            state = state,
-            zip_code = zip_code,
-            country_iso_code = country_iso_code,
+            number=number,
+            street=street,
+            city=city,
+            state=state,
+            zip_code=zip_code,
+            country_iso_code=country_iso_code,
         )
         print(address)
         captured = capsys.readouterr()
@@ -72,19 +74,18 @@ class TestLettingsModels:
         test the creation of a new letting with correct data
         """
         address_ref = Address.objects.create(
-            number = 11,
-            street = "West 53 Street",
-            city = "Manhattan",
-            state = "NY",
-            zip_code = 10019,
-            country_iso_code = "USA",
+            number=11,
+            street="West 53 Street",
+            city="Manhattan",
+            state="NY",
+            zip_code=10019,
+            country_iso_code="USA",
         )
         title = "Museum of Modern Art"
-        address = address_ref.pk
 
         letting = Letting.objects.create(
-            title = title,
-            address = address_ref
+            title=title,
+            address=address_ref
         )
         print(letting)
         captured = capsys.readouterr()
@@ -94,9 +95,9 @@ class TestLettingsModels:
     @pytest.mark.parametrize(
             "address_data,error_message",
             data_validator_address,
-            ids=["number", "state","zip_code","iso_code"]
+            ids=["number", "state", "zip_code", "iso_code"]
             )
-    def test_validator_address(self,address_data,error_message):
+    def test_validator_address(self, address_data, error_message):
         """
         test the error message when incorrect data are provided
         **data : **
@@ -125,6 +126,7 @@ class TestLettingsModels:
         assert del_info[0] == 2
         assert exc_info.value.args[0] == "Letting matching query does not exist."
 
+
 @pytest.mark.django_db
 class TestLettingsView:
     """
@@ -136,7 +138,7 @@ class TestLettingsView:
     """
     def test_letting_index_view(self, client):
         """
-        Test the elements displayed by the view 
+        Test the elements displayed by the view
         with the name of the letting elements in the database
         The database is pre-load with the data in fixtures/db_test.json
         """
@@ -148,38 +150,38 @@ class TestLettingsView:
             'The Mushroom Dome Retreat & LAND of Paradise Suite',
             'Underground Hygge'
             ]
-        
+
         path = reverse('lettings_index')
         resp = client.get(path)
         soup = BeautifulSoup(resp.content, features="html.parser")
-        list_letting = [x.string for x in soup.find_all("a", href=re.compile("/lettings/\d"))]
-        
+        list_letting = [x.string for x in soup.find_all("a", href=re.compile(r'/lettings/\d'))]
+
         assert len(list_letting) == 6
         for x in list_letting:
             assert x in expected_list
 
     def test_letting_detail_view(self, client):
         """
-        The database is pre-load with the data in fixtures/db_test.json  
-        Test the information from the view 
+        The database is pre-load with the data in fixtures/db_test.json
+        Test the information from the view
         with the info of the letting elements with the id=4
         """
         expected_data = ['9230 E. Joy Ridge Street', 'Marquette, MI 49855', 'USA']
-        
-        path = reverse('letting', kwargs={'letting_id':4})
+
+        path = reverse('letting', kwargs={'letting_id': 4})
         resp = client.get(path)
         soup = BeautifulSoup(resp.content, features="html.parser")
         card = soup.find("div", "card")
         result = [x.string for x in card.find_all("p")]
-        
+
         for data, expected in zip(result, expected_data):
             assert data == expected
 
     def test_letting_not_found(self, client):
         """
-        Test to get the detail of a letting who doesn't 
-        exist. Expect to receive a page 404 
+        Test to get the detail of a letting who doesn't
+        exist. Expect to receive a page 404
         """
-        path = reverse('letting', kwargs={'letting_id':20})
+        path = reverse('letting', kwargs={'letting_id': 20})
         resp = client.get(path)
         assert resp.status_code == 404
