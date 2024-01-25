@@ -11,7 +11,6 @@ ENV VIRTUAL_ENV=/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-
 RUN pip3 install --upgrade pip \
 && pip3 install -r requirements.txt --no-cache-dir
 
@@ -21,13 +20,7 @@ ENV DJANGO_SETTINGS_MODULE=oc_lettings_site.settings
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# RUN <<EDF
-# addgroup -S docker
-# adduser -S --shell /bin/bash --ingroup vscode
-# EOF
 
-# ENTRYPOINT [ "python3" ]
-CMD ["manage.py", "runserver", "0.0.0.0:8000"]
-# CMD ["manage.py", "runserver"]
+CMD ["python3", "manage.py", "collectstatic", "--noinput", "&&", "python3", "manage.py", "runserver", "0.0.0.0:8000"]
 
-LABEL version="0.1"
+LABEL version="0.2"

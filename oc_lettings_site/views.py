@@ -1,4 +1,3 @@
-import logging
 from django.shortcuts import render
 from urllib.parse import quote
 
@@ -8,10 +7,10 @@ from django.http import (
 )
 from django.template import loader
 from django.views.decorators.csrf import requires_csrf_token
-from sentry_sdk import capture_message
 
 ERROR_404_TEMPLATE_NAME = "oc_lettings_site/404.html"
 ERROR_500_TEMPLATE_NAME = "oc_lettings_site/500.html"
+
 
 # Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 # Quisque molestie quam lobortis leo consectetur ullamcorper non id est. Praesent dictum,
@@ -41,16 +40,16 @@ def page_not_found(request, exception, template_name=ERROR_404_TEMPLATE_NAME):
     404 handler.
 
     **Context :**
-    
+
     ``request_path``
         The path of the requested URL (e.g., '/app/pages/bad_page/'). It's
         quoted to prevent a content injection attack.
     ``exception``
         The message from the exception which triggered the 404 (if one was
         supplied), or the exception class name
-    
-    **Templates:** 
-    
+
+    **Templates:**
+
     :template:`oc_lettings_site/404.html`
     """
     exception_repr = exception.__class__.__name__
@@ -80,9 +79,9 @@ def server_error(request, template_name=ERROR_500_TEMPLATE_NAME):
 
     **Context :**
         None
-    
+
     **Templates :**
-    
+
     :template:`oc_lettings_site/500.html`
     """
     template = loader.get_template(template_name)

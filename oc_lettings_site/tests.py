@@ -7,16 +7,19 @@ from django.urls import include, path, reverse, resolve
 from django.core.management import call_command
 from django.shortcuts import render
 
+
 @pytest.fixture(scope='function')
 def django_db_setup(django_db_setup, django_db_blocker):
     with django_db_blocker.unblock():
         call_command('loaddata', 'db_test_site.json')
+
 
 def page_not_found_view(request):
     """
     Testing view raising the error 404
     """
     raise Http404
+
 
 def server_error_view(request):
     """
@@ -26,6 +29,7 @@ def server_error_view(request):
         # Votre logique susceptible de générer une exception
         # Par exemple :
         result = 1 / 0  # Division par zéro intentionnelle pour provoquer une erreur
+        return result
     except ZeroDivisionError:
         return render(request, 'oc_lettings_site/index.html', status=500)
 
@@ -36,6 +40,7 @@ urlpatterns = [
     path("500/", server_error_view),
     path("", include('oc_lettings_site.urls'))
 ]
+
 
 class TestCustomErrorHandler:
     """
@@ -52,10 +57,10 @@ class TestCustomErrorHandler:
         soup = BeautifulSoup(response.content, features="html.parser")
 
         re_msg = re.compile("We’re sorry, but the requested page could not be found.")
-        
+
         assert response.status_code == 404
         assert soup.body.find(string=re_msg)
-        
+
     def test_handler_render_500_response(self, client):
         """Test the page received after raising an error 500"""
         response = client.get("/500/")
@@ -66,14 +71,15 @@ class TestCustomErrorHandler:
         assert response.status_code == 500
         assert soup.body.find("p", string=re_msg)
 
-### Test the urls ###
+
+# ----- Test the urls -----
 class TestSiteUrl:
     def test_root_url(self):
         path = reverse('index')
         assert path == "/"
         assert resolve(path).view_name == "index"
 
-### Test the views ###
+# ----- Test the views -----
 @pytest.mark.django_db
 class TestSiteView:
     def test_index_view(self, client):
@@ -86,7 +92,7 @@ class TestSiteView:
         re_button_letting = re.compile("Letting")
 
         assert resp.status_code == 200
-        assert title in soup.body.h1.contents 
+        assert title in soup.body.h1.contents
         assert len(soup.find_all("a", string=re_button_profile)) == 2
         assert len(soup.find_all("a", string=re_button_letting)) == 2
 
@@ -99,10 +105,11 @@ class TestSiteView:
 
     def test_connected_admin_view(self, admin_client):
         resp = admin_client.get("/admin/")
-        
+
         assert resp.status_code == 200
         assert resp.request["PATH_INFO"] == "/admin/"
         assert resp.template_name == "admin/index.html"
+
 
 @pytest.mark.django_db
 class TestIntegration:
@@ -124,7 +131,7 @@ class TestIntegration:
         url = reverse("index")
         resp = client.get(url)
         assert resp.status_code == 200
-        
+
         # get profile_index url from Profile button
         soup = BeautifulSoup(resp.content, features="html.parser")
         button_profile = soup.find("a", string=re.compile("Profiles"))
@@ -145,7 +152,7 @@ class TestIntegration:
         # go to the profil page
         resp = client.get(profil_url)
         assert resp.status_code == 200
-        
+
         # check the data
         soup = BeautifulSoup(resp.content, features="html.parser")
         username = soup.h1.string
@@ -170,7 +177,7 @@ class TestIntegration:
         # go to the letting page
         resp = client.get(letting_url)
         assert resp.status_code == 200
-        
+
         # check the data
         soup = BeautifulSoup(resp.content, features="html.parser")
         title = soup.h1.string

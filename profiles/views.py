@@ -1,5 +1,5 @@
 import logging
-from django.http import Http404, HttpResponseNotFound
+from django.http import Http404
 from django.shortcuts import render
 from profiles.models import Profile
 
@@ -58,7 +58,7 @@ def profile(request, username):
         user_identity = request.user.username if request.user.is_authenticated else "Anonymous"
         logging.error(f"User {user_identity} get page 404 : {request.path}")
         raise Http404
-    
+
     except Exception as e:
         user_identity = request.user.username if request.user.is_authenticated else "Anonymous"
         logging.exception(f"User {user_identity} get an exception {e}")

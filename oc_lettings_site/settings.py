@@ -6,13 +6,13 @@ from sentry_sdk.integrations.logging import LoggingIntegration
 
 from pathlib import Path
 
-
 env = environ.Env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+env.read_env(env.str('ENV_PATH', '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -24,13 +24,14 @@ SECRET_KEY = env("SECRET_KEY")
 # DEBUG = True
 DEBUG = env.bool("DEBUG")
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'oc_lettings_site.apps.OCLettingsSiteConfig',
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,8 +79,8 @@ WSGI_APPLICATION = 'oc_lettings_site.wsgi.application'
 
 DATABASES = {
     'default': env.db(
-        default = os.path.join(BASE_DIR, 'oc-lettings-site.sqlite3'),
-        engine = 'django.db.backends.sqlite3',
+        default=os.path.join(BASE_DIR, 'oc-lettings-site.sqlite3'),
+        engine='django.db.backends.sqlite3',
     )
 }
 
@@ -120,14 +122,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static", ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Logging (Sentry key)
 
 sentry_sdk.init(
-    dsn = env("SENTRY_KEY"),
+    dsn=env("SENTRY_KEY"),
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     traces_sample_rate=1.0,
@@ -135,7 +137,7 @@ sentry_sdk.init(
     # of sampled transactions.
     # We recommend adjusting this value in production.
     profiles_sample_rate=0.5,
-    send_default_pii=True, # get user data from django.contrib.auth with error
+    send_default_pii=True,  # get user data from django.contrib.auth with error
     integrations=[
         LoggingIntegration(
             level=logging.INFO,        # Capture info and above as breadcrumbs

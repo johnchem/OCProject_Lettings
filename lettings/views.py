@@ -1,6 +1,6 @@
 import logging
 from django.shortcuts import render
-from django.http import Http404, HttpResponseNotFound
+from django.http import Http404
 from lettings.models import Letting
 
 
@@ -54,7 +54,7 @@ def letting(request, letting_id):
     ``title``
         The title of :model:`lettings.Letting`
     ``address``
-        The address :model:`lettings.Adress` linked to the instance 
+        The address :model:`lettings.Adress` linked to the instance
         :model:`lettings.Letting`
 
     **Template:**
@@ -72,7 +72,7 @@ def letting(request, letting_id):
         user_identity = request.user.username if request.user.is_authenticated else "Anonymous"
         logging.error(f"User {user_identity} get page 404 : {request.path}")
         raise Http404
-    
+
     except Exception as e:
         user_identity = request.user.username if request.user.is_authenticated else "Anonymous"
         logging.exception(f"User {user_identity} get an exception {e}")
