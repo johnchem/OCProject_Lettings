@@ -48,11 +48,11 @@ jobs:
       - run:
           name: Running linting
           command: |
+            set +o pipefail
             . venv/bin/activate
             flake8 --output-file=flake_report.txt
       - store_artifacts:
           path: flake_report.txt
-          destination: python_app
   coverage:
     docker:
       - image: cimg/python:3.10
@@ -80,7 +80,6 @@ jobs:
             pytest -v --cov=. --cov-report=html
       - store_artifacts:
           path: htmlcov/
-          destination: python_app
   container:
     docker:
       - image: cimg/base:2022.09
