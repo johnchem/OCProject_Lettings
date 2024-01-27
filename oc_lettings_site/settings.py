@@ -24,7 +24,10 @@ SECRET_KEY = env("SECRET_KEY")
 # DEBUG = True
 DEBUG = env.bool("DEBUG")
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+if DEBUG:
+    ALLOWED_HOSTS = "localhost"
+else:    
+    ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
 # Application definition
@@ -130,6 +133,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 sentry_sdk.init(
     dsn=env("SENTRY_KEY"),
+    debug=env(DEBUG),
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     traces_sample_rate=1.0,
