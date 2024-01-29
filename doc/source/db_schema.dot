@@ -1,0 +1,137 @@
+    digraph db_structure {
+        graph [
+            label = "Schéma de la base de données"
+            labelloc = t
+            fontname = "Helvetica, Arial, sans-serif"
+            fontsize = 20
+            layout = dot
+            rankdir = LR
+            newrank = true
+        ]
+        node [
+            style = filled
+            shape = rect
+            pencolor="#00000044" // frames color
+    		fontname="Helvetica,Arial,sans-serif"
+    		shape=plaintext
+    		margin="0"
+    	]
+        user [
+            color="white"
+            label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                    <tr><td bgcolor="grey"><b>User</b><br/>django.contrib.auth.models.User</td></tr>
+                    <tr><td>
+                        <table border="0" cellborder="0" cellspacing="5">
+                            <tr><td >username</td></tr>
+                            <tr><td >password</td></tr>
+                        </table>
+                    </td></tr>
+            </table>>
+        ]
+        profile [
+            color="white"
+            label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="grey"><b>Profile</b></td></tr>
+                <tr><td>
+                    <table border="0" cellborder="0" cellspacing="5">
+                        <tr><td port="user">
+                            <table border="0" cellborder="0" cellspacing="0">
+                                <tr><td align="left"><b>user</b></td></tr>
+                                <tr><td align="left"><font point-size="12">ForeignKey</font></td></tr>
+                                <tr><td align="left"><font point-size="12"><i>on_delete=models.CASCADE</i></font></td></tr>
+                            </table>
+                        </td></tr>
+                        <tr><td>
+                            <table border="0" cellborder="0" cellspacing="0">
+                                <tr><td align="left"><b>favorite_city</b></td></tr>
+                                <tr><td align="left"><font point-size="12">CharField</font></td></tr>
+                                <tr><td align="left"><font point-size="12"><i>options: max_length=64</i></font></td></tr>
+                                <tr><td align="left"><font point-size="12"><i>blank=True</i></font></td></tr>
+                            </table>
+                        </td></tr>
+                    </table>
+                </td></tr>
+            </table>>
+        ]
+        address [
+            color="white"
+            label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="grey"><b>Address</b></td></tr>
+                <tr><td>
+                    <table border="0" cellborder="0" cellspacing="5">
+                        <tr><td>
+                            <table border="0" cellborder="0" cellspacing="0">
+                                    <tr><td align="left"><b>number</b></td></tr>
+                                    <tr><td align="left"><font point-size="12">CharField</font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>options: max_length=64</i></font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>blank=True</i></font></td></tr>
+                            </table>
+                        </td></tr>
+                        <tr><td>
+                            <table border="0" cellborder="0" cellspacing="0">
+                                    <tr><td align="left"><b>street</b></td></tr>
+                                    <tr><td align="left"><font point-size="12">CharField</font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>options: max_length=64</i></font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>blank=True</i></font></td></tr>
+                            </table>
+                        </td></tr>
+                        <tr><td>
+                            <table border="0" cellborder="0" cellspacing="0">
+                                    <tr><td align="left"><b>city</b></td></tr>
+                                    <tr><td align="left"><font point-size="12">CharField</font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>options: max_length=64</i></font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>blank=True</i></font></td></tr>
+                            </table>
+                        </td></tr>
+                        <tr><td>
+                            <table border="0" cellborder="0" cellspacing="0">
+                                    <tr><td align="left"><b>state</b></td></tr>
+                                    <tr><td align="left"><font point-size="12">CharField</font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>options: max_length=64</i></font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>blank=True</i></font></td></tr>
+                            </table>
+                        </td></tr>
+                        <tr><td>
+                            <table border="0" cellborder="0" cellspacing="0">
+                                    <tr><td align="left"><b>zip_code</b></td></tr>
+                                    <tr><td align="left"><font point-size="12">CharField</font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>options: max_length=64</i></font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>blank=True</i></font></td></tr>
+                            </table>
+                        </td></tr>
+                        <tr><td>
+                            <table border="0" cellborder="0" cellspacing="0">
+                                    <tr><td align="left"><b>country_iso_code</b></td></tr>
+                                    <tr><td align="left"><font point-size="12">CharField</font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>options: max_length=64</i></font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>blank=True</i></font></td></tr>
+                            </table>
+                        </td></tr>
+                        <tr><td>
+                            <table border="0" cellborder="0" cellspacing="0">
+                                    <tr><td align="left"><b>favorite_city</b></td></tr>
+                                    <tr><td align="left"><font point-size="12">CharField</font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>options: max_length=64</i></font></td></tr>
+                                    <tr><td align="left"><font point-size="12"><i>blank=True</i></font></td></tr>
+                            </table>
+                        </td></tr>
+                    </table>
+                </td></tr>
+            </table>>
+        ]
+        letting [
+            color="white"
+            label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="grey"><b>Letting</b></td></tr>
+                <tr><td>
+                    <table border="0" cellborder="0" cellspacing="5">
+                        <tr><td>title</td></tr>
+                        <tr><td port="address">address</td></tr>
+                    </table>
+                </td></tr>
+            </table>>
+        ]
+        edge [dir=forward arrowhead="none"]
+        user -> profile [headlabel="1"]
+        address -> letting [headlabel="1"]
+    }

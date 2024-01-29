@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Gestion des données &#8212; Documentation orange_county 0.1</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+    <script src="_static/documentation_options.js?v=af8511e3"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=d99ca74e"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Mise en production" href="deploy_and_management.html" />
+    <link rel="prev" title="Guide d’utilisation" href="use_guide.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="gestion-des-donnees">
+<h1>Gestion des données<a class="headerlink" href="#gestion-des-donnees" title="Link to this heading">¶</a></h1>
+<section id="structure-de-la-base-de-donnees">
+<h2>Structure de la base de données<a class="headerlink" href="#structure-de-la-base-de-donnees" title="Link to this heading">¶</a></h2>
+<div class="graphviz"><object data="_images/graphviz-2d156b5b2c58d5a66c21815c8ee20b149359eaa4.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph db_structure {
+        graph [
+            label = &quot;Schéma de la base de données&quot;
+            labelloc = t
+            fontname = &quot;Helvetica, Arial, sans-serif&quot;
+            fontsize = 20
+            layout = dot
+            rankdir = LR
+            newrank = true
+        ]
+        node [
+            style = filled
+            shape = rect
+            pencolor=&quot;#00000044&quot; // frames color
+    		fontname=&quot;Helvetica,Arial,sans-serif&quot;
+    		shape=plaintext
+    		margin=&quot;0&quot;
+    	]
+        user [
+            color=&quot;white&quot;
+            label=&lt;&lt;table border=&quot;0&quot; cellborder=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;4&quot;&gt;
+                    &lt;tr&gt;&lt;td bgcolor=&quot;grey&quot;&gt;&lt;b&gt;User&lt;/b&gt;&lt;br/&gt;django.contrib.auth.models.User&lt;/td&gt;&lt;/tr&gt;
+                    &lt;tr&gt;&lt;td&gt;
+                        &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;5&quot;&gt;
+                            &lt;tr&gt;&lt;td &gt;username&lt;/td&gt;&lt;/tr&gt;
+                            &lt;tr&gt;&lt;td &gt;password&lt;/td&gt;&lt;/tr&gt;
+                        &lt;/table&gt;
+                    &lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;&gt;
+        ]
+        profile [
+            color=&quot;white&quot;
+            label=&lt;&lt;table border=&quot;0&quot; cellborder=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;4&quot;&gt;
+                &lt;tr&gt;&lt;td bgcolor=&quot;grey&quot;&gt;&lt;b&gt;Profile&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;
+                    &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;5&quot;&gt;
+                        &lt;tr&gt;&lt;td port=&quot;user&quot;&gt;
+                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;user&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;ForeignKey&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;on_delete=models.CASCADE&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;&lt;/tr&gt;
+                        &lt;tr&gt;&lt;td&gt;
+                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;favorite_city&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;&lt;/tr&gt;
+                    &lt;/table&gt;
+                &lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;&gt;
+        ]
+        address [
+            color=&quot;white&quot;
+            label=&lt;&lt;table border=&quot;0&quot; cellborder=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;4&quot;&gt;
+                &lt;tr&gt;&lt;td bgcolor=&quot;grey&quot;&gt;&lt;b&gt;Address&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;
+                    &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;5&quot;&gt;
+                        &lt;tr&gt;&lt;td&gt;
+                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;number&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;&lt;/tr&gt;
+                        &lt;tr&gt;&lt;td&gt;
+                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;street&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;&lt;/tr&gt;
+                        &lt;tr&gt;&lt;td&gt;
+                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;city&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;&lt;/tr&gt;
+                        &lt;tr&gt;&lt;td&gt;
+                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;state&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;&lt;/tr&gt;
+                        &lt;tr&gt;&lt;td&gt;
+                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;zip_code&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;&lt;/tr&gt;
+                        &lt;tr&gt;&lt;td&gt;
+                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;country_iso_code&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;&lt;/tr&gt;
+                        &lt;tr&gt;&lt;td&gt;
+                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;favorite_city&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;&lt;/tr&gt;
+                    &lt;/table&gt;
+                &lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;&gt;
+        ]
+        letting [
+            color=&quot;white&quot;
+            label=&lt;&lt;table border=&quot;0&quot; cellborder=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;4&quot;&gt;
+                &lt;tr&gt;&lt;td bgcolor=&quot;grey&quot;&gt;&lt;b&gt;Letting&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;
+                    &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;5&quot;&gt;
+                        &lt;tr&gt;&lt;td&gt;title&lt;/td&gt;&lt;/tr&gt;
+                        &lt;tr&gt;&lt;td port=&quot;address&quot;&gt;address&lt;/td&gt;&lt;/tr&gt;
+                    &lt;/table&gt;
+                &lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;&gt;
+        ]
+        edge [dir=forward arrowhead=&quot;none&quot;]
+        user -&gt; profile [headlabel=&quot;1&quot;]
+        address -&gt; letting [headlabel=&quot;1&quot;]
+    }</p></object></div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">orange_county</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="first_steps.html">Premiers pas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_guide.html">Guide d'utilisation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Gestion des données</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#structure-de-la-base-de-donnees">Structure de la base de données</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deploy_and_management.html">Mise en production et maintenance</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="use_guide.html" title="Chapitre précédent">Guide d’utilisation</a></li>
+      <li>Next: <a href="deploy_and_management.html" title="Chapitre suivant">Mise en production</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Payssan Jonathan.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/data_management.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
