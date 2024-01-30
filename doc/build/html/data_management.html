@@ -38,144 +38,194 @@
 <h1>Gestion des données<a class="headerlink" href="#gestion-des-donnees" title="Link to this heading">¶</a></h1>
 <section id="structure-de-la-base-de-donnees">
 <h2>Structure de la base de données<a class="headerlink" href="#structure-de-la-base-de-donnees" title="Link to this heading">¶</a></h2>
-<div class="graphviz"><object data="_images/graphviz-2d156b5b2c58d5a66c21815c8ee20b149359eaa4.svg" type="image/svg+xml" class="graphviz">
-<p class="warning">digraph db_structure {
-        graph [
-            label = &quot;Schéma de la base de données&quot;
-            labelloc = t
-            fontname = &quot;Helvetica, Arial, sans-serif&quot;
-            fontsize = 20
-            layout = dot
-            rankdir = LR
-            newrank = true
-        ]
-        node [
-            style = filled
-            shape = rect
-            pencolor=&quot;#00000044&quot; // frames color
-    		fontname=&quot;Helvetica,Arial,sans-serif&quot;
-    		shape=plaintext
-    		margin=&quot;0&quot;
-    	]
-        user [
-            color=&quot;white&quot;
-            label=&lt;&lt;table border=&quot;0&quot; cellborder=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;4&quot;&gt;
-                    &lt;tr&gt;&lt;td bgcolor=&quot;grey&quot;&gt;&lt;b&gt;User&lt;/b&gt;&lt;br/&gt;django.contrib.auth.models.User&lt;/td&gt;&lt;/tr&gt;
-                    &lt;tr&gt;&lt;td&gt;
-                        &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;5&quot;&gt;
-                            &lt;tr&gt;&lt;td &gt;username&lt;/td&gt;&lt;/tr&gt;
-                            &lt;tr&gt;&lt;td &gt;password&lt;/td&gt;&lt;/tr&gt;
-                        &lt;/table&gt;
-                    &lt;/td&gt;&lt;/tr&gt;
-            &lt;/table&gt;&gt;
-        ]
-        profile [
-            color=&quot;white&quot;
-            label=&lt;&lt;table border=&quot;0&quot; cellborder=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;4&quot;&gt;
-                &lt;tr&gt;&lt;td bgcolor=&quot;grey&quot;&gt;&lt;b&gt;Profile&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;
-                    &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;5&quot;&gt;
-                        &lt;tr&gt;&lt;td port=&quot;user&quot;&gt;
-                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
-                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;user&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;ForeignKey&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;on_delete=models.CASCADE&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                            &lt;/table&gt;
-                        &lt;/td&gt;&lt;/tr&gt;
-                        &lt;tr&gt;&lt;td&gt;
-                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
-                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;favorite_city&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                            &lt;/table&gt;
-                        &lt;/td&gt;&lt;/tr&gt;
-                    &lt;/table&gt;
-                &lt;/td&gt;&lt;/tr&gt;
-            &lt;/table&gt;&gt;
-        ]
-        address [
-            color=&quot;white&quot;
-            label=&lt;&lt;table border=&quot;0&quot; cellborder=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;4&quot;&gt;
-                &lt;tr&gt;&lt;td bgcolor=&quot;grey&quot;&gt;&lt;b&gt;Address&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;
-                    &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;5&quot;&gt;
-                        &lt;tr&gt;&lt;td&gt;
-                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;number&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                            &lt;/table&gt;
-                        &lt;/td&gt;&lt;/tr&gt;
-                        &lt;tr&gt;&lt;td&gt;
-                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;street&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                            &lt;/table&gt;
-                        &lt;/td&gt;&lt;/tr&gt;
-                        &lt;tr&gt;&lt;td&gt;
-                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;city&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                            &lt;/table&gt;
-                        &lt;/td&gt;&lt;/tr&gt;
-                        &lt;tr&gt;&lt;td&gt;
-                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;state&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                            &lt;/table&gt;
-                        &lt;/td&gt;&lt;/tr&gt;
-                        &lt;tr&gt;&lt;td&gt;
-                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;zip_code&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                            &lt;/table&gt;
-                        &lt;/td&gt;&lt;/tr&gt;
-                        &lt;tr&gt;&lt;td&gt;
-                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;country_iso_code&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                            &lt;/table&gt;
-                        &lt;/td&gt;&lt;/tr&gt;
-                        &lt;tr&gt;&lt;td&gt;
-                            &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;b&gt;favorite_city&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;CharField&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;options: max_length=64&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                                    &lt;tr&gt;&lt;td align=&quot;left&quot;&gt;&lt;font point-size=&quot;12&quot;&gt;&lt;i&gt;blank=True&lt;/i&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
-                            &lt;/table&gt;
-                        &lt;/td&gt;&lt;/tr&gt;
-                    &lt;/table&gt;
-                &lt;/td&gt;&lt;/tr&gt;
-            &lt;/table&gt;&gt;
-        ]
-        letting [
-            color=&quot;white&quot;
-            label=&lt;&lt;table border=&quot;0&quot; cellborder=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;4&quot;&gt;
-                &lt;tr&gt;&lt;td bgcolor=&quot;grey&quot;&gt;&lt;b&gt;Letting&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;
-                    &lt;table border=&quot;0&quot; cellborder=&quot;0&quot; cellspacing=&quot;5&quot;&gt;
-                        &lt;tr&gt;&lt;td&gt;title&lt;/td&gt;&lt;/tr&gt;
-                        &lt;tr&gt;&lt;td port=&quot;address&quot;&gt;address&lt;/td&gt;&lt;/tr&gt;
-                    &lt;/table&gt;
-                &lt;/td&gt;&lt;/tr&gt;
-            &lt;/table&gt;&gt;
-        ]
-        edge [dir=forward arrowhead=&quot;none&quot;]
-        user -&gt; profile [headlabel=&quot;1&quot;]
-        address -&gt; letting [headlabel=&quot;1&quot;]
-    }</p></object></div>
+<div class="graphviz"><object data="_images/graphviz-042699590ff5e391c556ef8eaf8cc48de1075b4e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph model_graph {
+  // Dotfile by Django-Extensions graph_models
+  // Created: 2024-01-30 10:03
+  // Cli Options: profiles lettings -o doc\source\db_schema.dot
+
+  fontname = &quot;Roboto&quot;
+  fontsize = 8
+  splines  = true
+  rankdir = &quot;TB&quot;
+
+  node [
+    fontname = &quot;Roboto&quot;
+    fontsize = 8
+    shape = &quot;plaintext&quot;
+  ]
+
+  edge [
+    fontname = &quot;Roboto&quot;
+    fontsize = 8
+  ]
+
+  // Labels
+
+
+  profiles_models_Profile [label=&lt;
+    &lt;TABLE BGCOLOR=&quot;white&quot; BORDER=&quot;1&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+    &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;5&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;#1b563f&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot; COLOR=&quot;white&quot; POINT-SIZE=&quot;10&quot;&gt;&lt;B&gt;
+    Profile
+    &lt;/B&gt;&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;id&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;AutoField&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;user&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;OneToOneField (id)&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Roboto&quot;&gt;favorite_city&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;/TABLE&gt;
+    &gt;]
+
+
+
+
+  lettings_models_Address [label=&lt;
+    &lt;TABLE BGCOLOR=&quot;white&quot; BORDER=&quot;1&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+    &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;5&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;#1b563f&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot; COLOR=&quot;white&quot; POINT-SIZE=&quot;10&quot;&gt;&lt;B&gt;
+    Address
+    &lt;/B&gt;&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;id&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;AutoField&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;city&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;country_iso_code&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;number&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;PositiveIntegerField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;state&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;street&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;zip_code&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;PositiveIntegerField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;/TABLE&gt;
+    &gt;]
+
+  lettings_models_Letting [label=&lt;
+    &lt;TABLE BGCOLOR=&quot;white&quot; BORDER=&quot;1&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+    &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;5&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;#1b563f&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot; COLOR=&quot;white&quot; POINT-SIZE=&quot;10&quot;&gt;&lt;B&gt;
+    Letting
+    &lt;/B&gt;&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;id&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;AutoField&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;address&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;OneToOneField (id)&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;title&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;/TABLE&gt;
+    &gt;]
+
+
+
+
+  // Relations
+  django_contrib_auth_models_User [label=&lt;
+  &lt;TABLE BGCOLOR=&quot;white&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+  &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;#1b563f&quot;&gt;
+  &lt;FONT FACE=&quot;Roboto&quot; POINT-SIZE=&quot;12&quot; COLOR=&quot;white&quot;&gt;User&lt;/FONT&gt;
+  &lt;/TD&gt;&lt;/TR&gt;
+  &lt;/TABLE&gt;
+  &gt;]
+  profiles_models_Profile -&gt; django_contrib_auth_models_User
+  [label=&quot; user (profile)&quot;] [arrowhead=none, arrowtail=none, dir=both];
+
+
+  lettings_models_Letting -&gt; lettings_models_Address
+  [label=&quot; address (letting)&quot;] [arrowhead=none, arrowtail=none, dir=both];
+
+
+}</p></object></div>
+</section>
+<section id="modele-profiles">
+<h2>modéle profiles<a class="headerlink" href="#modele-profiles" title="Link to this heading">¶</a></h2>
+</section>
+<section id="modele-lettings">
+<h2>modéle lettings<a class="headerlink" href="#modele-lettings" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -202,9 +252,13 @@
 <li class="toctree-l1"><a class="reference internal" href="use_guide.html">Guide d'utilisation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Gestion des données</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#structure-de-la-base-de-donnees">Structure de la base de données</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modele-profiles">modéle profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modele-lettings">modéle lettings</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="deploy_and_management.html">Mise en production et maintenance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_description.html">Interface de programmation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc_generation.html">Contruction de la documentaion</a></li>
 </ul>
 
 <div class="relations">

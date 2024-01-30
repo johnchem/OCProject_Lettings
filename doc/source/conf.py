@@ -1,3 +1,14 @@
+import os
+import sys
+import django
+from django.conf import settings
+
+settings.configure()
+
+sys.path.insert(0, os.path.abspath(os.path.join('..','..')))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'oc_lettings_site.settings'
+django.setup()
+
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -16,6 +27,7 @@ release = '0.1'
 
 extensions = [
     "sphinx.ext.graphviz",
+    "sphinx.ext.autodoc",
 ]
 
 templates_path = ['_templates']

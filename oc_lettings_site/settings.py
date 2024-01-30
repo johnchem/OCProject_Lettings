@@ -26,7 +26,7 @@ DEBUG = env.bool("DEBUG")
 
 if DEBUG:
     ALLOWED_HOSTS = "localhost"
-else:    
+else:
     ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'lettings',
     'profiles',
 ]
@@ -148,3 +149,12 @@ sentry_sdk.init(
         ),
     ],
 )
+
+# réglage pour la génération de réprésentation graphique des modéles
+
+GRAPH_MODELS = {
+  'all_applications': False,
+  'group_models': False,
+  'layout': "dot",
+  'theme': "django2018",
+}
