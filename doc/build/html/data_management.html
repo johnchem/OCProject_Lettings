@@ -221,11 +221,87 @@
 
 }</p></object></div>
 </section>
-<section id="modele-profiles">
-<h2>modéle profiles<a class="headerlink" href="#modele-profiles" title="Link to this heading">¶</a></h2>
+<section id="module-profiles.models">
+<span id="modele-profiles"></span><h2>modéle profiles<a class="headerlink" href="#module-profiles.models" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="profiles.models.Profile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">profiles.models.</span></span><span class="sig-name descname"><span class="pre">Profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profiles.models.Profile" title="Link to this definition">¶</a></dt>
+<dd><p>Store a profil with a link with the <code class="xref py py-class docutils literal notranslate"><span class="pre">auth.models.User</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">auth.models.User</span></code>) – user account</p></li>
+<li><p><strong>favorite_city</strong> (<em>str</em>) – Preference of the user</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="profiles.models.Profile.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#profiles.models.Profile.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="profiles.models.Profile.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#profiles.models.Profile.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="modele-lettings">
-<h2>modéle lettings<a class="headerlink" href="#modele-lettings" title="Link to this heading">¶</a></h2>
+<section id="module-lettings.models">
+<span id="modele-lettings"></span><h2>modéle lettings<a class="headerlink" href="#module-lettings.models" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="lettings.models.Address">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lettings.models.</span></span><span class="sig-name descname"><span class="pre">Address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lettings.models.Address" title="Link to this definition">¶</a></dt>
+<dd><p>Store a single adress</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number</strong> (<em>int</em>) – address number</p></li>
+<li><p><strong>street</strong> (<em>str</em>) – street name</p></li>
+<li><p><strong>city</strong> (<em>str</em>) – city name</p></li>
+<li><p><strong>state</strong> (<em>str</em>) – state abbreviations</p></li>
+<li><p><strong>zip_code</strong> (<em>int</em>) – 5 number zip code</p></li>
+<li><p><strong>country_iso_code</strong> (<em>str</em>) – 3 letters iso code</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="lettings.models.Address.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#lettings.models.Address.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="lettings.models.Address.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#lettings.models.Address.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lettings.models.Letting">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lettings.models.</span></span><span class="sig-name descname"><span class="pre">Letting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lettings.models.Letting" title="Link to this definition">¶</a></dt>
+<dd><p>Model to store a letting adress</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – title of the letting</p></li>
+<li><p><strong>address</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code>) – address linked to the letting model</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="lettings.models.Letting.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#lettings.models.Letting.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="lettings.models.Letting.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#lettings.models.Letting.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -252,8 +328,8 @@
 <li class="toctree-l1"><a class="reference internal" href="use_guide.html">Guide d'utilisation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Gestion des données</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#structure-de-la-base-de-donnees">Structure de la base de données</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#modele-profiles">modéle profiles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#modele-lettings">modéle lettings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-profiles.models">modéle profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lettings.models">modéle lettings</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="deploy_and_management.html">Mise en production et maintenance</a></li>

@@ -36,11 +36,96 @@
             
   <section id="mise-en-production">
 <h1>Mise en production<a class="headerlink" href="#mise-en-production" title="Link to this heading">¶</a></h1>
+<section id="flux-de-travail">
+<h2>flux de travail<a class="headerlink" href="#flux-de-travail" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Modification du code source</p></li>
+<li><p>Commit des changements vers le repertoire distant</p></li>
+<li><p>Déclanchement automatique de la routine CircleCI</p></li>
+<li><p>Lancement de la suite de test</p></li>
+<li><p>Lancement du test de couverture du code</p></li>
+<li><p>Lancement du test de Linting</p></li>
+<li><p>Les résultats du test de Linting et de courverture ne sont pas blocant</p></li>
+<li><p>Si la suite de test se termine avec succés, circleCI à la création du conteneur Docker</p></li>
+<li><p>Aprés avoir reçu un tag unique, l’image est envoyé sur dockerHub</p></li>
+<li><p>La réception d’une nouvelle image sur dockerHub déclanche la routina par Render</p></li>
+<li><p>Render, au signal d’une nouvelle image, va récupérer celle-ci.</p></li>
+<li><p>Lancer une série de commande pour lancer le conteneur, distribuer les fichiers statiques et lancer le serveur Django</p></li>
+</ol>
+</section>
 <section id="gestion-du-deploiement">
 <h2>Gestion du deploiement<a class="headerlink" href="#gestion-du-deploiement" title="Link to this heading">¶</a></h2>
-<p>Description</p>
-<p>Configuration</p>
-<p>Procédure</p>
+<section id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h3>
+<ul>
+<li><dl>
+<dt>selectionner une image docker depuis circleCI ``</dt><dd><div class="line-block">
+<div class="line">docker:</div>
+<div class="line-block">
+<div class="line">- image: cimg/python:3.10</div>
+</div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>charger les variables d’environnement. Dans notre cas, on défini la variable ALLOWED_HOSTS pour django</dt><dd><div class="line-block">
+<div class="line">environment:</div>
+<div class="line-block">
+<div class="line">- ALLOWED_HOSTS: localhost</div>
+</div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>On viens définir ensuite les étapes de notre taches</dt><dd><ul>
+<li><p><cite>- checkout</cite> : récupération du code depuis github</p></li>
+<li><p><cite>- restore_cache: key: deps1-{{ .Branch }}-{{ checksum « requirements.txt » }}</cite> circleCI va chercher à restorer un cache ayant un tag unique composé du nom de la branche et du checksum basé sur requirements.txt</p></li>
+<li><dl>
+<dt>La suite des instructions permet de créer un environment virtuel, son exécecution et l’installation des librairies. Si un fichier de cache existe, les instructions seront évalué mais les actions sont déjà réalisées.</dt><dd><div class="line-block">
+<div class="line">python3 -m venv venv</div>
+<div class="line">. venv/bin/activate</div>
+<div class="line">pip install -U pip setuptools</div>
+<div class="line">pip install -r requirements.txt</div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>on créer un cache pour faciliter la prochaine exécution.</dt><dd><div class="line-block">
+<div class="line">key: deps1-{{ .Branch }}-{{ checksum « requirements.txt » }}</div>
+<div class="line-block">
+<div class="line">paths:</div>
+<div class="line-block">
+<div class="line">- « venv »</div>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Enfin on excécute la commande d’interêt. Dans ce cas, on active l’environment virtuel et on exécute le module pytest</dt><dd><div class="line-block">
+<div class="line">name: Running tests</div>
+<div class="line">command: |</div>
+<div class="line-block">
+<div class="line">. venv/bin/activate</div>
+<div class="line">python3 -m pytest</div>
+</div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="procedure">
+<h3>Procédure<a class="headerlink" href="#procedure" title="Link to this heading">¶</a></h3>
+</section>
 </section>
 <section id="gestion-de-l-application">
 <h2>Gestion de l’application<a class="headerlink" href="#gestion-de-l-application" title="Link to this heading">¶</a></h2>
@@ -70,6 +155,7 @@
 <li class="toctree-l1"><a class="reference internal" href="use_guide.html">Guide d'utilisation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_management.html">Gestion des données</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Mise en production et maintenance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#flux-de-travail">flux de travail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gestion-du-deploiement">Gestion du deploiement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gestion-de-l-application">Gestion de l’application</a></li>
 </ul>

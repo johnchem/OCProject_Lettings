@@ -36,53 +36,171 @@
             
   <section id="interface-de-programmation">
 <h1>Interface de programmation<a class="headerlink" href="#interface-de-programmation" title="Link to this heading">¶</a></h1>
-<section id="general-site-oc-lettings-site">
-<h2>Géneral site : oc_lettings_site<a class="headerlink" href="#general-site-oc-lettings-site" title="Link to this heading">¶</a></h2>
-<dl class="py function" id="module-oc_lettings_site.views">
+<section id="module-oc_lettings_site.views">
+<span id="general-site-oc-lettings-site"></span><h2>Géneral site : oc_lettings_site<a class="headerlink" href="#module-oc_lettings_site.views" title="Link to this heading">¶</a></h2>
+<dl class="py function">
 <dt class="sig sig-object py" id="oc_lettings_site.views.index">
 <span class="sig-prename descclassname"><span class="pre">oc_lettings_site.views.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oc_lettings_site.views.index" title="Link to this definition">¶</a></dt>
 <dd><p>Display the main page of the site</p>
-<p><strong>Context</strong></p>
-<p>None</p>
-<p><strong>Template:</strong></p>
-<p><a href="#id1"><span class="problematic" id="id2">:template:`oc_lettings_site/index.html`</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>context</strong> (<em>None</em>) – the context is not read in this view</p>
+</dd>
+</dl>
+<p>:param template:<cite>oc_lettings_site/index.html</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the httpResponse filled with appropriate data</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>HttpResponse</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oc_lettings_site.views.page_not_found">
 <span class="sig-prename descclassname"><span class="pre">oc_lettings_site.views.</span></span><span class="sig-name descname"><span class="pre">page_not_found</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'oc_lettings_site/404.html'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oc_lettings_site.views.page_not_found" title="Link to this definition">¶</a></dt>
 <dd><p>404 handler.</p>
-<p><strong>Context :</strong></p>
-<dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">request_path</span></code></dt><dd><p>The path of the requested URL (e.g., “/app/pages/bad_page/”). It’s
-quoted to prevent a content injection attack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request_path</strong> – The path of the requested URL (e.g., “/app/pages/bad_page/”). It’s quoted to prevent a content injection attack.</p></li>
+<li><p><strong>template</strong> – <cite>oc_lettings_site/404.html</cite></p></li>
+<li><p><strong>exception</strong> – The message from the exception which triggered the 404 (if one was supplied), or the exception class name</p></li>
+</ul>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">exception</span></code></dt><dd><p>The message from the exception which triggered the 404 (if one was
-supplied), or the exception class name</p>
+<dt class="field-even">Return HttpResponseNotFound<span class="colon">:</span></dt>
+<dd class="field-even"><p>raise exception error_404 and display the page with the template defined.</p>
 </dd>
 </dl>
-<p><strong>Templates:</strong></p>
-<p><a href="#id3"><span class="problematic" id="id4">:template:`oc_lettings_site/404.html`</span></a></p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oc_lettings_site.views.server_error">
 <span class="sig-prename descclassname"><span class="pre">oc_lettings_site.views.</span></span><span class="sig-name descname"><span class="pre">server_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'oc_lettings_site/500.html'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oc_lettings_site.views.server_error" title="Link to this definition">¶</a></dt>
 <dd><p>500 error handler.</p>
-<dl class="simple">
-<dt><strong>Context :</strong></dt><dd><p>None</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> (<em>None</em>) – the context is not read</p></li>
+<li><p><strong>template</strong> – <cite>oc_lettings_site/500.html</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return HttpResponseServerError<span class="colon">:</span></dt>
+<dd class="field-even"><p>raise exception error_500 and display the page with the template defined.</p>
 </dd>
 </dl>
-<p><strong>Templates :</strong></p>
-<p><a href="#id5"><span class="problematic" id="id6">:template:`oc_lettings_site/500.html`</span></a></p>
 </dd></dl>
 
 </section>
-<section id="application-lettings">
-<h2>Application Lettings<a class="headerlink" href="#application-lettings" title="Link to this heading">¶</a></h2>
+<section id="module-lettings.views">
+<span id="application-lettings"></span><h2>Application Lettings<a class="headerlink" href="#module-lettings.views" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="lettings.views.index">
+<span class="sig-prename descclassname"><span class="pre">lettings.views.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lettings.views.index" title="Link to this definition">¶</a></dt>
+<dd><p>Display all the lettins instance in the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lettings_list</strong> (list(<code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Lettings</span></code>)) – All instance of <code class="xref py py-obj docutils literal notranslate"><span class="pre">lettings.Lettings</span></code>.</p></li>
+<li><p><strong>template</strong> – <cite>lettings/index.html</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>the httpResponse filled with appropriate data</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>Http404</strong> – Send page 404 if Letting is not found Letting.DoesNotExist</p></li>
+<li><p><strong>exception Exception</strong> – If any other issue append during the retreving of the letting</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lettings.views.letting">
+<span class="sig-prename descclassname"><span class="pre">lettings.views.</span></span><span class="sig-name descname"><span class="pre">letting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">letting_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lettings.views.letting" title="Link to this definition">¶</a></dt>
+<dd><p>Display the letting instance selected by user throught its letting_id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>string</em>) – The title of <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Letting</span></code></p></li>
+<li><p><strong>address</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code>) – The address <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code> linked to the instance <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Letting</span></code></p></li>
+<li><p><strong>template</strong> – <cite>lettings/letting.html</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>the httpResponse filled with appropriate data</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>Http404</strong> – Send page 404 if Letting is not found py:exception::<cite>Letting.DoesNotExist</cite></p></li>
+<li><p><strong>Exception</strong> – If any other issue append during the retreving of the letting</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="application-profiles">
-<h2>Application profiles<a class="headerlink" href="#application-profiles" title="Link to this heading">¶</a></h2>
+<section id="module-profiles.views">
+<span id="application-profiles"></span><h2>Application profiles<a class="headerlink" href="#module-profiles.views" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="profiles.views.index">
+<span class="sig-prename descclassname"><span class="pre">profiles.views.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profiles.views.index" title="Link to this definition">¶</a></dt>
+<dd><p>Display all the profile instances in the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>profiles_list</strong> (list(<code class="xref py py-class docutils literal notranslate"><span class="pre">profiles.Profile</span></code>)) – All instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">profiles.Profile</span></code>.</p>
+</dd>
+</dl>
+<p>:param template:<cite>profiles/index.html</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Lève<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Exception</strong> – log event if something unexpected append</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>the httpResponse filled with appropriate data</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="profiles.views.profile">
+<span class="sig-prename descclassname"><span class="pre">profiles.views.</span></span><span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profiles.views.profile" title="Link to this definition">¶</a></dt>
+<dd><p>Display the profile instance selected by user throught its username</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>profile</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">profile.Profile</span></code>) – an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">profiles.Profile</span></code></p>
+</dd>
+</dl>
+<p>:param template:<cite>profiles/profile.html</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Lève<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Http404</strong> – Send page 404 if profile is not found py:exception::<cite>Profile.DoesNotExist</cite></p></li>
+<li><p><strong>Exception</strong> – If any other issue append during the retreving of the letting</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>the httpResponse filled with appropriate data</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -110,9 +228,9 @@ supplied), or the exception class name</p>
 <li class="toctree-l1"><a class="reference internal" href="data_management.html">Gestion des données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deploy_and_management.html">Mise en production et maintenance</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Interface de programmation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#general-site-oc-lettings-site">Géneral site : oc_lettings_site</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#application-lettings">Application Lettings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#application-profiles">Application profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-oc_lettings_site.views">Géneral site : oc_lettings_site</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lettings.views">Application Lettings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-profiles.views">Application profiles</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="doc_generation.html">Contruction de la documentaion</a></li>
