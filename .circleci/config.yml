@@ -14,7 +14,7 @@ jobs:
             pwd
             ls -l
             sudo apt update -y
-            sudo apt install graphviz -y
+            sudo apt install graphviz-dev -y
       - run:
           command: |
             pwd
