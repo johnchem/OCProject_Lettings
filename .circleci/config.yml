@@ -11,6 +11,9 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           command: |
+            sudo apt install graphiviz
+      - run:
+          command: |
             python3 -m venv venv
             . venv/bin/activate
             pip install -U pip setuptools
@@ -34,6 +37,9 @@ jobs:
       - checkout
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - run:
+          command: |
+            sudo apt install graphiviz
       - run:
           command: |
             python3 -m venv venv
@@ -61,6 +67,9 @@ jobs:
       - checkout
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - run:
+          command: |
+            sudo apt install graphiviz
       - run:
           command: |
             python3 -m venv venv
