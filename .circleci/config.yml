@@ -11,16 +11,17 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           command: |
-            ls -l
+            pwd
             sudo apt update -y
             sudo apt install graphviz -y
       - run:
           command: |
+            pwd
             python3 -m venv venv
             . venv/bin/activate
             pip install -U pip setuptools
             pip install -r requirements.txt
-            ls -l
+            pwd
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
