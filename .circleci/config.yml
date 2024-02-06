@@ -11,7 +11,6 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           command: |
-            cd .
             ls -l
             sudo apt update -y
             sudo apt install graphviz -y
