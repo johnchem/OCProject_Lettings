@@ -60,63 +60,58 @@
 <p>Le fichier <cite>.circleci/config.yml</cite> permet de configurer une série de tâche. Par défaut, ces tâches sont excécutées dans leurs ordres de définitions. Il est possible de créer des workflows pour définir un flux personnalisé selon les besoins.</p>
 <p>Exemple de configuration pour la réalisation des tests unitaire
 * selectionner une image docker depuis circleCI</p>
-<blockquote>
-<div><div class="line-block">
-<div class="line">docker:</div>
-<div class="line-block">
-<div class="line">- image: cimg/python:3.10</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="p">:</span>
+ <span class="o">-</span> <span class="n">image</span><span class="p">:</span> <span class="n">cimg</span><span class="o">/</span><span class="n">python</span><span class="p">:</span><span class="mf">3.10</span>
+</pre></div>
 </div>
+<ul class="simple">
+<li><p>charger les variables d’environnement. Dans notre cas, on défini la variable ALLOWED_HOSTS pour django</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">environment</span><span class="p">:</span>
+ <span class="o">-</span> <span class="n">ALLOWED_HOSTS</span><span class="p">:</span> <span class="n">localhost</span>
+</pre></div>
+</div>
+<ul>
+<li><dl>
+<dt>On viens définir ensuite les étapes de notre taches</dt><dd><ul class="simple">
+<li><p>récupération du code depuis github</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">checkout</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>circleCI va chercher à restorer un cache ayant un tag unique composé du nom de la branche et du checksum basé sur requirements.txt</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">restore_cache</span><span class="p">:</span>
+    <span class="n">key</span><span class="p">:</span> <span class="n">deps1</span><span class="o">-</span><span class="p">{{</span> <span class="o">.</span><span class="n">Branch</span> <span class="p">}}</span><span class="o">-</span><span class="p">{{</span> <span class="n">checksum</span> <span class="s2">&quot;requirements.txt&quot;</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>La suite des instructions permet de créer un environment virtuel, son exécecution et l’installation des librairies. Si un fichier de cache existe, les instructions seront évalué mais les actions sont déjà réalisées.</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">venv</span>
+<span class="o">.</span> <span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">pip</span> <span class="n">setuptools</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
 </div>
 </div></blockquote>
 <ul>
-<li><dl>
-<dt>charger les variables d’environnement. Dans notre cas, on défini la variable ALLOWED_HOSTS pour django</dt><dd><div class="line-block">
-<div class="line">environment:</div>
-<div class="line-block">
-<div class="line">- ALLOWED_HOSTS: localhost</div>
+<li><p>on créer un cache pour faciliter la prochaine exécution.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">key</span><span class="p">:</span> <span class="n">deps1</span><span class="o">-</span><span class="p">{{</span> <span class="o">.</span><span class="n">Branch</span> <span class="p">}}</span><span class="o">-</span><span class="p">{{</span> <span class="n">checksum</span> <span class="s2">&quot;requirements.txt&quot;</span> <span class="p">}}</span>
+ <span class="n">paths</span><span class="p">:</span>
+  <span class="o">-</span> <span class="s2">&quot;venv&quot;</span>
+</pre></div>
 </div>
-</div>
-</dd>
-</dl>
 </li>
-<li><dl>
-<dt>On viens définir ensuite les étapes de notre taches</dt><dd><ul>
-<li><p><cite>- checkout</cite> : récupération du code depuis github</p></li>
-<li><p><cite>- restore_cache: key: deps1-{{ .Branch }}-{{ checksum « requirements.txt » }}</cite> circleCI va chercher à restorer un cache ayant un tag unique composé du nom de la branche et du checksum basé sur requirements.txt</p></li>
-<li><dl>
-<dt>La suite des instructions permet de créer un environment virtuel, son exécecution et l’installation des librairies. Si un fichier de cache existe, les instructions seront évalué mais les actions sont déjà réalisées.</dt><dd><div class="line-block">
-<div class="line">python3 -m venv venv</div>
-<div class="line">. venv/bin/activate</div>
-<div class="line">pip install -U pip setuptools</div>
-<div class="line">pip install -r requirements.txt</div>
+<li><p>Enfin on excécute la commande d’interêt. Dans ce cas, on active l’environment virtuel et on exécute le module pytest</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="p">:</span> <span class="n">Running</span> <span class="n">tests</span>
+<span class="n">command</span><span class="p">:</span> <span class="o">|</span>
+  <span class="o">.</span> <span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+  <span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pytest</span>
+</pre></div>
 </div>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>on créer un cache pour faciliter la prochaine exécution.</dt><dd><div class="line-block">
-<div class="line">key: deps1-{{ .Branch }}-{{ checksum « requirements.txt » }}</div>
-<div class="line-block">
-<div class="line">paths:</div>
-<div class="line-block">
-<div class="line">- « venv »</div>
-</div>
-</div>
-</div>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>Enfin on excécute la commande d’interêt. Dans ce cas, on active l’environment virtuel et on exécute le module pytest</dt><dd><div class="line-block">
-<div class="line">name: Running tests</div>
-<div class="line">command: |</div>
-<div class="line-block">
-<div class="line">. venv/bin/activate</div>
-<div class="line">python3 -m pytest</div>
-</div>
-</div>
-</dd>
-</dl>
 </li>
 </ul>
 </dd>
@@ -125,6 +120,21 @@
 </ul>
 <p>on attribut un nom de workflow au sommet de l’arbre. Puis on viens définir les différentes tâches nécéssaires dans le workflow. Quand 2 taches sont au même niveau, les tâches sont exécutées de manière concurente. Pour définir une excécution séquentielle, il faut utiliser l’option <cite>requires</cite>. Cette option définie que la tâche ne doit pas être exécutée si l’une des tâches renseignées ne se termine pas avec un succés.
 L’option <cite>filters</cite> définie les différents cas de figure dans lesquels la tâche doit être exécutée.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test_build_and_push</span><span class="p">:</span>
+<span class="n">jobs</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">pytest</span>
+  <span class="o">-</span> <span class="n">coverage</span>
+  <span class="o">-</span> <span class="n">linting</span>
+  <span class="o">-</span> <span class="n">container</span><span class="p">:</span>
+      <span class="n">context</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">docker_hub_creds</span>
+      <span class="n">requires</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">pytest</span>
+      <span class="n">filters</span><span class="p">:</span>
+        <span class="n">branches</span><span class="p">:</span>
+          <span class="n">only</span><span class="p">:</span> <span class="n">master</span>
+</pre></div>
+</div>
 </section>
 <section id="configuration-du-projet-dans-circleci">
 <h3>Configuration du projet dans circleCI<a class="headerlink" href="#configuration-du-projet-dans-circleci" title="Link to this heading">¶</a></h3>
@@ -132,6 +142,72 @@ L’option <cite>filters</cite> définie les différents cas de figure dans lesq
 </section>
 <section id="gestion-de-l-application-et-du-deploiement">
 <h2>Gestion de l’application et du deploiement<a class="headerlink" href="#gestion-de-l-application-et-du-deploiement" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>chargement d’une image docker pour l’excecution des commandes de conteneurisation</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker:
+  - image: cimg/base:2022.09
+    auth:
+      username: $DOCKERHUB_USERNAME
+      password: $DOCKERHUB_PASSWORD
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>chargement dans les variables d’environment du hash de commit pour l’identification de l’image docker</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">environment</span><span class="p">:</span>
+  <span class="n">COMMIT_HASH</span><span class="p">:</span> <span class="o">&lt;&lt;</span><span class="n">pipeline</span><span class="o">.</span><span class="n">trigger_parameters</span><span class="o">.</span><span class="n">github_app</span><span class="o">.</span><span class="n">commit_sha</span><span class="o">&gt;&gt;</span>
+    <span class="c1">#   username: $DOCKERHUB_USERNAME</span>
+    <span class="c1">#   password: $DOCKERHUB_PASSWORD</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Lancement des étapes de conteneurisation</p>
+<ul class="simple">
+<li><p>récupération du code source</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">checkout</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>cette ligne permet l’excecution des commandes <cite>docker</cite> et <cite>docker-compose</cite> localement sur la machine</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">setup_remote_docker</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>chargement d’un cache si existant</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">restore_cache</span><span class="p">:</span>
+      <span class="n">keys</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">v1</span><span class="o">-</span><span class="p">{{</span> <span class="o">.</span><span class="n">Branch</span> <span class="p">}}</span>
+      <span class="n">paths</span><span class="p">:</span>
+        <span class="o">-</span> <span class="o">/</span><span class="n">caches</span><span class="o">/</span><span class="n">app</span><span class="o">.</span><span class="n">tar</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>création d’une variable <cite>TAG</cite> et utilisation de celle-ci pour l’identification de l’image. Puis, connection au repertoire docker. Enfin, on pousse l’image sur dockerhub</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>name: Build and Push application Docker image
+command: |
+  TAG=$COMMIT_HASH
+  docker build -t $DOCKERHUB_USERNAME/orange_county:$TAG -t $DOCKERHUB_USERNAME/orange_county:latest .
+  echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+  docker push $DOCKERHUB_USERNAME/orange_county:$TAG
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>on créer un cache pour faciliter la prochaine exécution</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">save_cache</span><span class="p">:</span>
+  <span class="n">key</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">v1</span><span class="o">-</span><span class="p">{{</span> <span class="o">.</span><span class="n">Branch</span> <span class="p">}}</span>
+  <span class="n">paths</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">caches</span><span class="o">/</span><span class="n">app</span><span class="o">.</span><span class="n">tar</span>
+</pre></div>
+</div>
+</li>
+</ul>
 </section>
 </section>
 

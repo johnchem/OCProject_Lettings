@@ -97,8 +97,6 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     environment:
       COMMIT_HASH: <<pipeline.trigger_parameters.github_app.commit_sha>>
-        #   username: $DOCKERHUB_USERNAME
-        #   password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
@@ -107,11 +105,11 @@ jobs:
             - v1-{{ .Branch }}
           paths:
             - /caches/app.tar
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
+      # - run:
+      #     name: Load Docker image layer cache
+      #     command: |
+      #       set +o pipefail
+      #       docker load -i /caches/app.tar | true
       - run:
           name: Build and Push application Docker image
           command: |
@@ -119,6 +117,12 @@ jobs:
             docker build -t $DOCKERHUB_USERNAME/orange_county:$TAG -t $DOCKERHUB_USERNAME/orange_county:latest .
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push $DOCKERHUB_USERNAME/orange_county:$TAG
+      - save_cache:
+          key: 
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/app.tar
+
 
 workflows:
   test_build_and_push:
