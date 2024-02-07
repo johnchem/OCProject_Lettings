@@ -55,19 +55,20 @@
 </section>
 <section id="gestion-du-deploiement">
 <h2>Gestion du deploiement<a class="headerlink" href="#gestion-du-deploiement" title="Link to this heading">¶</a></h2>
-<section id="configuration">
-<h3>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h3>
-<ul>
-<li><dl>
-<dt>selectionner une image docker depuis circleCI ``</dt><dd><div class="line-block">
+<section id="configuration-du-fichier-config-yml">
+<h3>Configuration du fichier config.yml<a class="headerlink" href="#configuration-du-fichier-config-yml" title="Link to this heading">¶</a></h3>
+<p>Le fichier <cite>.circleci/config.yml</cite> permet de configurer une série de tâche. Par défaut, ces tâches sont excécutées dans leurs ordres de définitions. Il est possible de créer des workflows pour définir un flux personnalisé selon les besoins.</p>
+<p>Exemple de configuration pour la réalisation des tests unitaire
+* selectionner une image docker depuis circleCI</p>
+<blockquote>
+<div><div class="line-block">
 <div class="line">docker:</div>
 <div class="line-block">
 <div class="line">- image: cimg/python:3.10</div>
 </div>
 </div>
-</dd>
-</dl>
-</li>
+</div></blockquote>
+<ul>
 <li><dl>
 <dt>charger les variables d’environnement. Dans notre cas, on défini la variable ALLOWED_HOSTS pour django</dt><dd><div class="line-block">
 <div class="line">environment:</div>
@@ -122,13 +123,15 @@
 </dl>
 </li>
 </ul>
+<p>on attribut un nom de workflow au sommet de l’arbre. Puis on viens définir les différentes tâches nécéssaires dans le workflow. Quand 2 taches sont au même niveau, les tâches sont exécutées de manière concurente. Pour définir une excécution séquentielle, il faut utiliser l’option <cite>requires</cite>. Cette option définie que la tâche ne doit pas être exécutée si l’une des tâches renseignées ne se termine pas avec un succés.
+L’option <cite>filters</cite> définie les différents cas de figure dans lesquels la tâche doit être exécutée.</p>
 </section>
-<section id="procedure">
-<h3>Procédure<a class="headerlink" href="#procedure" title="Link to this heading">¶</a></h3>
+<section id="configuration-du-projet-dans-circleci">
+<h3>Configuration du projet dans circleCI<a class="headerlink" href="#configuration-du-projet-dans-circleci" title="Link to this heading">¶</a></h3>
 </section>
 </section>
-<section id="gestion-de-l-application">
-<h2>Gestion de l’application<a class="headerlink" href="#gestion-de-l-application" title="Link to this heading">¶</a></h2>
+<section id="gestion-de-l-application-et-du-deploiement">
+<h2>Gestion de l’application et du deploiement<a class="headerlink" href="#gestion-de-l-application-et-du-deploiement" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -157,7 +160,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Mise en production et maintenance</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#flux-de-travail">flux de travail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gestion-du-deploiement">Gestion du deploiement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gestion-de-l-application">Gestion de l’application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gestion-de-l-application-et-du-deploiement">Gestion de l’application et du deploiement</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api_description.html">Interface de programmation</a></li>
