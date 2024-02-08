@@ -16,12 +16,13 @@ flux de travail
 #. Render, au signal d'une nouvelle image, va récupérer celle-ci.
 #. Lancer une série de commande pour lancer le conteneur, distribuer les fichiers statiques et lancer le serveur Django
 
-Gestion du deploiement
-----------------------
+Configuration du fichier config.yml pour circleCI
+-------------------------------------------------
 
-Configuration du fichier config.yml
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Le fichier `.circleci/config.yml` permet de configurer une série de tâche. Par défaut, ces tâches sont excécutées dans leurs ordres de définitions. Il est possible de créer des workflows pour définir un flux personnalisé selon les besoins. 
+
+Configuration des suites de tests
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Exemple de configuration pour la réalisation des tests unitaire
 * selectionner une image docker depuis circleCI
@@ -64,7 +65,7 @@ Exemple de configuration pour la réalisation des tests unitaire
     * on créer un cache pour faciliter la prochaine exécution.
 
       .. code-block::
-      
+
          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
            - "venv"
@@ -72,37 +73,14 @@ Exemple de configuration pour la réalisation des tests unitaire
     * Enfin on excécute la commande d'interêt. Dans ce cas, on active l'environment virtuel et on exécute le module pytest
 
       .. code-block::
-      
+
          name: Running tests
          command: |
            . venv/bin/activate
            python3 -m pytest
 
-on attribut un nom de workflow au sommet de l'arbre. Puis on viens définir les différentes tâches nécéssaires dans le workflow. Quand 2 taches sont au même niveau, les tâches sont exécutées de manière concurente. Pour définir une excécution séquentielle, il faut utiliser l'option `requires`. Cette option définie que la tâche ne doit pas être exécutée si l'une des tâches renseignées ne se termine pas avec un succés.
-L'option `filters` définie les différents cas de figure dans lesquels la tâche doit être exécutée. 
-
-.. code-block::
-
-   test_build_and_push:
-   jobs:
-     - pytest
-     - coverage
-     - linting
-     - container:
-         context:
-           - docker_hub_creds
-         requires:
-           - pytest
-         filters:
-           branches:
-             only: master
-
-
-Configuration du projet dans circleCI
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Gestion de l'application et du deploiement
-------------------------------------------
+Configuration de la conteneurisation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * chargement d'une image docker pour l'excecution des commandes de conteneurisation
 
@@ -120,8 +98,6 @@ Gestion de l'application et du deploiement
 
      environment:
        COMMIT_HASH: <<pipeline.trigger_parameters.github_app.commit_sha>>
-         #   username: $DOCKERHUB_USERNAME
-         #   password: $DOCKERHUB_PASSWORD
 
 * Lancement des étapes de conteneurisation
 
@@ -167,4 +143,37 @@ Gestion de l'application et du deploiement
          - v1-{{ .Branch }}
        paths:
          - /caches/app.tar
+
+Configuration des workflows
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+on attribut un nom de workflow au sommet de l'arbre. Puis on viens définir les différentes tâches nécéssaires dans le workflow. Quand 2 taches sont au même niveau, les tâches sont exécutées de manière concurente. Pour définir une excécution séquentielle, il faut utiliser l'option `requires`. Cette option définie que la tâche ne doit pas être exécutée si l'une des tâches renseignées ne se termine pas avec un succés.
+L'option `filters` définie les différents cas de figure dans lesquels la tâche doit être exécutée. 
+
+.. code-block::
+
+   test_build_and_push:
+   jobs:
+     - pytest
+     - coverage
+     - linting
+     - container:
+         context:
+           - docker_hub_creds
+         requires:
+           - pytest
+         filters:
+           branches:
+             only: master
+
+
+Configuration du projet dans circleCI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+
+Gestion de l'application et du deploiement
+------------------------------------------
+
 
