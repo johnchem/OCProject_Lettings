@@ -103,8 +103,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
-          paths:
-            - /caches/app.tar
       # - run:
       #     name: Load Docker image layer cache
       #     command: |
