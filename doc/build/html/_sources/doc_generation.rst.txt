@@ -1,10 +1,24 @@
 Génération de la documentation
 ==============================
 
-Construction du diagramm de la base de données
-----------------------------------------------
+Configuration de sphinx
+-----------------------
 
-config django_extension
+Le fichier ``doc/source/index.rst`` est la base de la documentation, il sert aussi de page d'acceuil.
+Les différentes parties de la documentation sont rangées dans le dossier ``doc/source``.
+La configuration se fait par via le fichier ``doc/source/conf.py``.
+
+La construction de la documentation se fait avec la commande :
+``sphinx-build -M html doc/source doc/build -D graphviz_dot="C:\Program Files\Graphviz\bin\dot.exe"``
+
+Construction du diagramme de la base de données
+-----------------------------------------------
+
+Le diagramme de base de données est généré automatiquement sur base des modéles de chaque application.
+pour cela, on utilise le module **Graph models** de la librairie **Django-extensions**.
+Ce module crée un fichier dot pour le logiciel Graphviz. 
+
+La configuration pour **Graph models** est ajouté dans le fichier ``oc_settings_site.settings.py``
 
 .. code-block:: python
 
@@ -16,13 +30,15 @@ config django_extension
       'theme': "django2018",
     }
 
-``python manage.py graph_models profiles lettings -o doc\source\project.dot``
+La configuration de Graphviz se fait dans le fichier de configuration pour Sphinx
 
-configuration de graphiviz::
-.. code-block::python
+.. code-block:: python
 
     # doc\source\conf.py
     graphviz_output_format = 'svg'
 
-``sphinx-build -M html doc/source doc/build -D graphviz_dot="C:\Program Files\Graphviz\bin\dot.exe"``
+Enfin la création du diagramme se fait via la commande :
+``python manage.py graph_models profiles lettings -o doc\source\project.dot``
 
+Celle-ci prend la forme : 
+``python manage.py graph-models <applications> -o <fichier_de_sortie>`` 

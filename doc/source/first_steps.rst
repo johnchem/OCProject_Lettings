@@ -84,9 +84,10 @@ Excécussion de la suite de tests
 - ``source venv/bin/activate`` ou ``venv\Scripts\activate``
 - ``pytest``
 
-| Le projet fonctionne sur base de django 3.0.
-| Cette version utilise encore la librairie distutils qui est obsoléte.
-| Ceci génére des avertissements dans pytest mais sans affecter le fonctionnement
+.. note::
+    Le projet fonctionne sur base de django 3.0.
+    Cette version utilise encore la librairie distutils qui est obsoléte.
+    Ceci génére des avertissements dans pytest mais sans affecter le fonctionnement
 
 Panel d'administration
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -106,17 +107,20 @@ Languages
 Technologie
 ^^^^^^^^^^^
 **Site web**
+
 - Django 3.0
 - SQLite3
 - Bootstrap v5.1.3
 - WhiteNoise v6.6.0
 
 **Testing**
+
 - BeautifulSoup4 v4.12
 - Flake8 v3.7
 - Coverage v7.4
 - Pytest v7.4
 
 **Documentation**
+
 - Sphinx v7.2 
 - Graphviz v2.42

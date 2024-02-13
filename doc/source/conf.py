@@ -1,7 +1,6 @@
 import os
 import sys
 import django
-# from django.conf import settings
 
 sys.path.insert(0, os.path.abspath('../..'))
 
@@ -16,10 +15,10 @@ django.setup()
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'orange_county'
+project = 'Orange County Lettings'
 copyright = '2024, Payssan Jonathan'
 author = 'Payssan Jonathan'
-release = '0.1'
+# release = '0.1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -37,10 +36,8 @@ language = 'fr'
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'
+html_theme = 'haiku'
 html_static_path = ['_static']
 
 # -- GraphViz configuration ----------------------------------
 graphviz_output_format = 'svg'
-
-# sphinx-build -M html doc/source doc/build -D graphviz_dot="C:\Program Files\Graphviz\bin\dot.exe"

@@ -26,7 +26,7 @@ def index(request):
     :param context: the context is not read in this view
     :type context: None
 
-    :param template:`oc_lettings_site/index.html`
+    :param template: `oc_lettings_site/index.html`
 
     :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse
@@ -46,7 +46,7 @@ def page_not_found(request, exception, template_name=ERROR_404_TEMPLATE_NAME):
     :param exception: 404 (if one was supplied), or the exception class name
 
     :return HttpResponseNotFound: raise exception error_404 and
-    :return HttpResponseNotFound: display the page with the template defined.
+        display the page with the template defined.
 
     """
     exception_repr = exception.__class__.__name__
@@ -80,7 +80,7 @@ def server_error(request, template_name=ERROR_500_TEMPLATE_NAME):
     :param template: `oc_lettings_site/500.html`
 
     :return HttpResponseServerError: raise exception error_500
-    :return HttpResponseServerError: and display the page with the template defined.
+        and display the page with the template defined.
 
     """
     template = loader.get_template(template_name)

@@ -5,35 +5,37 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Interface de programmation &#8212; Documentation orange_county 0.1</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <title>Interface de programmation &#8212; Documentation Orange County Lettings </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f63d8bfa" />
+    <link rel="stylesheet" type="text/css" href="_static/haiku.css?v=e491ac2d" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
-    <script src="_static/documentation_options.js?v=af8511e3"></script>
+    <script src="_static/documentation_options.js?v=d1a510d7"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/translations.js?v=d99ca74e"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="next" title="Génération de la documentation" href="doc_generation.html" />
-    <link rel="prev" title="Mise en production" href="deploy_and_management.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-
-  
-  
-
+    <link rel="prev" title="Mise en production" href="deploy_and_management.html" /> 
   </head><body>
-  
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>Documentation Orange County Lettings </span></a></h1>
+        <h2 class="heading"><span>Interface de programmation</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="deploy_and_management.html">Mise en production</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contenu</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="doc_generation.html">Génération de la documentation</a>&#160;&#160;»
+        </p>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
+      </div>
+      <div class="content" role="main">
+        
+        
   <section id="interface-de-programmation">
 <h1>Interface de programmation<a class="headerlink" href="#interface-de-programmation" title="Link to this heading">¶</a></h1>
 <section id="module-oc_lettings_site.views">
@@ -44,16 +46,16 @@
 <dd><p>Display the main page of the site</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>context</strong> (<em>None</em>) – the context is not read in this view</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> (<em>None</em>) – the context is not read in this view</p></li>
+<li><p><strong>template</strong> – <cite>oc_lettings_site/index.html</cite></p></li>
+</ul>
 </dd>
-</dl>
-<p>:param template:<cite>oc_lettings_site/index.html</cite></p>
-<dl class="field-list simple">
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the httpResponse filled with appropriate data</p>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>the httpResponse filled with appropriate data</p>
 </dd>
-<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p>HttpResponse</p>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
 </dd>
 </dl>
 </dd></dl>
@@ -73,10 +75,8 @@
 </ul>
 </dd>
 <dt class="field-even">Return HttpResponseNotFound<span class="colon">:</span></dt>
-<dd class="field-even"><p>raise exception error_404 and</p>
-</dd>
-<dt class="field-odd">Return HttpResponseNotFound<span class="colon">:</span></dt>
-<dd class="field-odd"><p>display the page with the template defined.</p>
+<dd class="field-even"><p>raise exception error_404 and
+display the page with the template defined.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -93,10 +93,8 @@
 </ul>
 </dd>
 <dt class="field-even">Return HttpResponseServerError<span class="colon">:</span></dt>
-<dd class="field-even"><p>raise exception error_500</p>
-</dd>
-<dt class="field-odd">Return HttpResponseServerError<span class="colon">:</span></dt>
-<dd class="field-odd"><p>and display the page with the template defined.</p>
+<dd class="field-even"><p>raise exception error_500
+and display the page with the template defined.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -111,7 +109,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>lettings_list</strong> (list(<code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Lettings</span></code>)) – All instance of <code class="xref py py-obj docutils literal notranslate"><span class="pre">lettings.Lettings</span></code>.</p></li>
+<li><p><strong>lettings_list</strong> (list(<code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Lettings</span></code>)) – All instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Lettings</span></code>.</p></li>
 <li><p><strong>template</strong> – <cite>lettings/index.html</cite></p></li>
 </ul>
 </dd>
@@ -123,9 +121,8 @@
 </dd>
 <dt class="field-even">Lève<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>Http404</strong> – Send page 404 if Letting is not found Letting.DoesNotExist</p></li>
-<li><p><strong>exception Exception</strong> – If any other issue append</p></li>
-<li><p><strong>exception Exception</strong> – during the retreving of the letting</p></li>
+<li><p><strong>exc Http404</strong> – Send page 404 if Letting is not found <code class="xref py py-exc docutils literal notranslate"><span class="pre">Letting.DoesNotExist</span></code></p></li>
+<li><p><strong>ext Exception</strong> – If any other issue append during the retreving of the letting</p></li>
 </ul>
 </dd>
 </dl>
@@ -139,8 +136,8 @@
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>title</strong> (<em>string</em>) – The title of <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Letting</span></code></p></li>
-<li><p><strong>address</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code>) – The address <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code>
-linked to the instance <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Letting</span></code></p></li>
+<li><p><strong>address</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code>) – The address <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code></p></li>
+<li><p><strong>address</strong> – linked to the instance <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Letting</span></code></p></li>
 <li><p><strong>template</strong> – <cite>lettings/letting.html</cite></p></li>
 </ul>
 </dd>
@@ -152,9 +149,8 @@ linked to the instance <code class="xref py py-class docutils literal notranslat
 </dd>
 <dt class="field-even">Lève<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>Http404</strong> – Send page 404 if Letting
-is not found <a href="#id1"><span class="problematic" id="id2">:exception:`Letting.DoesNotExist`</span></a></p></li>
-<li><p><strong>Exception</strong> – If any other issue append during the retreving of the letting</p></li>
+<li><p><strong>exc Http404</strong> – Send page 404 if Letting is not found <code class="xref py py-exc docutils literal notranslate"><span class="pre">Letting.DoesNotExist</span></code></p></li>
+<li><p><strong>exc Exception</strong> – If any other issue append during the retreving of the letting</p></li>
 </ul>
 </dd>
 </dl>
@@ -175,7 +171,7 @@ is not found <a href="#id1"><span class="problematic" id="id2">:exception:`Letti
 <p>:param template:<cite>profiles/index.html</cite></p>
 <dl class="field-list simple">
 <dt class="field-odd">Lève<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Exception</strong> – log event if something unexpected append</p>
+<dd class="field-odd"><p><strong>exc Exception</strong> – log event if something unexpected append</p>
 </dd>
 <dt class="field-even">Renvoie<span class="colon">:</span></dt>
 <dd class="field-even"><p>the httpResponse filled with appropriate data</p>
@@ -199,8 +195,8 @@ is not found <a href="#id1"><span class="problematic" id="id2">:exception:`Letti
 <dl class="field-list simple">
 <dt class="field-odd">Lève<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Http404</strong> – Send page 404 if profile is not found py:exception::<cite>Profile.DoesNotExist</cite></p></li>
-<li><p><strong>Exception</strong> – If any other issue append during the retreving of the letting</p></li>
+<li><p><strong>exc Http404</strong> – Send page 404 if profile is not found <code class="xref py py-exc docutils literal notranslate"><span class="pre">Profile.DoesNotExist</span></code></p></li>
+<li><p><strong>exc Exception</strong> – If any other issue append during the retreving of the letting</p></li>
 </ul>
 </dd>
 <dt class="field-even">Renvoie<span class="colon">:</span></dt>
@@ -216,82 +212,22 @@ is not found <a href="#id1"><span class="problematic" id="id2">:exception:`Letti
 </section>
 
 
-          </div>
-          
-        </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">orange_county</a></h1>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="deploy_and_management.html">Mise en production</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contenu</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="doc_generation.html">Génération de la documentation</a>&#160;&#160;»
+        </p>
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="first_steps.html">Premiers pas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use_guide.html">Guide d'utilisation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_management.html">Gestion des données</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deploy_and_management.html">Mise en production et maintenance</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Interface de programmation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-oc_lettings_site.views">Géneral site : oc_lettings_site</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-lettings.views">Application Lettings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-profiles.views">Application profiles</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="doc_generation.html">Contruction de la documentaion</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="deploy_and_management.html" title="Chapitre précédent">Mise en production</a></li>
-      <li>Next: <a href="doc_generation.html" title="Chapitre suivant">Génération de la documentation</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Recherche rapide</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-
-
-
-
-
-
-
-
-        </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &#169;2024, Payssan Jonathan.
-      
-      |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
-      
-      |
-      <a href="_sources/api_description.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
-
-    
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Payssan Jonathan.
+      Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
   </body>
 </html>

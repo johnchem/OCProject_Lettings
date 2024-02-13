@@ -18,7 +18,7 @@ def index(request):
 
     :param template:`profiles/index.html`
 
-    :raise Exception: log event if something unexpected append
+    :raise exc Exception: log event if something unexpected append
 
     :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse
@@ -48,8 +48,8 @@ def profile(request, username):
 
     :param template:`profiles/profile.html`
 
-    :raises Http404: Send page 404 if profile is not found py:exception::`Profile.DoesNotExist`
-    :raises Exception: If any other issue append during the retreving of the letting
+    :raises exc Http404: Send page 404 if profile is not found :exc:`Profile.DoesNotExist`
+    :raises exc Exception: If any other issue append during the retreving of the letting
 
     :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse

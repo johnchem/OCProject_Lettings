@@ -13,16 +13,15 @@ from lettings.models import Letting
 def index(request):
     """Display all the lettins instance in the database
 
-    :param lettings_list: All instance of :obj:`lettings.Lettings`.
+    :param lettings_list: All instance of :class:`lettings.Lettings`.
     :type lettings_list: list(:class:`lettings.Lettings`)
     :param template: `lettings/index.html`
 
     :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse
 
-    :raises Http404: Send page 404 if Letting is not found Letting.DoesNotExist
-    :raises exception Exception: If any other issue append
-    :raises exception Exception: during the retreving of the letting
+    :raises exc Http404: Send page 404 if Letting is not found :exc:`Letting.DoesNotExist`
+    :raises ext Exception: If any other issue append during the retreving of the letting
     """
     try:
         lettings_list = Letting.objects.all()
@@ -51,16 +50,15 @@ def letting(request, letting_id):
 
     :param string title: The title of :class:`lettings.Letting`
     :param address: The address :class:`lettings.Address`
-        linked to the instance :class:`lettings.Letting`
+    :param address: linked to the instance :class:`lettings.Letting`
     :type address: :class:`lettings.Address`
     :param template: `lettings/letting.html`
 
     :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse
 
-    :raises Http404: Send page 404 if Letting
-        is not found :exception:`Letting.DoesNotExist`
-    :raises Exception: If any other issue append during the retreving of the letting
+    :raises exc Http404: Send page 404 if Letting is not found :exc:`Letting.DoesNotExist`
+    :raises exc Exception: If any other issue append during the retreving of the letting
     """
     try:
         letting = Letting.objects.get(id=letting_id)

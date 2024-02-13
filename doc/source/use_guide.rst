@@ -50,13 +50,53 @@ Pour tester les urls, on utilise la fonction ``django.urls.reverse`` pour obteni
 on vérifie que ce chemin méne au bon lien urls. 
 Enfin avec la fonction ``django.urls.resolve``, on vérifie que l'on retrouve le nom initial de l'url.
 
+.. code-block::
+
+    def test_letting_index_url(self):
+        path = reverse('lettings_index')
+        assert path == "/lettings/"
+        assert resolve(path).view_name == "lettings_index"
+
 Test des vues
 """"""""""""""
 La réponse HTML à l'appel de la page est obtenu via la fonction ``client.get(url)``. 
 La librairie **BeautifulSoup4** permet d'inspecter la réponse.
 Le test vérifie le statut HTTP de la résponse et la présente de contenu spécifique à la page désirée. 
-Par exemple pour tester une page **LIST**: on passera en fixture une liste d'objets et on vérifiera que l'on retrouve l'ensemble des objects sur la page avec le bon titre.   
+Par exemple pour tester une page **LIST**: on passera en fixture une liste d'objets et on vérifiera que l'on retrouve l'ensemble des objects sur la page avec le bon titre.
+
+.. code-block::
+    
+    def test_letting_detail_view(self, client):
+        expected_data = [
+            [...]
+        ]
+
+        path = reverse('letting', kwargs={'letting_id': 4})
+        resp = client.get(path)
+        soup = BeautifulSoup(resp.content, features="html.parser")
+        card = soup.find("div", "card")
+        result = [x.string for x in card.find_all("p")]
+
+        for data, expected in zip(result, expected_data):
+            assert data == expected
 
 Test des modéles
 """"""""""""""""
 Pour les tests des modéles, on testera les paramétres CRUD, la validations des champs et les relations entre les objets.
+
+.. code-block::
+
+    def test_create_letting(self, client, capsys):
+        address_ref = Address.objects.create(
+            [...]
+        )
+        title = "Museum of Modern Art"
+
+        letting = Letting.objects.create(
+            title=title,
+            address=address_ref
+        )
+        print(letting)
+        captured = capsys.readouterr()
+        assert captured.out == title+"\n"
+        assert letting.address.street == "West 53 Street"
