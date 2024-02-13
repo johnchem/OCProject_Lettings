@@ -30,7 +30,6 @@ def index(request):
 
     :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse
-
     """
     return render(request, "oc_lettings_site/index.html")
 
@@ -40,14 +39,13 @@ def page_not_found(request, exception, template_name=ERROR_404_TEMPLATE_NAME):
     404 handler.
 
     :param request_path: The path of the requested URL (e.g., '/app/pages/bad_page/').
-    :param request_path: It's quoted to prevent a content injection attack.
+        It's quoted to prevent a content injection attack.
     :param template: `oc_lettings_site/404.html`
     :param exception: The message from the exception which triggered the
-    :param exception: 404 (if one was supplied), or the exception class name
+        404 (if one was supplied), or the exception class name
 
     :return HttpResponseNotFound: raise exception error_404 and
         display the page with the template defined.
-
     """
     exception_repr = exception.__class__.__name__
     # Try to get an "interesting" exception message, if any (and not the ugly
@@ -81,7 +79,6 @@ def server_error(request, template_name=ERROR_500_TEMPLATE_NAME):
 
     :return HttpResponseServerError: raise exception error_500
         and display the page with the template defined.
-
     """
     template = loader.get_template(template_name)
     return HttpResponseServerError(template.render())

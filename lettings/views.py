@@ -20,8 +20,8 @@ def index(request):
     :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse
 
-    :raises exc Http404: Send page 404 if Letting is not found :exc:`Letting.DoesNotExist`
-    :raises ext Exception: If any other issue append during the retreving of the letting
+    :raises Http404: Send page 404 if Letting is not found :exc:`Letting.DoesNotExist`
+    :raises Exception: If any other issue append during the retreving of the letting
     """
     try:
         lettings_list = Letting.objects.all()
@@ -50,15 +50,15 @@ def letting(request, letting_id):
 
     :param string title: The title of :class:`lettings.Letting`
     :param address: The address :class:`lettings.Address`
-    :param address: linked to the instance :class:`lettings.Letting`
+        linked to the instance :class:`lettings.Letting`
     :type address: :class:`lettings.Address`
     :param template: `lettings/letting.html`
 
     :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse
 
-    :raises exc Http404: Send page 404 if Letting is not found :exc:`Letting.DoesNotExist`
-    :raises exc Exception: If any other issue append during the retreving of the letting
+    :raises Http404: Send page 404 if Letting is not found :exc:`Letting.DoesNotExist`
+    :raises Exception: If any other issue append during the retreving of the letting
     """
     try:
         letting = Letting.objects.get(id=letting_id)

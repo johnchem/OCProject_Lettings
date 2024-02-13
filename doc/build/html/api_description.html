@@ -67,11 +67,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>request_path</strong> – The path of the requested URL (e.g., “/app/pages/bad_page/”).</p></li>
-<li><p><strong>request_path</strong> – It’s quoted to prevent a content injection attack.</p></li>
+<li><p><strong>request_path</strong> – The path of the requested URL (e.g., “/app/pages/bad_page/”).
+It’s quoted to prevent a content injection attack.</p></li>
 <li><p><strong>template</strong> – <cite>oc_lettings_site/404.html</cite></p></li>
-<li><p><strong>exception</strong> – The message from the exception which triggered the</p></li>
-<li><p><strong>exception</strong> – 404 (if one was supplied), or the exception class name</p></li>
+<li><p><strong>exception</strong> – The message from the exception which triggered the
+404 (if one was supplied), or the exception class name</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return HttpResponseNotFound<span class="colon">:</span></dt>
@@ -121,8 +121,8 @@ and display the page with the template defined.</p>
 </dd>
 <dt class="field-even">Lève<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>exc Http404</strong> – Send page 404 if Letting is not found <code class="xref py py-exc docutils literal notranslate"><span class="pre">Letting.DoesNotExist</span></code></p></li>
-<li><p><strong>ext Exception</strong> – If any other issue append during the retreving of the letting</p></li>
+<li><p><strong>Http404</strong> – Send page 404 if Letting is not found <code class="xref py py-exc docutils literal notranslate"><span class="pre">Letting.DoesNotExist</span></code></p></li>
+<li><p><strong>Exception</strong> – If any other issue append during the retreving of the letting</p></li>
 </ul>
 </dd>
 </dl>
@@ -136,8 +136,8 @@ and display the page with the template defined.</p>
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>title</strong> (<em>string</em>) – The title of <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Letting</span></code></p></li>
-<li><p><strong>address</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code>) – The address <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code></p></li>
-<li><p><strong>address</strong> – linked to the instance <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Letting</span></code></p></li>
+<li><p><strong>address</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code>) – The address <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code>
+linked to the instance <code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Letting</span></code></p></li>
 <li><p><strong>template</strong> – <cite>lettings/letting.html</cite></p></li>
 </ul>
 </dd>
@@ -149,8 +149,8 @@ and display the page with the template defined.</p>
 </dd>
 <dt class="field-even">Lève<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>exc Http404</strong> – Send page 404 if Letting is not found <code class="xref py py-exc docutils literal notranslate"><span class="pre">Letting.DoesNotExist</span></code></p></li>
-<li><p><strong>exc Exception</strong> – If any other issue append during the retreving of the letting</p></li>
+<li><p><strong>Http404</strong> – Send page 404 if Letting is not found <code class="xref py py-exc docutils literal notranslate"><span class="pre">Letting.DoesNotExist</span></code></p></li>
+<li><p><strong>Exception</strong> – If any other issue append during the retreving of the letting</p></li>
 </ul>
 </dd>
 </dl>
@@ -165,19 +165,19 @@ and display the page with the template defined.</p>
 <dd><p>Display all the profile instances in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>profiles_list</strong> (list(<code class="xref py py-class docutils literal notranslate"><span class="pre">profiles.Profile</span></code>)) – All instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">profiles.Profile</span></code>.</p>
-</dd>
-</dl>
-<p>:param template:<cite>profiles/index.html</cite></p>
-<dl class="field-list simple">
-<dt class="field-odd">Lève<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>exc Exception</strong> – log event if something unexpected append</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>profiles_list</strong> (list(<code class="xref py py-class docutils literal notranslate"><span class="pre">profiles.Profile</span></code>)) – All instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">profiles.Profile</span></code>.</p></li>
+<li><p><strong>template</strong> – <cite>profiles/index.html</cite></p></li>
+</ul>
 </dd>
 <dt class="field-even">Renvoie<span class="colon">:</span></dt>
 <dd class="field-even"><p>the httpResponse filled with appropriate data</p>
 </dd>
 <dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
 <dd class="field-odd"><p>HttpResponse</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – log event if something unexpected append</p>
 </dd>
 </dl>
 </dd></dl>
@@ -188,15 +188,9 @@ and display the page with the template defined.</p>
 <dd><p>Display the profile instance selected by user throught its username</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>profile</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">profile.Profile</span></code>) – an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">profiles.Profile</span></code></p>
-</dd>
-</dl>
-<p>:param template:<cite>profiles/profile.html</cite></p>
-<dl class="field-list simple">
-<dt class="field-odd">Lève<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>exc Http404</strong> – Send page 404 if profile is not found <code class="xref py py-exc docutils literal notranslate"><span class="pre">Profile.DoesNotExist</span></code></p></li>
-<li><p><strong>exc Exception</strong> – If any other issue append during the retreving of the letting</p></li>
+<li><p><strong>profile</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">profile.Profile</span></code>) – an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">profiles.Profile</span></code></p></li>
+<li><p><strong>template</strong> – <cite>profiles/profile.html</cite></p></li>
 </ul>
 </dd>
 <dt class="field-even">Renvoie<span class="colon">:</span></dt>
@@ -204,6 +198,12 @@ and display the page with the template defined.</p>
 </dd>
 <dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
 <dd class="field-odd"><p>HttpResponse</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>Http404</strong> – Send page 404 if profile is not found <code class="xref py py-exc docutils literal notranslate"><span class="pre">Profile.DoesNotExist</span></code></p></li>
+<li><p><strong>Exception</strong> – If any other issue append during the retreving of the letting</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
