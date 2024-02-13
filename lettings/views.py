@@ -17,7 +17,7 @@ def index(request):
     :type lettings_list: list(:class:`lettings.Lettings`)
     :param template: `lettings/index.html`
 
-    :return: the httpResponse filled with appropriate data 
+    :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse
 
     :raises Http404: Send page 404 if Letting is not found Letting.DoesNotExist
@@ -50,15 +50,15 @@ def letting(request, letting_id):
     """Display the letting instance selected by user throught its letting_id
 
     :param string title: The title of :class:`lettings.Letting`
-    :param address: The address :class:`lettings.Address` 
+    :param address: The address :class:`lettings.Address`
         linked to the instance :class:`lettings.Letting`
     :type address: :class:`lettings.Address`
     :param template: `lettings/letting.html`
 
-    :return: the httpResponse filled with appropriate data 
+    :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse
 
-    :raises Http404: Send page 404 if Letting 
+    :raises Http404: Send page 404 if Letting
         is not found :exception:`Letting.DoesNotExist`
     :raises Exception: If any other issue append during the retreving of the letting
     """

@@ -10,7 +10,7 @@ class Profile(models.Model):
     :param user: user account
     :type user: :class:`auth.models.User`
 
-    :param str favorite_city: Preference of the user 
+    :param str favorite_city: Preference of the user
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     favorite_city = models.CharField(max_length=64, blank=True)

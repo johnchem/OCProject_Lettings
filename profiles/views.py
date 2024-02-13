@@ -17,10 +17,10 @@ def index(request):
     :type profiles_list: list(:class:`profiles.Profile`)
 
     :param template:`profiles/index.html`
-    
+
     :raise Exception: log event if something unexpected append
 
-    :return: the httpResponse filled with appropriate data 
+    :return: the httpResponse filled with appropriate data
     :rtype: HttpResponse
 
     """
@@ -47,7 +47,7 @@ def profile(request, username):
     :type profile: :class:`profile.Profile`
 
     :param template:`profiles/profile.html`
-    
+
     :raises Http404: Send page 404 if profile is not found py:exception::`Profile.DoesNotExist`
     :raises Exception: If any other issue append during the retreving of the letting
 
