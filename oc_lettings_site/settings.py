@@ -24,7 +24,10 @@ SECRET_KEY = env("SECRET_KEY")
 # DEBUG = True
 DEBUG = env.bool("DEBUG")
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+if DEBUG:
+    ALLOWED_HOSTS = "localhost"
+else:
+    ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
 # Application definition
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'lettings',
     'profiles',
 ]
@@ -145,3 +149,12 @@ sentry_sdk.init(
         ),
     ],
 )
+
+# réglage pour la génération de réprésentation graphique des modéles
+
+GRAPH_MODELS = {
+  'all_applications': False,
+  'group_models': False,
+  'layout': "dot",
+  'theme': "django2018",
+}

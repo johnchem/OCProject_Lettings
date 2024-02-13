@@ -11,11 +11,14 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           command: |
+            sudo apt update -y
+            sudo apt install graphviz-dev -y
+      - run:
+          command: |
             python3 -m venv venv
             . venv/bin/activate
             pip install -U pip setuptools
             pip install -r requirements.txt
-            ls -l
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
@@ -34,6 +37,10 @@ jobs:
       - checkout
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - run:
+          command: |
+            sudo apt update -y
+            sudo apt install graphviz-dev -y
       - run:
           command: |
             python3 -m venv venv
@@ -63,11 +70,14 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           command: |
+            sudo apt update -y
+            sudo apt install libgraphviz-dev -y
+      - run:
+          command: |
             python3 -m venv venv
             . venv/bin/activate
             pip install -U pip setuptools
             pip install -r requirements.txt
-            ls -l
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
@@ -87,16 +97,11 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     environment:
       COMMIT_HASH: <<pipeline.trigger_parameters.github_app.commit_sha>>
-        #   username: $DOCKERHUB_USERNAME
-        #   password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
       - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/app.tar
+          key: v1-{{ .Branch }}
       - run:
           name: Load Docker image layer cache
           command: |
@@ -109,6 +114,10 @@ jobs:
             docker build -t $DOCKERHUB_USERNAME/orange_county:$TAG -t $DOCKERHUB_USERNAME/orange_county:latest .
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push $DOCKERHUB_USERNAME/orange_county:$TAG
+      - save_cache:
+          key: v1-{{ .Branch }}
+          paths:
+            - /caches/app.tar
 
 workflows:
   test_build_and_push:

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Gestion des données &#8212; Documentation Orange County Lettings </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f63d8bfa" />
+    <link rel="stylesheet" type="text/css" href="_static/haiku.css?v=e491ac2d" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+    <script src="_static/documentation_options.js?v=d1a510d7"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=d99ca74e"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Mise en production" href="deploy_and_management.html" />
+    <link rel="prev" title="Guide d’utilisation" href="use_guide.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>Documentation Orange County Lettings </span></a></h1>
+        <h2 class="heading"><span>Gestion des données</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="use_guide.html">Guide d’utilisation</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contenu</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="deploy_and_management.html">Mise en production</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content" role="main">
+        
+        
+  <section id="gestion-des-donnees">
+<h1>Gestion des données<a class="headerlink" href="#gestion-des-donnees" title="Link to this heading">¶</a></h1>
+<section id="structure-de-la-base-de-donnees">
+<h2>Structure de la base de données<a class="headerlink" href="#structure-de-la-base-de-donnees" title="Link to this heading">¶</a></h2>
+<div class="graphviz"><object data="_images/graphviz-042699590ff5e391c556ef8eaf8cc48de1075b4e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph model_graph {
+  // Dotfile by Django-Extensions graph_models
+  // Created: 2024-01-30 10:03
+  // Cli Options: profiles lettings -o doc\source\db_schema.dot
+
+  fontname = &quot;Roboto&quot;
+  fontsize = 8
+  splines  = true
+  rankdir = &quot;TB&quot;
+
+  node [
+    fontname = &quot;Roboto&quot;
+    fontsize = 8
+    shape = &quot;plaintext&quot;
+  ]
+
+  edge [
+    fontname = &quot;Roboto&quot;
+    fontsize = 8
+  ]
+
+  // Labels
+
+
+  profiles_models_Profile [label=&lt;
+    &lt;TABLE BGCOLOR=&quot;white&quot; BORDER=&quot;1&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+    &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;5&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;#1b563f&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot; COLOR=&quot;white&quot; POINT-SIZE=&quot;10&quot;&gt;&lt;B&gt;
+    Profile
+    &lt;/B&gt;&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;id&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;AutoField&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;user&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;OneToOneField (id)&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Roboto&quot;&gt;favorite_city&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;/TABLE&gt;
+    &gt;]
+
+
+
+
+  lettings_models_Address [label=&lt;
+    &lt;TABLE BGCOLOR=&quot;white&quot; BORDER=&quot;1&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+    &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;5&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;#1b563f&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot; COLOR=&quot;white&quot; POINT-SIZE=&quot;10&quot;&gt;&lt;B&gt;
+    Address
+    &lt;/B&gt;&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;id&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;AutoField&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;city&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;country_iso_code&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;number&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;PositiveIntegerField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;state&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;street&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;zip_code&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;PositiveIntegerField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;/TABLE&gt;
+    &gt;]
+
+  lettings_models_Letting [label=&lt;
+    &lt;TABLE BGCOLOR=&quot;white&quot; BORDER=&quot;1&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+    &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;5&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;#1b563f&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot; COLOR=&quot;white&quot; POINT-SIZE=&quot;10&quot;&gt;&lt;B&gt;
+    Letting
+    &lt;/B&gt;&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;id&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;AutoField&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;address&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;&lt;B&gt;OneToOneField (id)&lt;/B&gt;&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+  
+    &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;title&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+    &lt;FONT FACE=&quot;Roboto&quot;&gt;CharField&lt;/FONT&gt;
+    &lt;/TD&gt;&lt;/TR&gt;
+  
+  
+    &lt;/TABLE&gt;
+    &gt;]
+
+
+
+
+  // Relations
+  django_contrib_auth_models_User [label=&lt;
+  &lt;TABLE BGCOLOR=&quot;white&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+  &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;#1b563f&quot;&gt;
+  &lt;FONT FACE=&quot;Roboto&quot; POINT-SIZE=&quot;12&quot; COLOR=&quot;white&quot;&gt;User&lt;/FONT&gt;
+  &lt;/TD&gt;&lt;/TR&gt;
+  &lt;/TABLE&gt;
+  &gt;]
+  profiles_models_Profile -&gt; django_contrib_auth_models_User
+  [label=&quot; user (profile)&quot;] [arrowhead=none, arrowtail=none, dir=both];
+
+
+  lettings_models_Letting -&gt; lettings_models_Address
+  [label=&quot; address (letting)&quot;] [arrowhead=none, arrowtail=none, dir=both];
+
+
+}</p></object></div>
+</section>
+<section id="module-profiles.models">
+<span id="modele-profiles"></span><h2>Modèle <strong>profiles</strong><a class="headerlink" href="#module-profiles.models" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="profiles.models.Profile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">profiles.models.</span></span><span class="sig-name descname"><span class="pre">Profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profiles.models.Profile" title="Link to this definition">¶</a></dt>
+<dd><p>Store a profil with a link with the <code class="xref py py-class docutils literal notranslate"><span class="pre">auth.models.User</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">auth.models.User</span></code>) – user account</p></li>
+<li><p><strong>favorite_city</strong> (<em>str</em>) – Preference of the user</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="profiles.models.Profile.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#profiles.models.Profile.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="profiles.models.Profile.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#profiles.models.Profile.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-lettings.models">
+<span id="modele-lettings"></span><h2>Modèle <strong>lettings</strong><a class="headerlink" href="#module-lettings.models" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="lettings.models.Address">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lettings.models.</span></span><span class="sig-name descname"><span class="pre">Address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lettings.models.Address" title="Link to this definition">¶</a></dt>
+<dd><p>Store a single adress</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number</strong> (<em>int</em>) – address number</p></li>
+<li><p><strong>street</strong> (<em>str</em>) – street name</p></li>
+<li><p><strong>city</strong> (<em>str</em>) – city name</p></li>
+<li><p><strong>state</strong> (<em>str</em>) – state abbreviations</p></li>
+<li><p><strong>zip_code</strong> (<em>int</em>) – 5 number zip code</p></li>
+<li><p><strong>country_iso_code</strong> (<em>str</em>) – 3 letters iso code</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="lettings.models.Address.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#lettings.models.Address.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="lettings.models.Address.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#lettings.models.Address.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lettings.models.Letting">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lettings.models.</span></span><span class="sig-name descname"><span class="pre">Letting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lettings.models.Letting" title="Link to this definition">¶</a></dt>
+<dd><p>Model to store a letting adress</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – title of the letting</p></li>
+<li><p><strong>address</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">lettings.Address</span></code>) – address linked to the letting model</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="lettings.models.Letting.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#lettings.models.Letting.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="lettings.models.Letting.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#lettings.models.Letting.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="use_guide.html">Guide d’utilisation</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contenu</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="deploy_and_management.html">Mise en production</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Payssan Jonathan.
+      Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+  </body>
+</html>

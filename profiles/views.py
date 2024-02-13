@@ -13,14 +13,16 @@ def index(request):
     """
     Display all the profile instances in the database
 
-    **Context :**
+    :param profiles_list: All instance of :class:`profiles.Profile`.
+    :type profiles_list: list(:class:`profiles.Profile`)
 
-    ``profiles_list``
-        All instance of :model:`profiles.Profile`.
+    :param template: `profiles/index.html`
 
-    **Template :**
+    :return: the httpResponse filled with appropriate data
+    :rtype: HttpResponse
 
-    :template:`profiles/index.html`
+    :raise Exception: log event if something unexpected append
+
     """
     try:
         profiles_list = Profile.objects.all()
@@ -41,14 +43,16 @@ def profile(request, username):
     """
     Display the profile instance selected by user throught its username
 
-    **Context :**
+    :param profile: an instance of :class:`profiles.Profile`
+    :type profile: :class:`profile.Profile`
 
-    ``profile``
-        an instance of :model:`profiles.Profile`
+    :param template: `profiles/profile.html`
 
-    **Template :**
+    :return: the httpResponse filled with appropriate data
+    :rtype: HttpResponse
 
-    :template:`profiles/profile.html`
+    :raises Http404: Send page 404 if profile is not found :exc:`Profile.DoesNotExist`
+    :raises Exception: If any other issue append during the retreving of the letting
     """
     try:
         profile = Profile.objects.get(user__username=username)

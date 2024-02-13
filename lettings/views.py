@@ -11,17 +11,17 @@ from lettings.models import Letting
 # tempor et, bibendum id arcu. Vestibulum ante ipsum primis infaucibus
 # orci luctus et ultrices posuere cubilia curae; Cras eget scelerisque
 def index(request):
-    """
-    Display all the lettins instance in the database
+    """Display all the lettins instance in the database
 
-    **Context :**
+    :param lettings_list: All instance of :class:`lettings.Lettings`.
+    :type lettings_list: list(:class:`lettings.Lettings`)
+    :param template: `lettings/index.html`
 
-    ``lettings_list``
-        All instance of :model:`lettings.Lettins`.
+    :return: the httpResponse filled with appropriate data
+    :rtype: HttpResponse
 
-    **Template :**
-
-    :template:`lettings/index.html`
+    :raises Http404: Send page 404 if Letting is not found :exc:`Letting.DoesNotExist`
+    :raises Exception: If any other issue append during the retreving of the letting
     """
     try:
         lettings_list = Letting.objects.all()
@@ -46,20 +46,19 @@ def index(request):
 # Mauris condimentum auctor elementum. Donec quis nisi ligula. Integer vehicula
 # tincidunt enim, ac lacinia augue pulvinar sit amet.
 def letting(request, letting_id):
-    """
-    Display the letting instance selected by user throught its letting_id
+    """Display the letting instance selected by user throught its letting_id
 
-    **Context**
+    :param string title: The title of :class:`lettings.Letting`
+    :param address: The address :class:`lettings.Address`
+        linked to the instance :class:`lettings.Letting`
+    :type address: :class:`lettings.Address`
+    :param template: `lettings/letting.html`
 
-    ``title``
-        The title of :model:`lettings.Letting`
-    ``address``
-        The address :model:`lettings.Adress` linked to the instance
-        :model:`lettings.Letting`
+    :return: the httpResponse filled with appropriate data
+    :rtype: HttpResponse
 
-    **Template:**
-
-    :template:`lettings/letting.html`
+    :raises Http404: Send page 404 if Letting is not found :exc:`Letting.DoesNotExist`
+    :raises Exception: If any other issue append during the retreving of the letting
     """
     try:
         letting = Letting.objects.get(id=letting_id)
