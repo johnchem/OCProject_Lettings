@@ -38,53 +38,63 @@
 <h1>Guide d’utilisation<a class="headerlink" href="#guide-d-utilisation" title="Link to this heading">¶</a></h1>
 <section id="structure-du-projet">
 <h2>Structure du projet<a class="headerlink" href="#structure-du-projet" title="Link to this heading">¶</a></h2>
-<p>le projet est structuré selon 3 applications :
-* oc_lettings_site : gestion du site et des pages générales
-* lettings : gestion des adresses et des locations
-* profiles : gestion des profiles utilisateur</p>
-<p>Les applications sont composés des éléments:
-* models.py : représentation de la structure des objets dans la base de données
-* urls.py : liste des chemins urls pour l’application
-* views.py : fichier avec les vues
-* templates/ : repertoire contenant les templates HTML
-* tests.py : suite de tests unitaires de l’application
-* fixtures/ : fixtures pour les tests unitiares</p>
-<p>L’application oc_lettings_site requiered 2 des élélents supplémentaire:
-* admin.py : paramétrage de la page par défaut /admin
-* settings.py : paramétrage de l’ensemble de l’application</p>
-<p>Les images et fichier CSS sont servis à partir du fichier <strong>static/</strong> placé à la racine du projet.</p>
+<p>le projet est structuré selon 3 applications :</p>
+<ul class="simple">
+<li><p><strong>oc_lettings_site :</strong> gestion du site et des pages générales</p></li>
+<li><p><strong>lettings :</strong> gestion des adresses et des locations</p></li>
+<li><p><strong>profiles :</strong> gestion des profiles utilisateur</p></li>
+</ul>
+<p>Les applications sont composées des éléments:</p>
+<ul class="simple">
+<li><p><strong>models.py :</strong> représentation de la structure des objets dans la base de données</p></li>
+<li><p><strong>urls.py :</strong> liste des chemins urls pour l’application</p></li>
+<li><p><strong>views.py :</strong> fichier avec les vues</p></li>
+<li><p><strong>templates/ :</strong> repertoire contenant les templates HTML</p></li>
+<li><p><strong>tests.py :</strong> suite de tests unitaires de l’application</p></li>
+<li><p><strong>fixtures/ :</strong> fixtures pour les tests unitiares</p></li>
+</ul>
+<p>L’application <strong>oc_lettings_site</strong> nécéssite 2 des élélents supplémentaires :</p>
+<ul class="simple">
+<li><p><strong>admin.py :</strong> paramétrage de la page par défaut <code class="docutils literal notranslate"><span class="pre">/admin</span></code></p></li>
+<li><p><strong>settings.py :</strong> paramétrage de l’ensemble de l’application</p></li>
+</ul>
+<p>Les images et fichier CSS sont servis à partir du fichier <code class="docutils literal notranslate"><span class="pre">static/</span></code> placé à la racine du projet.</p>
 </section>
 <section id="creation-ou-modification-d-un-modele">
 <h2>Création ou modification d’un modéle<a class="headerlink" href="#creation-ou-modification-d-un-modele" title="Link to this heading">¶</a></h2>
-<p>La création ou modification d’un modéle est réalisé via le fichier <strong>models.py</strong>
-- Créer ou modifier le modéles accordément à la documentation de Django
-- <code class="docutils literal notranslate"><span class="pre">django-admin</span> <span class="pre">makemigrations</span></code>
-- <code class="docutils literal notranslate"><span class="pre">django-admin</span> <span class="pre">migrate</span></code></p>
+<p>La création ou modification d’un modéle est réalisé via le fichier <code class="docutils literal notranslate"><span class="pre">models.py</span></code></p>
+<ul class="simple">
+<li><p>Créer ou modifier le modéles accordément à la documentation de Django</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">django-admin</span> <span class="pre">makemigrations</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">django-admin</span> <span class="pre">migrate</span></code></p></li>
+</ul>
 </section>
 <section id="creation-d-une-nouvelle-vue">
 <h2>Création d’une nouvelle vue<a class="headerlink" href="#creation-d-une-nouvelle-vue" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Ecriture de la vue dans le fichier <strong>views.py</strong></p></li>
-<li><p>Création d’un nouveau template dans <strong>templates/</strong> pour afficher la vue</p></li>
-<li><p>Création d’un chemin url dans <strong>urls.py</strong> pour appeler la vue</p></li>
+<li><p>Ecriture de la vue dans le fichier <code class="docutils literal notranslate"><span class="pre">views.py</span></code></p></li>
+<li><p>Création d’un nouveau template dans <code class="docutils literal notranslate"><span class="pre">templates/</span></code> pour afficher la vue</p></li>
+<li><p>Création d’un chemin url dans <code class="docutils literal notranslate"><span class="pre">urls.py</span></code> pour appeler la vue</p></li>
 </ul>
 </section>
 <section id="ecriture-des-tests-unitaires">
 <h2>Ecriture des tests unitaires<a class="headerlink" href="#ecriture-des-tests-unitaires" title="Link to this heading">¶</a></h2>
 <p>Les tests unitaires doivent permettre de tester chaque sous-élements que soit les modéles, les urls ou les vues.</p>
 <section id="test-des-urls">
-<h3>test des urls<a class="headerlink" href="#test-des-urls" title="Link to this heading">¶</a></h3>
+<h3>Test des urls<a class="headerlink" href="#test-des-urls" title="Link to this heading">¶</a></h3>
 <p>Pour tester les urls, on utilise la fonction <code class="docutils literal notranslate"><span class="pre">django.urls.reverse</span></code> pour obtenir le chemin d’accés.
-on vérifie que ce chemin méne au bon lien urls. Enfin avec la fonction <code class="docutils literal notranslate"><span class="pre">django.urls.resolve</span></code>, on vérifie que l’on retrouve le nom initial de l’url.</p>
+on vérifie que ce chemin méne au bon lien urls.
+Enfin avec la fonction <code class="docutils literal notranslate"><span class="pre">django.urls.resolve</span></code>, on vérifie que l’on retrouve le nom initial de l’url.</p>
 </section>
 <section id="test-des-vues">
-<h3>test des vues<a class="headerlink" href="#test-des-vues" title="Link to this heading">¶</a></h3>
-<p>La réponse HTML à l’appel de la page est obtenu via la fonction <code class="docutils literal notranslate"><span class="pre">client.get(url)</span></code>. La librairie <strong>BeautifulSoup4</strong> permet d’inspecter la réponse.
-On va vérifier le statut HTTP de la résponse et la présente de contenu spécifique à la page désiré.
+<h3>Test des vues<a class="headerlink" href="#test-des-vues" title="Link to this heading">¶</a></h3>
+<p>La réponse HTML à l’appel de la page est obtenu via la fonction <code class="docutils literal notranslate"><span class="pre">client.get(url)</span></code>.
+La librairie <strong>BeautifulSoup4</strong> permet d’inspecter la réponse.
+Le test vérifie le statut HTTP de la résponse et la présente de contenu spécifique à la page désirée.
 Par exemple pour tester une page <strong>LIST</strong>: on passera en fixture une liste d’objets et on vérifiera que l’on retrouve l’ensemble des objects sur la page avec le bon titre.</p>
 </section>
 <section id="test-des-modeles">
-<h3>test des modéles<a class="headerlink" href="#test-des-modeles" title="Link to this heading">¶</a></h3>
+<h3>Test des modéles<a class="headerlink" href="#test-des-modeles" title="Link to this heading">¶</a></h3>
 <p>Pour les tests des modéles, on testera les paramétres CRUD, la validations des champs et les relations entre les objets.</p>
 </section>
 </section>

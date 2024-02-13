@@ -69,13 +69,13 @@
 <li><p>Pour désactiver l’environnement, <code class="docutils literal notranslate"><span class="pre">deactivate</span></code></p></li>
 </ul>
 </section>
-<section id="telechargement-et-mesures-prealables">
-<h3>Téléchargement et mesures préalables<a class="headerlink" href="#telechargement-et-mesures-prealables" title="Link to this heading">¶</a></h3>
+<section id="installation-du-projet-en-developpement">
+<h3>Installation du projet en développement<a class="headerlink" href="#installation-du-projet-en-developpement" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/path/to/OCProject_Lettings</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">venv/bin/activate</span></code> ou <code class="docutils literal notranslate"><span class="pre">venv\Scripts\activate</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code></p></li>
-<li><p>Créer un fichier <strong>.env</strong> sur base de la structure du fichier <strong>.env.exemple</strong></p></li>
+<li><p>Créer un fichier <code class="docutils literal notranslate"><span class="pre">.env</span></code> sur base de la structure du fichier <code class="docutils literal notranslate"><span class="pre">.env.exemple</span></code></p></li>
 </ul>
 <section id="creation-d-un-project-dans-sentry-io">
 <h4>Creation d’un project dans Sentry.io<a class="headerlink" href="#creation-d-un-project-dans-sentry-io" title="Link to this heading">¶</a></h4>
@@ -88,7 +88,7 @@
 <li><p>Cliquer sur le bouton <strong>Create Project</strong> pour finaliser l’opération</p></li>
 <li><p>Sentry confirmera la création du projet, en fournissant quelques informations pour débuter.</p></li>
 <li><p>Dans l’exenple de code, il fournira une clef <strong>dns</strong>.</p></li>
-<li><p>Copier cette clef dans le fichier <strong>.env</strong></p></li>
+<li><p>Copier cette clef dans le fichier <code class="docutils literal notranslate"><span class="pre">.env</span></code></p></li>
 </ul>
 </section>
 <section id="creation-d-une-clef-secrete-django">
@@ -97,7 +97,7 @@
 <li><p>Ouvrir un terminal python avec la commande <code class="docutils literal notranslate"><span class="pre">python</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">secrets</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">print(secrets.token_urlsafe())</span></code></p></li>
-<li><p>copier la valeur dans le fichier <strong>.env</strong></p></li>
+<li><p>copier la valeur dans le fichier <code class="docutils literal notranslate"><span class="pre">.env</span></code></p></li>
 </ul>
 </section>
 <section id="adresse-de-la-base-de-donnees">
@@ -109,17 +109,17 @@
 <section id="activation-du-mode-developpement">
 <h4>Activation du mode Développement<a class="headerlink" href="#activation-du-mode-developpement" title="Link to this heading">¶</a></h4>
 <ul class="simple">
-<li><p>Donner la valeur <strong>True</strong> à la variable <strong>DEBUG</strong> dans le fichier <strong>.env</strong></p></li>
+<li><p>Donner la valeur <strong>True</strong> à la variable <strong>DEBUG</strong> dans le fichier <code class="docutils literal notranslate"><span class="pre">.env</span></code></p></li>
 </ul>
 </section>
-</section>
 <section id="lancement-du-site-local">
-<h3>Lancement du site local<a class="headerlink" href="#lancement-du-site-local" title="Link to this heading">¶</a></h3>
+<h4>Lancement du site local<a class="headerlink" href="#lancement-du-site-local" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span></code></p></li>
 <li><p>Aller sur <a class="reference external" href="http://localhost:8000">http://localhost:8000</a> dans un navigateur.</p></li>
 <li><p>Confirmer que le site fonctionne et qu’il est possible de naviguer (vous devriez voir plusieurs profils et locations).</p></li>
 </ul>
+</section>
 </section>
 </section>
 <section id="demarrage-rapide">
@@ -156,24 +156,29 @@
 <section id="technologie-et-languages">
 <h2>Technologie et languages<a class="headerlink" href="#technologie-et-languages" title="Link to this heading">¶</a></h2>
 <section id="languages">
-<h3>languages<a class="headerlink" href="#languages" title="Link to this heading">¶</a></h3>
+<h3>Languages<a class="headerlink" href="#languages" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>python 3.10</p></li>
+<li><p>CSS</p></li>
 <li><p>HTML</p></li>
+<li><p>javascript</p></li>
 </ul>
 </section>
 <section id="technologie">
 <h3>Technologie<a class="headerlink" href="#technologie" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p>Django 3.0</p></li>
-<li><p>SQLite3</p></li>
-<li><p>Bootstrap v5.1.3</p></li>
-<li><p>BeautifulSoup4 v4.12</p></li>
-<li><p>Flake8 v3.7</p></li>
-<li><p>Coverage v7.4</p></li>
-<li><p>Pytest v7.4</p></li>
-<li><p>Sphinx v7.2</p></li>
-</ul>
+<p><strong>Site web</strong>
+- Django 3.0
+- SQLite3
+- Bootstrap v5.1.3
+- WhiteNoise v6.6.0</p>
+<p><strong>Testing</strong>
+- BeautifulSoup4 v4.12
+- Flake8 v3.7
+- Coverage v7.4
+- Pytest v7.4</p>
+<p><strong>Documentation</strong>
+- Sphinx v7.2
+- Graphviz v2.42</p>
 </section>
 </section>
 </section>

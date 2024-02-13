@@ -21,7 +21,8 @@ def index(request):
     :rtype: HttpResponse
 
     :raises Http404: Send page 404 if Letting is not found Letting.DoesNotExist
-    :raises exception Exception: If any other issue append during the retreving of the letting
+    :raises exception Exception: If any other issue append
+    :raises exception Exception: during the retreving of the letting
     """
     try:
         lettings_list = Letting.objects.all()

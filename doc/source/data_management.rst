@@ -6,12 +6,12 @@ Structure de la base de données
 .. graphviz:: db_schema.dot
 
 
-modéle profiles
----------------
+Modèle **profiles**
+-------------------
 .. automodule:: profiles.models
     :members:
 
-modéle lettings
----------------
+Modèle **lettings**
+-------------------
 .. automodule:: lettings.models
     :members:

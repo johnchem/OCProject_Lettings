@@ -71,7 +71,7 @@ jobs:
       - run:
           command: |
             sudo apt update -y
-            sudo apt install graphviz-dev -y
+            sudo apt install libgraphviz-dev -y
       - run:
           command: |
             python3 -m venv venv

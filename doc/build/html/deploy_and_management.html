@@ -37,7 +37,7 @@
   <section id="mise-en-production">
 <h1>Mise en production<a class="headerlink" href="#mise-en-production" title="Link to this heading">¶</a></h1>
 <section id="flux-de-travail">
-<h2>flux de travail<a class="headerlink" href="#flux-de-travail" title="Link to this heading">¶</a></h2>
+<h2>Flux de travail<a class="headerlink" href="#flux-de-travail" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Modification du code source</p></li>
 <li><p>Commit des changements vers le repertoire distant</p></li>
@@ -45,19 +45,22 @@
 <li><p>Lancement de la suite de test</p></li>
 <li><p>Lancement du test de couverture du code</p></li>
 <li><p>Lancement du test de Linting</p></li>
-<li><p>Les résultats du test de Linting et de courverture ne sont pas blocant</p></li>
 <li><p>Si la suite de test se termine avec succés, circleCI à la création du conteneur Docker</p></li>
 <li><p>Aprés avoir reçu un tag unique, l’image est envoyé sur dockerHub</p></li>
 <li><p>La réception d’une nouvelle image sur dockerHub déclanche la routina par Render</p></li>
 <li><p>Render, au signal d’une nouvelle image, va récupérer celle-ci.</p></li>
 <li><p>Lancer une série de commande pour lancer le conteneur, distribuer les fichiers statiques et lancer le serveur Django</p></li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Les résultats du test de Linting et de couverture ne sont pas blocant</p>
+</div>
 </section>
-<section id="gestion-du-deploiement">
-<h2>Gestion du deploiement<a class="headerlink" href="#gestion-du-deploiement" title="Link to this heading">¶</a></h2>
-<section id="configuration-du-fichier-config-yml">
-<h3>Configuration du fichier config.yml<a class="headerlink" href="#configuration-du-fichier-config-yml" title="Link to this heading">¶</a></h3>
-<p>Le fichier <cite>.circleci/config.yml</cite> permet de configurer une série de tâche. Par défaut, ces tâches sont excécutées dans leurs ordres de définitions. Il est possible de créer des workflows pour définir un flux personnalisé selon les besoins.</p>
+<section id="configuration-du-fichier-config-yml-pour-circleci">
+<h2>Configuration du fichier config.yml pour circleCI<a class="headerlink" href="#configuration-du-fichier-config-yml-pour-circleci" title="Link to this heading">¶</a></h2>
+<p>Le fichier <code class="docutils literal notranslate"><span class="pre">.circleci/config.yml</span></code> permet de configurer une série de tâche. Par défaut, ces tâches sont excécutées dans leurs ordres de définitions. Il est possible de créer des workflows pour définir un flux personnalisé selon les besoins.</p>
+<section id="configuration-des-suites-de-tests">
+<h3>Configuration des suites de tests<a class="headerlink" href="#configuration-des-suites-de-tests" title="Link to this heading">¶</a></h3>
 <p>Exemple de configuration pour la réalisation des tests unitaire
 * selectionner une image docker depuis circleCI</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="p">:</span>
@@ -84,6 +87,15 @@
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">restore_cache</span><span class="p">:</span>
     <span class="n">key</span><span class="p">:</span> <span class="n">deps1</span><span class="o">-</span><span class="p">{{</span> <span class="o">.</span><span class="n">Branch</span> <span class="p">}}</span><span class="o">-</span><span class="p">{{</span> <span class="n">checksum</span> <span class="s2">&quot;requirements.txt&quot;</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>mise à jour des paquets de l’image docker et installation de graphviz pour la l’exécution de la documentation.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">run</span><span class="p">:</span>
+    <span class="n">command</span><span class="p">:</span> <span class="o">|</span>
+      <span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span> <span class="o">-</span><span class="n">y</span>
+      <span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">graphviz</span><span class="o">-</span><span class="n">dev</span> <span class="o">-</span><span class="n">y</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -118,30 +130,9 @@
 </dl>
 </li>
 </ul>
-<p>on attribut un nom de workflow au sommet de l’arbre. Puis on viens définir les différentes tâches nécéssaires dans le workflow. Quand 2 taches sont au même niveau, les tâches sont exécutées de manière concurente. Pour définir une excécution séquentielle, il faut utiliser l’option <cite>requires</cite>. Cette option définie que la tâche ne doit pas être exécutée si l’une des tâches renseignées ne se termine pas avec un succés.
-L’option <cite>filters</cite> définie les différents cas de figure dans lesquels la tâche doit être exécutée.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test_build_and_push</span><span class="p">:</span>
-<span class="n">jobs</span><span class="p">:</span>
-  <span class="o">-</span> <span class="n">pytest</span>
-  <span class="o">-</span> <span class="n">coverage</span>
-  <span class="o">-</span> <span class="n">linting</span>
-  <span class="o">-</span> <span class="n">container</span><span class="p">:</span>
-      <span class="n">context</span><span class="p">:</span>
-        <span class="o">-</span> <span class="n">docker_hub_creds</span>
-      <span class="n">requires</span><span class="p">:</span>
-        <span class="o">-</span> <span class="n">pytest</span>
-      <span class="n">filters</span><span class="p">:</span>
-        <span class="n">branches</span><span class="p">:</span>
-          <span class="n">only</span><span class="p">:</span> <span class="n">master</span>
-</pre></div>
-</div>
 </section>
-<section id="configuration-du-projet-dans-circleci">
-<h3>Configuration du projet dans circleCI<a class="headerlink" href="#configuration-du-projet-dans-circleci" title="Link to this heading">¶</a></h3>
-</section>
-</section>
-<section id="gestion-de-l-application-et-du-deploiement">
-<h2>Gestion de l’application et du deploiement<a class="headerlink" href="#gestion-de-l-application-et-du-deploiement" title="Link to this heading">¶</a></h2>
+<section id="configuration-de-la-conteneurisation">
+<h3>Configuration de la conteneurisation<a class="headerlink" href="#configuration-de-la-conteneurisation" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>chargement d’une image docker pour l’excecution des commandes de conteneurisation</p></li>
 </ul>
@@ -157,8 +148,6 @@ L’option <cite>filters</cite> définie les différents cas de figure dans lesq
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">environment</span><span class="p">:</span>
   <span class="n">COMMIT_HASH</span><span class="p">:</span> <span class="o">&lt;&lt;</span><span class="n">pipeline</span><span class="o">.</span><span class="n">trigger_parameters</span><span class="o">.</span><span class="n">github_app</span><span class="o">.</span><span class="n">commit_sha</span><span class="o">&gt;&gt;</span>
-    <span class="c1">#   username: $DOCKERHUB_USERNAME</span>
-    <span class="c1">#   password: $DOCKERHUB_PASSWORD</span>
 </pre></div>
 </div>
 <ul>
@@ -209,6 +198,49 @@ command: |
 </li>
 </ul>
 </section>
+<section id="configuration-des-workflows">
+<h3>Configuration des workflows<a class="headerlink" href="#configuration-des-workflows" title="Link to this heading">¶</a></h3>
+<p>on attribut un nom de workflow au sommet de l’arbre. Puis on viens définir les différentes tâches nécéssaires dans le workflow. Quand 2 taches sont au même niveau, les tâches sont exécutées de manière concurente. Pour définir une excécution séquentielle, il faut utiliser l’option <cite>requires</cite>. Cette option définie que la tâche ne doit pas être exécutée si l’une des tâches renseignées ne se termine pas avec un succés.
+L’option <cite>filters</cite> définie les différents cas de figure dans lesquels la tâche doit être exécutée.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test_build_and_push</span><span class="p">:</span>
+<span class="n">jobs</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">pytest</span>
+  <span class="o">-</span> <span class="n">coverage</span>
+  <span class="o">-</span> <span class="n">linting</span>
+  <span class="o">-</span> <span class="n">container</span><span class="p">:</span>
+      <span class="n">context</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">docker_hub_creds</span>
+      <span class="n">requires</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">pytest</span>
+      <span class="n">filters</span><span class="p">:</span>
+        <span class="n">branches</span><span class="p">:</span>
+          <span class="n">only</span><span class="p">:</span> <span class="n">master</span>
+</pre></div>
+</div>
+</section>
+<section id="configuration-du-projet-dans-circleci">
+<h3>Configuration du projet dans circleCI<a class="headerlink" href="#configuration-du-projet-dans-circleci" title="Link to this heading">¶</a></h3>
+<p>Lors de la creation du projet dans circleCI, le formulaire demande un nom de projet et la creation d’une clef SSH vers github. La clef public est passé dans github et la clef privé doit être passé dans le formulaire. Enfin le formulaire va demander d’indiquer le répertoire du projet et indentifier si un fichier de configuration existe sous <cite>.circleci/config.yml</cite>.</p>
+<p>Dans les paramétres d’organisations, on va créer un contexte qui permettra de maintenir les identifiants connection à dockerhub commun à plusieurs projet. Dans le sous-menu <strong>contexts</strong>, cliquez sur <strong>Create Context</strong> puis <strong>Add Environmnent Variable</strong>. Créer la variable <strong>DOCKERHUB_PASSWORD</strong> puis la clef <strong>DOCKERHUB_USERNAME</strong>.</p>
+<p>Dans les paramétres du projet, on va venir créer les variables d’environment nécéssaire à l’exécution et aux tests du projet. ces variables sont les mêmes que celles du fichier <cite>.env</cite>. En effet, le fichier contenant les variables n’est pas disponible dans le répertoire publique, il faut donc que circleCI servent celles-ci lors des tests.</p>
+</section>
+<section id="configuration-de-render-pour-le-deploiement">
+<h3>Configuration de Render pour le déploiement<a class="headerlink" href="#configuration-de-render-pour-le-deploiement" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Créer un nouveau <strong>Web Service</strong> dans votre dashboard Render.</p></li>
+<li><p>Selectionner <em>Deploy an existing image from a registry</em></p></li>
+<li><p>Introduire l’adresse URL de l’image sur Dockerhub <cite>docker.io/&lt;namespace&gt;/&lt;image_name&gt;:&lt;version&gt;</cite>, par exemple : <cite>docker.io/johnchem/orange_county:latest</cite></p></li>
+<li><p>Définir un nom pour le web service et selectionner les paramétres de service pour le service</p></li>
+<li><p>Ajouter dans les variables d’environment : <cite>ENV_PATH = /etc/secrets/.env</cite>. Cette variable permet d’indiquer le chemin du fichier <cite>.env</cite> nécéssaire lors de l’exécution du module <cite>oc_letting_site.settings.py</cite>.</p></li>
+<li><p>cliquer sur le boutton « Advanced » pour afficher plus d’options de configuration</p></li>
+<li><p>Ajouter un fichier <cite>.env</cite> en cliquant sur le boutton <em>+ Add Scret File</em>. le nom sera <em>.env</em> et les valeurs seront le contenu du fichier <em>.env.exemple</em> avec les champs remplis selon les intructions.</p></li>
+<li><p>Sous l’option <em>Docker Command</em> introduisez : <cite>/bin/sh -c python3 manage.py collectstatic –noinput &amp;&amp; python3 manage.py runserver 0.0.0.0:8000</cite>. La commande va exécuter la migration des fichiers statiques sur le serveur puis lancer le serveur docker sur le port 8000.</p></li>
+<li><p>Enfin cliquer sur <strong>Create Web Service</strong> pour deployer le site.</p></li>
+</ul>
+<p>La dernière étape est la configuration du hook pour le deploiement automatique :
+- Dans le dashbord, allez dans les <em>settings</em> du web service et dans le sous-menu <em>settings</em>, copier l’url <cite>Deploy Hook</cite> et l’introduire dans le sous-menu <em>Web Hook</em> pour que Dockerhub signal à render chaque fois qu’une nouvelle version de l’image est disponible.</p>
+</section>
+</section>
 </section>
 
 
@@ -234,9 +266,8 @@ command: |
 <li class="toctree-l1"><a class="reference internal" href="use_guide.html">Guide d'utilisation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_management.html">Gestion des données</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Mise en production et maintenance</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#flux-de-travail">flux de travail</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gestion-du-deploiement">Gestion du deploiement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gestion-de-l-application-et-du-deploiement">Gestion de l’application et du deploiement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#flux-de-travail">Flux de travail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-du-fichier-config-yml-pour-circleci">Configuration du fichier config.yml pour circleCI</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api_description.html">Interface de programmation</a></li>

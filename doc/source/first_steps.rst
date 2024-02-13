@@ -29,12 +29,12 @@ Création de l'environnement virtuel
 - Confirmer que la commande ``pip`` exécute l'exécutable pip dans l'environnement virtuel, ``which pip`` (Linux) ou ``powershell Get-Command python`` (Windows)
 - Pour désactiver l'environnement, ``deactivate``
 
-Téléchargement et mesures préalables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installation du projet en développement
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 - ``cd /path/to/OCProject_Lettings``
 - ``source venv/bin/activate`` ou ``venv\Scripts\activate``
 - ``pip install -r requirements.txt``
-- Créer un fichier **.env** sur base de la structure du fichier **.env.exemple**
+- Créer un fichier ``.env`` sur base de la structure du fichier ``.env.exemple``
 
 Creation d'un project dans Sentry.io
 """"""""""""""""""""""""""""""""""""
@@ -46,14 +46,14 @@ Creation d'un project dans Sentry.io
 - Cliquer sur le bouton **Create Project** pour finaliser l'opération
 - Sentry confirmera la création du projet, en fournissant quelques informations pour débuter. 
 - Dans l'exenple de code, il fournira une clef **dns**.
-- Copier cette clef dans le fichier **.env**
+- Copier cette clef dans le fichier ``.env``
 
 Creation d'une clef secrete Django
 """"""""""""""""""""""""""""""""""
 - Ouvrir un terminal python avec la commande ``python``
 - ``import secrets``
 - ``print(secrets.token_urlsafe())``
-- copier la valeur dans le fichier **.env**
+- copier la valeur dans le fichier ``.env``
 
 Adresse de la base de données
 """""""""""""""""""""""""""""
@@ -61,10 +61,10 @@ Adresse de la base de données
 
 Activation du mode Développement
 """"""""""""""""""""""""""""""""
-- Donner la valeur **True** à la variable **DEBUG** dans le fichier **.env** 
+- Donner la valeur **True** à la variable **DEBUG** dans le fichier ``.env`` 
 
 Lancement du site local
-^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""
 - ``python manage.py runserver``
 - Aller sur `http://localhost:8000 <http://localhost:8000>`_ dans un navigateur.
 - Confirmer que le site fonctionne et qu'il est possible de naviguer (vous devriez voir plusieurs profils et locations).
@@ -96,19 +96,27 @@ Panel d'administration
 Technologie et languages
 ------------------------
 
-languages
+Languages
 ^^^^^^^^^
 - python 3.10
+- CSS
 - HTML
+- javascript
 
 Technologie
 ^^^^^^^^^^^
+**Site web**
 - Django 3.0
 - SQLite3
 - Bootstrap v5.1.3
+- WhiteNoise v6.6.0
+
+**Testing**
 - BeautifulSoup4 v4.12
 - Flake8 v3.7
 - Coverage v7.4
 - Pytest v7.4
-- Sphinx v7.2 
 
+**Documentation**
+- Sphinx v7.2 
+- Graphviz v2.42
