@@ -103,10 +103,6 @@ jobs:
       - restore_cache:
           key: v1-{{ .Branch }}
       - run:
-          command: |
-            sudo apt update -y
-            sudo apt install libgraphviz-dev -y
-      - run:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
