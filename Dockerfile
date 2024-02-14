@@ -2,6 +2,7 @@ FROM python:3.10-alpine3.19
 
 RUN apk update \
 && apk add git \
+&& apk add gcc \
 && apk add --no-cache --upgrade bash \
 && apk add graphviz-dev
 
