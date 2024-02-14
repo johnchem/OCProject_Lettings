@@ -42,3 +42,28 @@ Enfin la création du diagramme se fait via la commande :
 
 Celle-ci prend la forme : 
 ``python manage.py graph-models <applications> -o <fichier_de_sortie>`` 
+
+Configuration de Read the Docs
+------------------------------
+
+- Creation d'un fichier de configuration `.readthedocs.yaml` à la racine du projet
+
+.. code-block::
+  build:
+    os: ubuntu-22.04
+  tools:
+    python: "3.12"
+
+.. code-block::
+  sphinx:
+    configuration: doc/source/conf.py
+
+.. code-block::
+  python:
+    install:
+      - requirements: requirements.txt
+
+- connecter votre compte github
+- créer un nouveau projet
+- selectionner le dépôt
+- admin : ajouter les variables d'environnements

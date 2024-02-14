@@ -17,6 +17,62 @@ Flux de travail
 
 .. note:: Les résultats du test de Linting et de couverture ne sont pas blocant
 
+
+Configuration du fichier dockerfile pour la conteneurisation
+------------------------------------------------------------
+La structure du fichier d'instruction pour la contruction de l'image docker est décrit ci-dessous : 
+
+- Obtention d'une image docker de base
+
+.. code-block::
+  
+  FROM python:3.10-alpine3.19
+
+- Mise à jour de l'OS, git est nécéssaire pour l'importation du répertoire lors de la dockeurisation par circleCI, gcc et g++ sont utilisé par pygraphviz-dev
+
+.. code-block::
+  
+  RUN apk update \
+  && apk add --no-cache git \
+  && apk add --no-cache gcc \
+  && apk add --no-cache g++ \
+  && apk add --no-cache --upgrade bash \
+  && apk add --no-cache graphviz-dev
+
+- Changement du dossier de travail et copie des fichiers sources
+
+.. code-block::
+  
+  WORKDIR /OCProject_Lettings
+  COPY . /OCProject_Lettings
+
+- Création de l'environnement virtuel et installation des librairies
+
+.. code-block::
+  
+  ENV VIRTUAL_ENV=/venv
+  RUN python3 -m venv $VIRTUAL_ENV
+  ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+  RUN pip3 install --upgrade pip \
+  && pip3 install -r requirements.txt --no-cache-dir
+
+- Configuration du port de sortie, et paramétres pour limiter la formation de cache
+
+.. code-block::
+  
+  EXPOSE 8000
+
+  ENV DJANGO_SETTINGS_MODULE=oc_lettings_site.settings
+  ENV PYTHONDONTWRITEBYTECODE 1 #av
+  ENV PYTHONUNBUFFERED 1
+
+- Commande pour l'exécution direct de l'image docker
+
+.. code-block::
+  
+  CMD ["python3", "manage.py", "collectstatic", "--noinput", "&&", "python3", "manage.py", "runserver", "0.0.0.0:8000"]
+
 Configuration du fichier config.yml pour circleCI
 -------------------------------------------------
 
@@ -181,15 +237,15 @@ L'option `filters` définie les différents cas de figure dans lesquels la tâch
 
 
 Configuration du projet dans circleCI
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------
 
 Lors de la creation du projet dans circleCI, le formulaire demande un nom de projet et la creation d'une clef SSH vers github. 
 La clef public est passé dans github et la clef privé doit être passé dans le formulaire. 
-Enfin le formulaire va demander d'indiquer le répertoire du projet et indentifier si un fichier de configuration existe sous `.circleci/config.yml`.
+Enfin le formulaire va demander d'indiquer le répertoire du projet et identifier si un fichier de configuration existe sous `.circleci/config.yml`.
 
 Dans les paramétres d'organisations, on va créer un contexte qui permettra de maintenir les identifiants connection à dockerhub commun à plusieurs projet. 
 Dans le sous-menu **contexts**, cliquez sur **Create Context** puis **Add Environmnent Variable**. 
-Créer la variable **DOCKERHUB_PASSWORD** puis la clef **DOCKERHUB_USERNAME**.
+Créer les variables **DOCKERHUB_PASSWORD** et **DOCKERHUB_USERNAME**.
 
 Dans les paramétres du projet, on va venir créer les variables d'environment nécéssaire à l'exécution et aux tests du projet. 
 Ces variables sont les mêmes que celles du fichier `.env`. 
@@ -197,18 +253,19 @@ En effet, le fichier contenant les variables n'est pas disponible dans le réper
 CircleCI doit donc servir celles-ci lors des tests.
 
 Configuration de Render pour le déploiement
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------
+
 - Créer un nouveau **Web Service** dans votre dashboard Render. 
 - Selectionner **Deploy an existing image from a registry**
 - Introduire l'adresse URL de l'image sur Dockerhub ``docker.io/<namespace>/<image_name>:<version>``, par exemple : ``docker.io/johnchem/orange_county:latest``
 - Définir un nom pour le web service et selectionner les paramétres de service pour le service
 - Ajouter dans les variables d'environment : **ENV_PATH; /etc/secrets/.env**. Cette variable permet d'indiquer le chemin du fichier ``.env`` nécéssaire lors de l'exécution du module ``oc_letting_site.settings.py``.
 - cliquer sur le boutton "Advanced" pour afficher plus d'options de configuration
-- Ajouter un fichier ``.env`` en cliquant sur le boutton **+ Add Scret File**. le nom sera **.env** et les valeurs seront le contenu du fichier **.env.exemple** avec les champs remplis selon les intructions.
+- Ajouter un fichier ``.env`` en cliquant sur le boutton **+ Add Secret File**. le nom sera **.env** et les valeurs seront le contenu du fichier **.env.exemple** avec les champs remplis selon les intructions.
 - Sous l'option **Docker Command** introduisez : ``/bin/sh -c python3 manage.py collectstatic --noinput && python3 manage.py runserver 0.0.0.0:8000``. La commande va exécuter la migration des fichiers statiques sur le serveur puis lancer le serveur docker sur le port 8000.
 - Enfin cliquer sur **Create Web Service** pour deployer le site.
 
 La dernière étape est la configuration du *Web hook* pour le deploiement automatique :
 
 - Dans le dashbord, allez dans les **settings** du web service et dans le sous-menu **settings**
-- Copier l'url ``Deploy Hook`` et l'introduire dans le sous-menu **Web Hook**
+- Copier l'url ``Deploy Hook`` et l'introduire dans le sous-menu **Web Hook** de DockerHub

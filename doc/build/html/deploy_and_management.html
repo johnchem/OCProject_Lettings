@@ -58,6 +58,60 @@
 <p>Les résultats du test de Linting et de couverture ne sont pas blocant</p>
 </div>
 </section>
+<section id="configuration-du-fichier-dockerfile-pour-la-conteunerisation">
+<h2>Configuration du fichier dockerfile pour la conteunerisation<a class="headerlink" href="#configuration-du-fichier-dockerfile-pour-la-conteunerisation" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Obtention d’une image docker de base</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">python</span><span class="p">:</span><span class="mf">3.10</span><span class="o">-</span><span class="n">alpine3</span><span class="mf">.19</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Mise à jour de l’OS, git est nécéssaire pour l’importation du répertoire lors de la dockeurisation par circleCI, gcc et g++ sont utilisé par pygraphviz-dev</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RUN</span> <span class="n">apk</span> <span class="n">update</span> \
+<span class="o">&amp;&amp;</span> <span class="n">apk</span> <span class="n">add</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">cache</span> <span class="n">git</span> \
+<span class="o">&amp;&amp;</span> <span class="n">apk</span> <span class="n">add</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">cache</span> <span class="n">gcc</span> \
+<span class="o">&amp;&amp;</span> <span class="n">apk</span> <span class="n">add</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">cache</span> <span class="n">g</span><span class="o">++</span> \
+<span class="o">&amp;&amp;</span> <span class="n">apk</span> <span class="n">add</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">cache</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">bash</span> \
+<span class="o">&amp;&amp;</span> <span class="n">apk</span> <span class="n">add</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">cache</span> <span class="n">graphviz</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>changement du dossier de travail et copies des fichiers sources</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WORKDIR</span> <span class="o">/</span><span class="n">OCProject_Lettings</span>
+<span class="n">COPY</span> <span class="o">.</span> <span class="o">/</span><span class="n">OCProject_Lettings</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Création de l’environnement virtuel et installation des librairies</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ENV VIRTUAL_ENV=/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH=&quot;$VIRTUAL_ENV/bin:$PATH&quot;
+
+RUN pip3 install --upgrade pip \
+&amp;&amp; pip3 install -r requirements.txt --no-cache-dir
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>configuration du port de sortie, et paramétres pour limiter la formation de cache</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EXPOSE</span> <span class="mi">8000</span>
+
+<span class="n">ENV</span> <span class="n">DJANGO_SETTINGS_MODULE</span><span class="o">=</span><span class="n">oc_lettings_site</span><span class="o">.</span><span class="n">settings</span>
+<span class="n">ENV</span> <span class="n">PYTHONDONTWRITEBYTECODE</span> <span class="mi">1</span> <span class="c1">#av</span>
+<span class="n">ENV</span> <span class="n">PYTHONUNBUFFERED</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>commande pour l’exécution direct de l’image docker</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CMD</span> <span class="p">[</span><span class="s2">&quot;python3&quot;</span><span class="p">,</span> <span class="s2">&quot;manage.py&quot;</span><span class="p">,</span> <span class="s2">&quot;collectstatic&quot;</span><span class="p">,</span> <span class="s2">&quot;--noinput&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;python3&quot;</span><span class="p">,</span> <span class="s2">&quot;manage.py&quot;</span><span class="p">,</span> <span class="s2">&quot;runserver&quot;</span><span class="p">,</span> <span class="s2">&quot;0.0.0.0:8000&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
 <section id="configuration-du-fichier-config-yml-pour-circleci">
 <h2>Configuration du fichier config.yml pour circleCI<a class="headerlink" href="#configuration-du-fichier-config-yml-pour-circleci" title="Link to this heading">¶</a></h2>
 <p>Le fichier <code class="docutils literal notranslate"><span class="pre">.circleci/config.yml</span></code> permet de configurer une série de tâche. Par défaut, ces tâches sont excécutées dans leurs ordres de définitions. Il est possible de créer des workflows pour définir un flux personnalisé selon les besoins.</p>

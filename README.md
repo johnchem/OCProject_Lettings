@@ -75,3 +75,39 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+## Déploiement
+### Introduction
+- Modification du code source et commit des changements vers le repertoire distant
+- Lancement de la suite de test
+- Lancement du test de couverture du code
+- Lancement du test de Linting
+- Création du conteneur Docker par CircleCI si la suite de test se termine avec succés 
+- Envoie de l'image sur dockerHub aprés avoir reçu un tag unique, 
+- Dockerhub signal à Render la réception d'une nouvelle version de l'image  
+- Récupéreration de la nouvelle image par Render 
+- Lancement d'une série de commande pour lancer le conteneur, distribuer les fichiers statiques et lancer le serveur Django
+
+### Configuration de CircleCI
+
+- Créer un nouveau projet dans circleCI
+- Introduire un nom de projet
+- Créer une clef SSH vers github, la clef public est passé dans github et la clef privé doit être passé dans le formulaire
+- Indiquer le répertoire du projet et identifier si un fichier de configuration existe sous `.circleci/config.yml`
+- Créer un contexte avec les variables **DOCKERHUB_PASSWORD** et **DOCKERHUB_USERNAME** avec vos informations du dockerHub
+- Créer les variables d'environments selon les indications du fichier `.env.exemple`. La **SECRET_KEY** ne doit pas être celle utilisé pour la mise en production
+
+### Configuration de Render
+- Créer un nouveau **Web Service** dans votre dashboard Render. 
+- Selectionner **Deploy an existing image from a registry**
+- Introduire l'adresse URL de l'image sur Dockerhub `docker.io/<namespace>/<image_name>:<version>`
+- Ajouter dans les variables d'environment : **ENV_PATH; /etc/secrets/.env**.
+- cliquer sur le boutton "Advanced" pour afficher plus d'options de configuration
+- Ajouter un fichier `.env` en cliquant sur le boutton **+ Add Secret File**. le nom sera **.env** et les valeurs seront le contenu du fichier **.env.exemple** avec les champs remplis selon les intructions.
+- Sous l'option **Docker Command** introduisez : `/bin/sh -c python3 manage.py collectstatic --noinput && python3 manage.py runserver 0.0.0.0:8000`
+- Enfin cliquer sur **Create Web Service** pour deployer le site.
+
+La dernière étape est la configuration du *Web hook* pour le deploiement automatique :
+
+- Dans le dashbord, allez dans les **settings** du web service et dans le sous-menu **settings**
+- Copier l'url `Deploy Hook` et l'introduire dans le sous-menu **Web Hook** de DockerHub

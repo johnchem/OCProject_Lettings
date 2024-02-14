@@ -17,6 +17,61 @@ Flux de travail
 
 .. note:: Les résultats du test de Linting et de couverture ne sont pas blocant
 
+
+Configuration du fichier dockerfile pour la conteunerisation
+------------------------------------------------------------
+
+- Obtention d'une image docker de base
+
+.. code-block::
+  
+  FROM python:3.10-alpine3.19
+
+- Mise à jour de l'OS, git est nécéssaire pour l'importation du répertoire lors de la dockeurisation par circleCI, gcc et g++ sont utilisé par pygraphviz-dev
+
+.. code-block::
+  
+  RUN apk update \
+  && apk add --no-cache git \
+  && apk add --no-cache gcc \
+  && apk add --no-cache g++ \
+  && apk add --no-cache --upgrade bash \
+  && apk add --no-cache graphviz-dev
+
+- changement du dossier de travail et copies des fichiers sources
+
+.. code-block::
+  
+  WORKDIR /OCProject_Lettings
+  COPY . /OCProject_Lettings
+
+- Création de l'environnement virtuel et installation des librairies
+
+.. code-block::
+  
+  ENV VIRTUAL_ENV=/venv
+  RUN python3 -m venv $VIRTUAL_ENV
+  ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+  RUN pip3 install --upgrade pip \
+  && pip3 install -r requirements.txt --no-cache-dir
+
+- configuration du port de sortie, et paramétres pour limiter la formation de cache
+
+.. code-block::
+  
+  EXPOSE 8000
+
+  ENV DJANGO_SETTINGS_MODULE=oc_lettings_site.settings
+  ENV PYTHONDONTWRITEBYTECODE 1 #av
+  ENV PYTHONUNBUFFERED 1
+
+- commande pour l'exécution direct de l'image docker
+
+.. code-block::
+  
+  CMD ["python3", "manage.py", "collectstatic", "--noinput", "&&", "python3", "manage.py", "runserver", "0.0.0.0:8000"]
+
 Configuration du fichier config.yml pour circleCI
 -------------------------------------------------
 
