@@ -3,7 +3,7 @@ FROM python:3.10-alpine3.19
 RUN apk update \
 && apk add git \
 && apk add --no-cache --upgrade bash \
-&& apk add libgraphviz-dev
+&& apk add graphviz-dev
 
 WORKDIR /OCProject_Lettings
 COPY . /OCProject_Lettings
