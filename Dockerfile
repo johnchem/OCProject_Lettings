@@ -28,7 +28,7 @@ ENV DJANGO_SETTINGS_MODULE=oc_lettings_site.settings
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# command to start site
-CMD ["python3", "manage.py", "collectstatic", "--noinput", "&&", "python3", "manage.py", "runserver", "0.0.0.0:8000"]
+# command to start 
+CMD ./script.sh
 
 LABEL version="0.2"
