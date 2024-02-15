@@ -87,7 +87,7 @@ class TestSiteView:
         resp = client.get(url)
         soup = BeautifulSoup(resp.content, features="html.parser")
 
-        title = "Welcome to Freeway Homes"
+        title = "Welcome to Holiday Homes"
         re_button_profile = re.compile("Profiles")
         re_button_letting = re.compile("Letting")
 
