@@ -29,6 +29,6 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # command to start 
-CMD ./script.sh
+CMD sh ./script.sh
 
 LABEL version="0.2"
