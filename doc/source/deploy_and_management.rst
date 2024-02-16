@@ -15,7 +15,7 @@ Flux de travail
 #. Récupéreration de la nouvelle image par Render 
 #. Lancement d'une série de commande pour lancer le conteneur, distribuer les fichiers statiques et lancer le serveur Django
 
-.. note:: Les résultats du test de Linting et de couverture ne sont pas blocant
+.. note:: Les résultats du test de Linting et de couverture ne sont pas blocants
 
 
 Configuration du fichier dockerfile pour la conteneurisation
@@ -67,11 +67,19 @@ La structure du fichier d'instruction pour la contruction de l'image docker est 
   ENV PYTHONDONTWRITEBYTECODE 1 #av
   ENV PYTHONUNBUFFERED 1
 
-- Commande pour l'exécution direct de l'image docker
+- Le script d'exécution est lancé par la commande ci-dessous. 
 
 .. code-block::
   
-  CMD ["python3", "manage.py", "collectstatic", "--noinput", "&&", "python3", "manage.py", "runserver", "0.0.0.0:8000"]
+  CMD sh ./script.sh
+
+- Enfin, créer un nouveau fichier `script.sh` à la racine du projet
+
+.. code-block::
+
+  #/bin/sh
+  python3 manage.py collectstatic --noinput
+  python3 manage.py runserver 0.0.0.0:8000
 
 Configuration du fichier config.yml pour circleCI
 -------------------------------------------------
