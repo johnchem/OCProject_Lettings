@@ -105,9 +105,6 @@ jobs:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
     
-    environment:
-      COMMIT_HASH: $CIRCLE_SHA1
-    
     steps:
       - checkout
       - setup_remote_docker
@@ -121,6 +118,7 @@ jobs:
       - run:
           name: Build and Push application Docker image
           command: |
+            echo $CIRCLE_SHA1
             docker build -t $DOCKERHUB_USERNAME/orange_county:$CIRCLE_SHA1 -t $DOCKERHUB_USERNAME/orange_county:latest .
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push --all-tags $DOCKERHUB_USERNAME/orange_county
