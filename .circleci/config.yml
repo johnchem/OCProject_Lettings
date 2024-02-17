@@ -106,7 +106,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     
     environment:
-      COMMIT_HASH: <<pipeline.trigger_parameters.github_app.commit_sha>>
+      COMMIT_HASH: <<pipeline.git.revision>>
     
     steps:
       - checkout
