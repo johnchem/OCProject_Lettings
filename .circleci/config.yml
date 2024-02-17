@@ -115,7 +115,7 @@ jobs:
           command: |
             set +o pipefail
             docker load -i /caches/app.tar | true
-      - run: echo "$CIRCLE_BUILD_NUM-$CIRCLE_SHA1" >> .tag
+      - run: echo "$CIRCLE_SHA1" >> .tag
       - run:
           name: Build and Push application Docker image
           command: |
