@@ -166,13 +166,6 @@ Configuration de la conteneurisation
            username: $DOCKERHUB_USERNAME
            password: $DOCKERHUB_PASSWORD
 
-* chargement dans les variables d'environment du hash de commit pour l'identification de l'image docker
-
-.. code-block::
-
-     environment:
-       COMMIT_HASH: <<pipeline.trigger_parameters.github_app.commit_sha>>
-
 * Lancement des étapes de conteneurisation
 
   * récupération du code source
@@ -194,19 +187,32 @@ Configuration de la conteneurisation
      - restore_cache:
            keys:
              - v1-{{ .Branch }}
-           paths:
-             - /caches/app.tar
   
+  * chargement des caches Docker
+
+  .. code-block::
+
+    - run:
+        name: Load Docker image layer cache
+        command: |
+          set +o pipefail
+          docker load -i /caches/app.tar | true
+      
+  * création d'une variable pour l'identification de l'image Docker
+  
+  .. code-block::
+
+    - run: echo "$CIRCLE_SHA1" >> .tag
+
   * création d'une variable `TAG` et utilisation de celle-ci pour l'identification de l'image. Puis, connection au repertoire docker. Enfin, on pousse l'image sur dockerhub
 
   .. code-block::
 
      name: Build and Push application Docker image
      command: |
-       TAG=$COMMIT_HASH
-       docker build -t $DOCKERHUB_USERNAME/orange_county:$TAG -t $DOCKERHUB_USERNAME/orange_county:latest .
-       echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-       docker push $DOCKERHUB_USERNAME/orange_county:$TAG
+        docker build -t $DOCKERHUB_USERNAME/orange_county:$(cat .tag) -t $DOCKERHUB_USERNAME/orange_county:latest .
+        echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+        docker push --all-tags $DOCKERHUB_USERNAME/orange_county
     
   * on créer un cache pour faciliter la prochaine exécution
 
@@ -252,7 +258,7 @@ La clef public est passé dans github et la clef privé doit être passé dans l
 Enfin le formulaire va demander d'indiquer le répertoire du projet et identifier si un fichier de configuration existe sous `.circleci/config.yml`.
 
 Dans les paramétres d'organisations, on va créer un contexte qui permettra de maintenir les identifiants connection à dockerhub commun à plusieurs projet. 
-Dans le sous-menu **contexts**, cliquez sur **Create Context** puis **Add Environmnent Variable**. 
+Dans le sous-menu **contexts**, cliquez sur **Create Context**. Créer un context nommé **docker_hub_creds** puis **Add Environmnent Variable**. 
 Créer les variables **DOCKERHUB_PASSWORD** et **DOCKERHUB_USERNAME**.
 
 Dans les paramétres du projet, on va venir créer les variables d'environment nécéssaire à l'exécution et aux tests du projet. 
