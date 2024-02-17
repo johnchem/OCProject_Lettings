@@ -16,8 +16,8 @@ Le site est construit sur le framework Django. Le front-end est construit avec l
    Premiers pas <first_steps>
    Guide d'utilisation <use_guide>
    Gestion des données <data_management>
-   Mise en production et maintenance <deploy_and_management>
    Interface de programmation <api_description>
+   Mise en production et maintenance <deploy_and_management>
    Contruction de la documentaion <doc_generation>
 
 

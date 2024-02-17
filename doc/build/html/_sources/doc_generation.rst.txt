@@ -47,23 +47,32 @@ Configuration de Read the Docs
 ------------------------------
 
 - Creation d'un fichier de configuration `.readthedocs.yaml` à la racine du projet
+- Selection de l'OS pour la construction de la documentation et de la version de python.
+  Les paramétres par défault sont conservées.
 
 .. code-block::
+
   build:
     os: ubuntu-22.04
   tools:
     python: "3.12"
 
+- Indiquer le chemin vers le fichier de configuration de sphinx
+
 .. code-block::
+
   sphinx:
     configuration: doc/source/conf.py
 
+- Indiquer le fichier de réquis pour l'installation des dépendances
+
 .. code-block::
+
   python:
     install:
       - requirements: requirements.txt
 
-- connecter votre compte github
-- créer un nouveau projet
-- selectionner le dépôt
-- admin : ajouter les variables d'environnements
+- Sur le site de (readthedocs https://readthedocs.org/)_
+- Connecter vous avec votre compte github
+- Créer un nouveau projet et selectionner le dépôt avec le projet
+- Ajouter les variables d'environnements dans le menu **admin** du projet

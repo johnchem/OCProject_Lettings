@@ -15,8 +15,8 @@
     <script src="_static/translations.js?v=d99ca74e"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="Interface de programmation" href="api_description.html" />
-    <link rel="prev" title="Gestion des données" href="data_management.html" /> 
+    <link rel="next" title="Génération de la documentation" href="doc_generation.html" />
+    <link rel="prev" title="Interface de programmation" href="api_description.html" /> 
   </head><body>
       <div class="header" role="banner"><h1 class="heading"><a href="index.html">
           <span>Documentation Orange County Lettings </span></a></h1>
@@ -25,11 +25,11 @@
       <div class="topnav" role="navigation" aria-label="top navigation">
       
         <p>
-        «&#160;&#160;<a href="data_management.html">Gestion des données</a>
+        «&#160;&#160;<a href="api_description.html">Interface de programmation</a>
         &#160;&#160;::&#160;&#160;
         <a class="uplink" href="index.html">Contenu</a>
         &#160;&#160;::&#160;&#160;
-        <a href="api_description.html">Interface de programmation</a>&#160;&#160;»
+        <a href="doc_generation.html">Génération de la documentation</a>&#160;&#160;»
         </p>
 
       </div>
@@ -55,11 +55,12 @@
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Les résultats du test de Linting et de couverture ne sont pas blocant</p>
+<p>Les résultats du test de Linting et de couverture ne sont pas blocants</p>
 </div>
 </section>
-<section id="configuration-du-fichier-dockerfile-pour-la-conteunerisation">
-<h2>Configuration du fichier dockerfile pour la conteunerisation<a class="headerlink" href="#configuration-du-fichier-dockerfile-pour-la-conteunerisation" title="Link to this heading">¶</a></h2>
+<section id="configuration-du-fichier-dockerfile-pour-la-conteneurisation">
+<h2>Configuration du fichier dockerfile pour la conteneurisation<a class="headerlink" href="#configuration-du-fichier-dockerfile-pour-la-conteneurisation" title="Link to this heading">¶</a></h2>
+<p>La structure du fichier d’instruction pour la contruction de l’image docker est décrit ci-dessous :</p>
 <ul class="simple">
 <li><p>Obtention d’une image docker de base</p></li>
 </ul>
@@ -78,7 +79,7 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>changement du dossier de travail et copies des fichiers sources</p></li>
+<li><p>Changement du dossier de travail et copie des fichiers sources</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WORKDIR</span> <span class="o">/</span><span class="n">OCProject_Lettings</span>
 <span class="n">COPY</span> <span class="o">.</span> <span class="o">/</span><span class="n">OCProject_Lettings</span>
@@ -96,7 +97,7 @@ RUN pip3 install --upgrade pip \
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>configuration du port de sortie, et paramétres pour limiter la formation de cache</p></li>
+<li><p>Configuration du port de sortie, et paramétres pour limiter la formation de cache</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EXPOSE</span> <span class="mi">8000</span>
 
@@ -106,9 +107,17 @@ RUN pip3 install --upgrade pip \
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>commande pour l’exécution direct de l’image docker</p></li>
+<li><p>Le script d’exécution est lancé par la commande ci-dessous.</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CMD</span> <span class="p">[</span><span class="s2">&quot;python3&quot;</span><span class="p">,</span> <span class="s2">&quot;manage.py&quot;</span><span class="p">,</span> <span class="s2">&quot;collectstatic&quot;</span><span class="p">,</span> <span class="s2">&quot;--noinput&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;python3&quot;</span><span class="p">,</span> <span class="s2">&quot;manage.py&quot;</span><span class="p">,</span> <span class="s2">&quot;runserver&quot;</span><span class="p">,</span> <span class="s2">&quot;0.0.0.0:8000&quot;</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CMD</span> <span class="n">sh</span> <span class="o">./</span><span class="n">script</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Enfin, créer un nouveau fichier <cite>script.sh</cite> à la racine du projet</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#/bin/sh</span>
+<span class="n">python3</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">collectstatic</span> <span class="o">--</span><span class="n">noinput</span>
+<span class="n">python3</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">runserver</span> <span class="mf">0.0.0.0</span><span class="p">:</span><span class="mi">8000</span>
 </pre></div>
 </div>
 </section>
@@ -277,21 +286,22 @@ L’option <cite>filters</cite> définie les différents cas de figure dans lesq
 </pre></div>
 </div>
 </section>
+</section>
 <section id="configuration-du-projet-dans-circleci">
-<h3>Configuration du projet dans circleCI<a class="headerlink" href="#configuration-du-projet-dans-circleci" title="Link to this heading">¶</a></h3>
+<h2>Configuration du projet dans circleCI<a class="headerlink" href="#configuration-du-projet-dans-circleci" title="Link to this heading">¶</a></h2>
 <p>Lors de la creation du projet dans circleCI, le formulaire demande un nom de projet et la creation d’une clef SSH vers github.
 La clef public est passé dans github et la clef privé doit être passé dans le formulaire.
-Enfin le formulaire va demander d’indiquer le répertoire du projet et indentifier si un fichier de configuration existe sous <cite>.circleci/config.yml</cite>.</p>
+Enfin le formulaire va demander d’indiquer le répertoire du projet et identifier si un fichier de configuration existe sous <cite>.circleci/config.yml</cite>.</p>
 <p>Dans les paramétres d’organisations, on va créer un contexte qui permettra de maintenir les identifiants connection à dockerhub commun à plusieurs projet.
 Dans le sous-menu <strong>contexts</strong>, cliquez sur <strong>Create Context</strong> puis <strong>Add Environmnent Variable</strong>.
-Créer la variable <strong>DOCKERHUB_PASSWORD</strong> puis la clef <strong>DOCKERHUB_USERNAME</strong>.</p>
+Créer les variables <strong>DOCKERHUB_PASSWORD</strong> et <strong>DOCKERHUB_USERNAME</strong>.</p>
 <p>Dans les paramétres du projet, on va venir créer les variables d’environment nécéssaire à l’exécution et aux tests du projet.
 Ces variables sont les mêmes que celles du fichier <cite>.env</cite>.
 En effet, le fichier contenant les variables n’est pas disponible dans le répertoire publique.
 CircleCI doit donc servir celles-ci lors des tests.</p>
 </section>
 <section id="configuration-de-render-pour-le-deploiement">
-<h3>Configuration de Render pour le déploiement<a class="headerlink" href="#configuration-de-render-pour-le-deploiement" title="Link to this heading">¶</a></h3>
+<h2>Configuration de Render pour le déploiement<a class="headerlink" href="#configuration-de-render-pour-le-deploiement" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Créer un nouveau <strong>Web Service</strong> dans votre dashboard Render.</p></li>
 <li><p>Selectionner <strong>Deploy an existing image from a registry</strong></p></li>
@@ -299,16 +309,15 @@ CircleCI doit donc servir celles-ci lors des tests.</p>
 <li><p>Définir un nom pour le web service et selectionner les paramétres de service pour le service</p></li>
 <li><p>Ajouter dans les variables d’environment : <strong>ENV_PATH; /etc/secrets/.env</strong>. Cette variable permet d’indiquer le chemin du fichier <code class="docutils literal notranslate"><span class="pre">.env</span></code> nécéssaire lors de l’exécution du module <code class="docutils literal notranslate"><span class="pre">oc_letting_site.settings.py</span></code>.</p></li>
 <li><p>cliquer sur le boutton « Advanced » pour afficher plus d’options de configuration</p></li>
-<li><p>Ajouter un fichier <code class="docutils literal notranslate"><span class="pre">.env</span></code> en cliquant sur le boutton <strong>+ Add Scret File</strong>. le nom sera <strong>.env</strong> et les valeurs seront le contenu du fichier <strong>.env.exemple</strong> avec les champs remplis selon les intructions.</p></li>
+<li><p>Ajouter un fichier <code class="docutils literal notranslate"><span class="pre">.env</span></code> en cliquant sur le boutton <strong>+ Add Secret File</strong>. le nom sera <strong>.env</strong> et les valeurs seront le contenu du fichier <strong>.env.exemple</strong> avec les champs remplis selon les intructions.</p></li>
 <li><p>Sous l’option <strong>Docker Command</strong> introduisez : <code class="docutils literal notranslate"><span class="pre">/bin/sh</span> <span class="pre">-c</span> <span class="pre">python3</span> <span class="pre">manage.py</span> <span class="pre">collectstatic</span> <span class="pre">--noinput</span> <span class="pre">&amp;&amp;</span> <span class="pre">python3</span> <span class="pre">manage.py</span> <span class="pre">runserver</span> <span class="pre">0.0.0.0:8000</span></code>. La commande va exécuter la migration des fichiers statiques sur le serveur puis lancer le serveur docker sur le port 8000.</p></li>
 <li><p>Enfin cliquer sur <strong>Create Web Service</strong> pour deployer le site.</p></li>
 </ul>
 <p>La dernière étape est la configuration du <em>Web hook</em> pour le deploiement automatique :</p>
 <ul class="simple">
 <li><p>Dans le dashbord, allez dans les <strong>settings</strong> du web service et dans le sous-menu <strong>settings</strong></p></li>
-<li><p>Copier l’url <code class="docutils literal notranslate"><span class="pre">Deploy</span> <span class="pre">Hook</span></code> et l’introduire dans le sous-menu <strong>Web Hook</strong></p></li>
+<li><p>Copier l’url <code class="docutils literal notranslate"><span class="pre">Deploy</span> <span class="pre">Hook</span></code> et l’introduire dans le sous-menu <strong>Web Hook</strong> de DockerHub</p></li>
 </ul>
-</section>
 </section>
 </section>
 
@@ -317,11 +326,11 @@ CircleCI doit donc servir celles-ci lors des tests.</p>
       <div class="bottomnav" role="navigation" aria-label="bottom navigation">
       
         <p>
-        «&#160;&#160;<a href="data_management.html">Gestion des données</a>
+        «&#160;&#160;<a href="api_description.html">Interface de programmation</a>
         &#160;&#160;::&#160;&#160;
         <a class="uplink" href="index.html">Contenu</a>
         &#160;&#160;::&#160;&#160;
-        <a href="api_description.html">Interface de programmation</a>&#160;&#160;»
+        <a href="doc_generation.html">Génération de la documentation</a>&#160;&#160;»
         </p>
 
       </div>

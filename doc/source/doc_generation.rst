@@ -9,6 +9,9 @@ Les différentes parties de la documentation sont rangées dans le dossier ``doc
 La configuration se fait par via le fichier ``doc/source/conf.py``.
 
 La construction de la documentation se fait avec la commande :
+``sphinx-build -M html doc/source doc/build``
+
+Pour les systèmes sous window, il peut être nécéssaire de préciser la localisation de l'exécutable de graphviz 
 ``sphinx-build -M html doc/source doc/build -D graphviz_dot="C:\Program Files\Graphviz\bin\dot.exe"``
 
 Construction du diagramme de la base de données
@@ -72,7 +75,7 @@ Configuration de Read the Docs
     install:
       - requirements: requirements.txt
 
-- Sur le site de (readthedocs https://readthedocs.org/)_
+- Sur le site de `readthedocs <https://readthedocs.org/>`_
 - Connecter vous avec votre compte github
 - Créer un nouveau projet et selectionner le dépôt avec le projet
 - Ajouter les variables d'environnements dans le menu **admin** du projet

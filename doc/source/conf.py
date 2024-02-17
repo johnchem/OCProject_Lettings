@@ -41,4 +41,3 @@ html_static_path = ['_static']
 
 # -- GraphViz configuration ----------------------------------
 graphviz_output_format = 'svg'
-# graphviz_dot="/usr/local/bin/dot"

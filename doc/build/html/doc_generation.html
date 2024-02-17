@@ -15,7 +15,7 @@
     <script src="_static/translations.js?v=d99ca74e"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="prev" title="Interface de programmation" href="api_description.html" /> 
+    <link rel="prev" title="Mise en production" href="deploy_and_management.html" /> 
   </head><body>
       <div class="header" role="banner"><h1 class="heading"><a href="index.html">
           <span>Documentation Orange County Lettings </span></a></h1>
@@ -24,7 +24,7 @@
       <div class="topnav" role="navigation" aria-label="top navigation">
       
         <p>
-        «&#160;&#160;<a href="api_description.html">Interface de programmation</a>
+        «&#160;&#160;<a href="deploy_and_management.html">Mise en production</a>
         &#160;&#160;::&#160;&#160;
         <a class="uplink" href="index.html">Contenu</a>
         </p>
@@ -72,12 +72,35 @@ Ce module crée un fichier dot pour le logiciel Graphviz.</p>
 <h2>Configuration de Read the Docs<a class="headerlink" href="#configuration-de-read-the-docs" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Creation d’un fichier de configuration <cite>.readthedocs.yaml</cite> à la racine du projet</p></li>
+<li><p>Selection de l’OS pour la construction de la documentation et de la version de python.
+Les paramétres par défault sont conservées.</p></li>
 </ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">build</span><span class="p">:</span>
+  <span class="n">os</span><span class="p">:</span> <span class="n">ubuntu</span><span class="o">-</span><span class="mf">22.04</span>
+<span class="n">tools</span><span class="p">:</span>
+  <span class="n">python</span><span class="p">:</span> <span class="s2">&quot;3.12&quot;</span>
+</pre></div>
+</div>
 <ul class="simple">
-<li><p>connecter votre compte github</p></li>
-<li><p>créer un nouveau projet</p></li>
-<li><p>selectionner le dépôt</p></li>
-<li><p>admin : ajouter les variables d’environnements</p></li>
+<li><p>Indiquer le chemin vers le fichier de configuration de sphinx</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="p">:</span>
+  <span class="n">configuration</span><span class="p">:</span> <span class="n">doc</span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Indiquer le fichier de réquis pour l’installation des dépendances</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span><span class="p">:</span>
+  <span class="n">install</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">requirements</span><span class="p">:</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Sur le site de (readthedocs <a class="reference external" href="https://readthedocs.org/)_">https://readthedocs.org/)_</a></p></li>
+<li><p>Connecter vous avec votre compte github</p></li>
+<li><p>Créer un nouveau projet et selectionner le dépôt avec le projet</p></li>
+<li><p>Ajouter les variables d’environnements dans le menu <strong>admin</strong> du projet</p></li>
 </ul>
 </section>
 </section>
@@ -87,7 +110,7 @@ Ce module crée un fichier dot pour le logiciel Graphviz.</p>
       <div class="bottomnav" role="navigation" aria-label="bottom navigation">
       
         <p>
-        «&#160;&#160;<a href="api_description.html">Interface de programmation</a>
+        «&#160;&#160;<a href="deploy_and_management.html">Mise en production</a>
         &#160;&#160;::&#160;&#160;
         <a class="uplink" href="index.html">Contenu</a>
         </p>
