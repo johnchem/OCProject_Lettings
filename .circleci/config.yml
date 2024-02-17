@@ -121,8 +121,7 @@ jobs:
       - run:
           name: Build and Push application Docker image
           command: |
-            TAG=$COMMIT_HASH
-            docker build -t $DOCKERHUB_USERNAME/orange_county:$TAG -t $DOCKERHUB_USERNAME/orange_county:latest .
+            docker build -t $DOCKERHUB_USERNAME/orange_county:$CIRCLE_SHA1 -t $DOCKERHUB_USERNAME/orange_county:latest .
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push --all-tags $DOCKERHUB_USERNAME/orange_county
       - save_cache:
